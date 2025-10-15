@@ -5,13 +5,13 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import { useAppSelector } from "@/state/redux";
 import { useGetPropertiesQuery } from "@/state/api";
 import { Property } from "@/types/prismaTypes";
+import { ReceiptRussianRubleIcon } from "lucide-react";
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN as string;
 
 const Map = () => {
   const mapContainerRef = useRef(null);
   const filters = useAppSelector((state) => state.global.filters);
-  const isFiltersFullOpen = useAppSelector((state) => state.global.isFiltersFullOpen);
   const {
     data: properties,
     isLoading,
@@ -19,20 +19,19 @@ const Map = () => {
   } = useGetPropertiesQuery(filters);
 
   useEffect(() => {
-    console.log("Properties fetched:", properties);
-
-    if (isLoading || isError || !properties) return;
-
+    if (isLoading || isError || !properties) {
+          console.log("No properties data:", { isLoading, isError, properties });
+          return ; 
+    }
+    console.log("Properties for markers:",properties);
     const map = new mapboxgl.Map({
       container: mapContainerRef.current!,
-      style: "mapbox://styles/ducpham9786/cmglnz9ez006m01s3fkd76d33",
-      center: filters.coordinates || [-74.5, 40],
-      zoom: 9,
+      style: "mapbox://styles/thanhduong1/cmgqqw45x00d701sd7rx1cmab",
+      center: filters.coordinates || [106.6519, 10.9804],
+      zoom: 13,
     });
 
     properties.forEach((property) => {
-        console.log("Property coordinates:", property.location.coordinates);
-
       const marker = createPropertyMarker(property, map);
       const markerElement = marker.getElement();
       const path = markerElement.querySelector("path[fill='#3FB1CE']");
@@ -45,7 +44,6 @@ const Map = () => {
     resizeMap();
 
     return () => map.remove();
-    
   }, [isLoading, isError, properties, filters.coordinates]);
 
   if (isLoading) return <>Loading...</>;
@@ -68,8 +66,8 @@ const Map = () => {
 const createPropertyMarker = (property: Property, map: mapboxgl.Map) => {
   const marker = new mapboxgl.Marker()
     .setLngLat([
-      property.coordinates.longitude,
-      property.coordinates.latitude,
+      property.location.coordinates.longitude,
+      property.location.coordinates.latitude,
     ])
     .setPopup(
       new mapboxgl.Popup().setHTML(

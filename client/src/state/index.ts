@@ -28,7 +28,7 @@ export const initialState: InitialStateTypes = {
     gender: "any",
     amenities: [],
     availableFrom: "any",
-    coordinates: [106.65, 10.75], // VD: tọa độ mặc định Thủ Dầu Một
+    coordinates: [106.6519, 10.9804],
   },
   isFiltersFullOpen: false,
   viewMode: "grid",

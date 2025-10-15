@@ -1,92 +1,74 @@
 [
   {
     "id": 1,
-    "country": "United States",
-    "city": "Pasadena",
-    "state": "CA",
-    "address": "123 Colorado Blvd",
-    "postalCode": "91105",
-    "coordinates": "POINT(-118.144516 34.147785)"
+    "address": "35 Phú Lợi",
+    "city": "Thủ Dầu Một",
+    "state": "Bình Dương",
+    "country": "Việt Nam",
+    "postalCode": "590000",
+    "coordinates": "POINT(106.655 10.981)"
   },
   {
     "id": 2,
-    "country": "United States",
-    "city": "Santa Monica",
-    "state": "CA",
-    "address": "456 Ocean Ave",
-    "postalCode": "90401",
-    "coordinates": "POINT(-118.496513 34.013654)"
+    "address": "22 Nguyễn Văn Tiết",
+    "city": "Thủ Dầu Một",
+    "state": "Bình Dương",
+    "country": "Việt Nam",
+    "postalCode": "590001",
+    "coordinates": "POINT(106.672 10.982)"
   },
   {
     "id": 3,
-    "country": "United States",
-    "city": "Burbank",
-    "state": "CA",
-    "address": "789 Hollywood Way",
-    "postalCode": "91505",
-    "coordinates": "POINT(-118.328661 34.180839)"
+    "address": "5 Cách Mạng Tháng Tám",
+    "city": "Thủ Dầu Một",
+    "state": "Bình Dương",
+    "country": "Việt Nam",
+    "postalCode": "590002",
+    "coordinates": "POINT(106.674 10.979)"
   },
   {
     "id": 4,
-    "country": "United States",
-    "city": "Long Beach",
-    "state": "CA",
-    "address": "101 Pine Ave",
-    "postalCode": "90802",
-    "coordinates": "POINT(-118.192604 33.766720)"
+    "address": "12 Yersin",
+    "city": "Thủ Dầu Một",
+    "state": "Bình Dương",
+    "country": "Việt Nam",
+    "postalCode": "590003",
+    "coordinates": "POINT(106.680 10.985)"
   },
   {
     "id": 5,
-    "country": "United States",
-    "city": "New York",
-    "state": "NY",
-    "address": "555 Manhattan Ave",
-    "postalCode": "10001",
-    "coordinates": "POINT(-74.005941 40.712784)"
+    "address": "18 Nguyễn Du",
+    "city": "Thủ Dầu Một",
+    "state": "Bình Dương",
+    "country": "Việt Nam",
+    "postalCode": "590004",
+    "coordinates": "POINT(106.668 10.983)"
   },
   {
     "id": 6,
-    "country": "United States",
-    "city": "Malibu",
-    "state": "CA",
-    "address": "888 Malibu Road",
-    "postalCode": "90265",
-    "coordinates": "POINT(-118.774518 34.025922)"
+    "address": "42 Lê Hồng Phong",
+    "city": "Thủ Dầu Một",
+    "state": "Bình Dương",
+    "country": "Việt Nam",
+    "postalCode": "590005",
+    "coordinates": "POINT(106.675 10.988)"
   },
   {
     "id": 7,
-    "country": "United States",
-    "city": "Glendale",
-    "state": "CA",
-    "address": "777 Brand Blvd",
-    "postalCode": "91203",
-    "coordinates": "POINT(-118.254708 34.142508)"
+    "address": "90 Bạch Đằng",
+    "city": "Thủ Dầu Một",
+    "state": "Bình Dương",
+    "country": "Việt Nam",
+    "postalCode": "590006",
+    "coordinates": "POINT(106.660 10.986)"
   },
   {
     "id": 8,
-    "country": "United States",
-    "city": "Torrance",
-    "state": "CA",
-    "address": "555 Torrance Blvd",
-    "postalCode": "90503",
-    "coordinates": "POINT(-118.352575 33.835849)"
-  },
-  {
-    "id": 9,
-    "country": "United States",
-    "city": "Miami",
-    "state": "FL",
-    "address": "1234 Ocean Dr",
-    "postalCode": "33139",
-    "coordinates": "POINT(-80.130045 25.782551)"
-  },
-  {
-    "id": 10,
-    "country": "United States",
-    "city": "Beverly Hills",
-    "state": "CA",
-    "address": "789 Rodeo Dr",
-    "postalCode": "90210",
-    "coordinates": "POINT(-118.400356 34.073620)"
+    "address": "14 Huỳnh Văn Lũy",
+    "city": "Thủ Dầu Một",
+    "state": "Bình Dương",
+    "country": "Việt Nam",
+    "postalCode": "590007",
+    "coordinates": "POINT(106.683 10.984)"
   }
 ]

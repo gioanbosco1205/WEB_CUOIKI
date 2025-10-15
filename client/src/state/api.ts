@@ -42,15 +42,14 @@ export const api = createApi({
           const user = await getCurrentUser();
           const userRole = idToken?.payload["custom:role"] as string;
 
-
-          const endpoint = // goi api lay thong tin chi tiet 
+          const endpoint =
             userRole === "manager"
               ? `/managers/${user.userId}`
               : `/tenants/${user.userId}`;
 
           let userDetailsResponse = await fetchWithBQ(endpoint);
 
-          // neu nhu user khong ton tai tao cai moi 
+          // if user doesn't exist, create new user
           if (
             userDetailsResponse.error &&
             userDetailsResponse.error.status === 404
@@ -78,55 +77,36 @@ export const api = createApi({
 
     // property related endpoints
     getProperties: build.query<
-  Property[],
-  Partial<FiltersState> & { favoriteIds?: number[] }
->({
-  query: (filters) => {
-    const params = cleanParams({
-      location: filters.location, // Địa điểm
-      priceMin: filters.priceRange?.[0], //  Giá tiền
-      priceMax: filters.priceRange?.[1],
-      areaMin: filters.areaRange?.[0],   // 📏 Diện tích (m²)
-      areaMax: filters.areaRange?.[1],
-      roomType: filters.roomType, // loại phòng
-      gender: filters.gender, //  Giới tính
-      amenities: filters.amenities?.length       // ⚙️ Tiện nghi (wifi, máy lạnh, toilet riêng,...)
-        ? filters.amenities.join(",")
-        : undefined,
-      availableFrom:
-        filters.availableFrom && filters.availableFrom !== "any"
-          ? filters.availableFrom //  Ngày có thể dọn vào
-          : undefined,
+      Property[],
+      Partial<FiltersState> & { favoriteIds?: number[] }
+    >({
+      query: (filters) => {
+        const params = cleanParams({
+          location: filters.location,
+          priceMin: filters.priceRange?.[0],
+          priceMax: filters.priceRange?.[1],
+          amenities: filters.amenities?.join(","),
+          availableFrom: filters.availableFrom,
+          favoriteIds: filters.favoriteIds?.join(","),
+          latitude: filters.coordinates?.[1],
+          longitude: filters.coordinates?.[0],
+        });
 
-      // ❤️ Danh sách yêu thích
-      favoriteIds: filters.favoriteIds?.length
-        ? filters.favoriteIds.join(",")
-        : undefined,
-
-      // 🗺️ Tọa độ
-      latitude: filters.coordinates?.[0],
-      longitude: filters.coordinates?.[1],
-    });
-    console.log("Params gửi đi:", params);
-
-    return { url: "properties", params };
-  },
-
-  providesTags: (result) =>
-    result
-      ? [
-          ...result.map(({ id }) => ({ type: "Properties" as const, id })),
-          { type: "Properties", id: "LIST" },
-        ]
-      : [{ type: "Properties", id: "LIST" }],
-
-  async onQueryStarted(_, { queryFulfilled }) {
-    await withToast(queryFulfilled, {
-      error: "Không thể tải danh sách trọ.",
-    });
-  },
-}),
-
+        return { url: "properties", params };
+      },
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ id }) => ({ type: "Properties" as const, id })),
+              { type: "Properties", id: "LIST" },
+            ]
+          : [{ type: "Properties", id: "LIST" }],
+      async onQueryStarted(_, { queryFulfilled }) {
+        await withToast(queryFulfilled, {
+          error: "Failed to fetch properties.",
+        });
+      },
+    }),
 
     getProperty: build.query<Property, number>({
       query: (id) => `properties/${id}`,

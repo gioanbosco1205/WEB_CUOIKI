@@ -12,6 +12,11 @@ npm install -D @types/express
 // server 
 npm init -y
 
+// prisma 
+npm run prisma:generate 
+ npx prisma migrate dev --name init
+
+npm run seed
 
 npm install --save-dev kill-port
 
