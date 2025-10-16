@@ -166,18 +166,21 @@ const FiltersBar = () => {
           </SelectContent>
         </Select>
 
-        {/* 🚻 Giới tính */}
+        {/* Tiện ích */}
         <Select
-          value={filters.gender || "any"}
-          onValueChange={(v) => handleFilterChange("gender", v, null)}
+          value ={filters.amenities?.[0]?.toString() || "any"}
+          onValueChange={(v) => handleFilterChange("amenities", v, null)}
         >
           <SelectTrigger className="w-28 rounded-xl border-primary-400">
-            <SelectValue placeholder="Giới tính" />
+            <SelectValue placeholder="Tất cả tiện ích" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="any">Giới tính</SelectItem>
-            <SelectItem value="male">Nam</SelectItem>
-            <SelectItem value="female">Nữ</SelectItem>
+            <SelectItem value="any">Tất cả tiện ích</SelectItem>
+            <SelectItem value="male">Wifi</SelectItem>
+            <SelectItem value="female">Máy Lạnh</SelectItem>
+            <SelectItem value="female">Có chỗ đậu xe</SelectItem>
+            <SelectItem value="female">Gần trường</SelectItem>
+
           </SelectContent>
         </Select>
 

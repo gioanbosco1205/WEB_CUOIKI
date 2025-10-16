@@ -6,7 +6,7 @@
     "pricePerMonth": 1500000,
     "securityDeposit": 500000,
     "applicationFee": 100000,
-    "photoUrls": ["https://example.com/room1.jpg"],
+    "photoUrls": ["/images/anhTro1.png"],
     "amenities": ["WiFi", "WasherDryer", "AirConditioning"],
     "highlights": ["CloseToTransit", "QuietNeighborhood"],
     "isPetsAllowed": false,

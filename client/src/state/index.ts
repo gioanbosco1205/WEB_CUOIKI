@@ -5,11 +5,11 @@ export interface FiltersState {
   priceRange?: [number | null, number | null];
   roomType?: string; // phòng trọ, căn hộ, ký túc xá,...
   areaRange?: [number | null, number | null];
-  gender?: "male" | "female" | "any";
-  amenities?: string[];
+  amenities?: string[]; // Các tiện ích: Wifi, Máy lạnh, Gác lửng, Gần trường...
   availableFrom?: string;
   coordinates?: [number, number];
   favoriteIds?: number[];
+  distanceToSchool?: [number | null, number | null]; // khoảng cách đến trường
 }
 
 
@@ -25,14 +25,16 @@ export const initialState: InitialStateTypes = {
     priceRange: [null, null],
     roomType: "any",
     areaRange: [null, null],
-    gender: "any",
     amenities: [],
     availableFrom: "any",
     coordinates: [106.6519, 10.9804],
+    distanceToSchool: [null, null], // thêm này để tránh lỗi TS
   },
   isFiltersFullOpen: false,
   viewMode: "grid",
 };
+
+
 
 
 export const globalSlice = createSlice({

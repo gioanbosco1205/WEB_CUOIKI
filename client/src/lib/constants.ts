@@ -31,37 +31,56 @@ import {
   Users,
 } from "lucide-react";
 
+// =========================
+// 🎯 New Room Type for Filter
+// =========================
+
+export enum RoomTypeEnum {
+  PHONG_TRO = "Phòng trọ",
+  CAN_HO = "Căn hộ mini",
+  NHA_NGUYEN_CAN = "Nhà nguyên căn",
+  CHUNG_CU = "Chung cư",
+  KY_TUC_XA = "Ký túc xá",
+  SLEEPBOX = "Sleepbox",
+}
+
+export const RoomTypeIcons: Record<RoomTypeEnum, LucideIcon> = {
+  [RoomTypeEnum.PHONG_TRO]: Bed,
+  [RoomTypeEnum.CAN_HO]: Building2,
+  [RoomTypeEnum.NHA_NGUYEN_CAN]: Home,
+  [RoomTypeEnum.CHUNG_CU]: Building,
+  [RoomTypeEnum.KY_TUC_XA]: Users,
+  [RoomTypeEnum.SLEEPBOX]: BedSingle,
+};
+// =========================
+
+
+// =========================
+// 🎯 Tiện ích sinh viên quan tâm
+// =========================
 export enum AmenityEnum {
-  WasherDryer = "WasherDryer",
-  AirConditioning = "AirConditioning",
-  Dishwasher = "Dishwasher",
-  HighSpeedInternet = "HighSpeedInternet",
-  HardwoodFloors = "HardwoodFloors",
-  WalkInClosets = "WalkInClosets",
-  Microwave = "Microwave",
-  Refrigerator = "Refrigerator",
-  Pool = "Pool",
-  Gym = "Gym",
-  Parking = "Parking",
-  PetsAllowed = "PetsAllowed",
   WiFi = "WiFi",
+  AirConditioning = "Điều hòa",
+  WasherDryer = "Máy giặt/sấy",
+  Parking = "Chỗ đậu xe",
+  PetsAllowed = "Cho phép thú cưng",
+  Gym = "Phòng tập",
+  NearSchool = "Gần trường",
 }
 
 export const AmenityIcons: Record<AmenityEnum, LucideIcon> = {
-  WasherDryer: Waves,
-  AirConditioning: Thermometer,
-  Dishwasher: Waves,
-  HighSpeedInternet: Wifi,
-  HardwoodFloors: Home,
-  WalkInClosets: Maximize,
-  Microwave: Tv,
-  Refrigerator: Thermometer,
-  Pool: Waves,
-  Gym: Dumbbell,
-  Parking: Car,
-  PetsAllowed: PawPrint,
-  WiFi: Wifi,
+  [AmenityEnum.WiFi]: Wifi,
+  [AmenityEnum.AirConditioning]: Thermometer, // ✅ dùng enum key
+  [AmenityEnum.WasherDryer]: Waves,
+  [AmenityEnum.Parking]: Car,
+  [AmenityEnum.PetsAllowed]: PawPrint,
+  [AmenityEnum.Gym]: Dumbbell,
+  [AmenityEnum.NearSchool]: Building2,
 };
+// =========================
+
+
+
 
 export enum HighlightEnum {
   HighSpeedInternetAccess = "HighSpeedInternetAccess",
@@ -117,27 +136,7 @@ export const PropertyTypeIcons: Record<PropertyTypeEnum, LucideIcon> = {
   Townhouse: Home,
   Cottage: Trees,
 };
-// =========================
-// 🎯 New Room Type for Filter
-// =========================
 
-export enum RoomTypeEnum {
-  PHONG_TRO = "Phòng trọ",
-  CAN_HO = "Căn hộ mini",
-  NHA_NGUYEN_CAN = "Nhà nguyên căn",
-  CHUNG_CU = "Chung cư",
-  KY_TUC_XA = "Ký túc xá",
-  SLEEPBOX = "Sleepbox",
-}
-
-export const RoomTypeIcons: Record<RoomTypeEnum, LucideIcon> = {
-  [RoomTypeEnum.PHONG_TRO]: Bed,
-  [RoomTypeEnum.CAN_HO]: Building2,
-  [RoomTypeEnum.NHA_NGUYEN_CAN]: Home,
-  [RoomTypeEnum.CHUNG_CU]: Building,
-  [RoomTypeEnum.KY_TUC_XA]: Users,
-  [RoomTypeEnum.SLEEPBOX]: BedSingle,
-};
 
 // Add this constant at the end of the file
 export const NAVBAR_HEIGHT = 50; // in pixels

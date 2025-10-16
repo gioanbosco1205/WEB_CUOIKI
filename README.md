@@ -10,6 +10,8 @@ npm install express
 npm install -D @types/express
 
 // server 
+npm install rimraf --save-dev
+
 npm init -y
 
 // prisma 
