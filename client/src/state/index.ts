@@ -2,9 +2,9 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface FiltersState {
   location?: string;
-  priceRange?: [number | null, number | null];
+  pricePerMonth?: [number | null, number | null]; // Giá thuê theo tháng
   roomType?: string; // phòng trọ, căn hộ, ký túc xá,...
-  areaRange?: [number | null, number | null];
+  squareFeet?: [number | null, number | null]; // diên tích phong
   amenities?: string[]; // Các tiện ích: Wifi, Máy lạnh, Gác lửng, Gần trường...
   availableFrom?: string;
   coordinates?: [number, number];
@@ -22,9 +22,9 @@ interface InitialStateTypes {
 export const initialState: InitialStateTypes = {
   filters: {
     location: "Thủ Dầu Một",
-    priceRange: [null, null],
+    pricePerMonth: [null, null],
     roomType: "any",
-    areaRange: [null, null],
+    squareFeet: [null, null],
     amenities: [],
     availableFrom: "any",
     coordinates: [106.6519, 10.9804],

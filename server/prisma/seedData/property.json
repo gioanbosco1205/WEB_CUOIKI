@@ -16,7 +16,9 @@
     "squareFeet": 20,
     "propertyType": "Rooms",
     "locationId": 1,
-    "managerCognitoId": "us-east-2:manager-001"
+    "managerCognitoId": "us-east-2:manager-001",
+    "averageRating": 4.5,
+    "numberOfReviews": 20
   },
   {
     "id": 2,

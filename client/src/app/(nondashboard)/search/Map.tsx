@@ -20,10 +20,10 @@ const Map = () => {
 
   useEffect(() => {
     if (isLoading || isError || !properties) {
-          console.log("No properties data:", { isLoading, isError, properties });
-          return ; 
+      console.log("No properties data:", { isLoading, isError, properties });
+      return;
     }
-    console.log("Properties for markers:",properties);
+    console.log("Properties for markers:", properties);
     const map = new mapboxgl.Map({
       container: mapContainerRef.current!,
       style: "mapbox://styles/thanhduong1/cmgqqw45x00d701sd7rx1cmab",

@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input';
 import { cleanParams, cn } from '@/lib/utils';
 import { initialState, setFilters } from '@/state';
 import { useAppSelector } from '@/state/redux';
-import { debounce } from 'lodash';
+import { debounce, set } from 'lodash';
 import { Search } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useState } from 'react'
@@ -47,7 +47,45 @@ const FiltersFull = () => {
     setLocalFilters(initialState.filters);
     dispatch(setFilters(initialState.filters));
     updateURL(initialState.filters);
-  }
+  };
+
+  const handleAmenityChange = (amenity: string) => {
+    setLocalFilters((prev) => ({
+      ...prev,
+      amenities: prev.amenities?.includes(amenity)
+        ? prev.amenities.filter((a) => a !== amenity)
+        : [...(prev.amenities || []), amenity],
+    }));
+  };
+
+  const handleLocationSearch = async () => {
+    try {
+      if (!localFilters.location) return; // kiểm tra nếu chưa nhập địa điểm
+  
+      const response = await fetch(
+        `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
+          localFilters.location
+        )}.json?access_token=${
+          process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN
+        }&fuzzyMatch=true`
+      );
+  
+      const data = await response.json();
+  
+      if (data.features && data.features.length > 0) {
+        const [lng, lat] = data.features[0].center;
+        setLocalFilters((prev) => ({
+          ...prev,
+          coordinates: [lng, lat],
+        }));
+      }
+    } catch (err) {
+      console.error("Error fetching location data:", err);
+    }
+  };
+  
+
+
 
   if (!isFiltersFullOpen) return null;
   const handleFilterChange = (
@@ -57,7 +95,7 @@ const FiltersFull = () => {
   ) => {
     let newValue = value;
 
-    if (key === "priceRange" || key === "areaRange") {
+    if (key === "pricePerMonth" || key === "squareFeet") {
       const currentArrayRange = [...(filters[key] || [null, null])];
       if (isMin !== null) {
         const index = isMin ? 0 : 1;
@@ -95,7 +133,7 @@ const FiltersFull = () => {
             className="rounded-l-xl rounded-r-none border-r-0"
           />
           <Button
-            // onClick={handleLocationSearch}
+             onClick={handleLocationSearch}
             className="rounded-r-xl rounded-l-none border-l-none border-black shadow-none border hover:bg-primary-700 hover:text-primary-50"
           >
             <Search className="w-4 h-4" />
@@ -137,8 +175,8 @@ const FiltersFull = () => {
           max={10000000}
           step={500000}
           value={[
-            (localFilters.priceRange?.[0] ?? 500000),
-            (localFilters.priceRange?.[1] ?? 10000000),
+            (localFilters.pricePerMonth?.[0] ?? 500000),
+            (localFilters.pricePerMonth?.[1] ?? 10000000),
           ]}
           onValueChange={(value: any) =>
             setLocalFilters((prev) => ({
@@ -148,8 +186,8 @@ const FiltersFull = () => {
           }
         />
         <div className="flex justify-between mt-2">
-          <span>{(localFilters.priceRange?.[0] ?? 500000).toLocaleString("vi-VN")} đ</span>
-          <span>{(localFilters.priceRange?.[1] ?? 10000000).toLocaleString("vi-VN")} đ</span>
+          <span>{(localFilters.pricePerMonth?.[0] ?? 500000).toLocaleString("vi-VN")} đ</span>
+          <span>{(localFilters.pricePerMonth?.[1] ?? 10000000).toLocaleString("vi-VN")} đ</span>
         </div>
       </div>
       {/* Diện tích */}
@@ -160,8 +198,8 @@ const FiltersFull = () => {
           max={100}
           step={5}
           value={[
-            localFilters.areaRange?.[0] ?? 25,
-            localFilters.areaRange?.[1] ?? 100,
+            localFilters.squareFeet?.[0] ?? 25,
+            localFilters.squareFeet?.[1] ?? 100,
           ]}
           onValueChange={(value) =>
             setLocalFilters((prev) => ({
@@ -172,8 +210,8 @@ const FiltersFull = () => {
           className="[&>.bar]:bg-primary-700"
         />
         <div className="flex justify-between mt-2">
-          <span>{localFilters.areaRange?.[0] ?? 25} m2</span>
-          <span>{localFilters.areaRange?.[1] ?? 100} m2</span>
+          <span>{localFilters.squareFeet?.[0] ?? 25} m2</span>
+          <span>{localFilters.squareFeet?.[1] ?? 100} m2</span>
         </div>
       </div>
 
