@@ -26,7 +26,7 @@ const Map = () => {
     console.log("Properties for markers:",properties);
     const map = new mapboxgl.Map({
       container: mapContainerRef.current!,
-      style: "mapbox://styles/thanhduong1/cmgqqw45x00d701sd7rx1cmab",
+      style: "mapbox://styles/ducpham9786/cmglnz9ez006m01s3fkd76d33",
       center: filters.coordinates || [106.6519, 10.9804],
       zoom: 13,
     });

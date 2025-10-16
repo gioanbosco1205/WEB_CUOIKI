@@ -54,5 +54,124 @@
     "name": "Hoàng Anh Tuấn",
     "email": "tuan.hoang@example.com",
     "phoneNumber": "+84 929334455"
+  },
+  {
+    "id": 9,
+    "cognitoId": "us-east-2:manager-009",
+    "name": "Bùi Tiến Dũng",
+    "email": "dung.bui@example.com",
+    "phoneNumber": "+84 905123456"
+  },
+  {
+    "id": 10,
+    "cognitoId": "us-east-2:manager-010",
+    "name": "Phan Thị Mỹ Linh",
+    "email": "linh.phan@example.com",
+    "phoneNumber": "+84 987654321"
+  },
+  {
+    "id": 11,
+    "cognitoId": "us-east-2:manager-011",
+    "name": "Võ Minh Khang",
+    "email": "khang.vo@example.com",
+    "phoneNumber": "+84 911223344"
+  },
+  {
+    "id": 12,
+    "cognitoId": "us-east-2:manager-012",
+    "name": "Huỳnh Ngọc Ánh",
+    "email": "anh.huynh@example.com",
+    "phoneNumber": "+84 944556677"
+  },
+  {
+    "id": 13,
+    "cognitoId": "us-east-2:manager-013",
+    "name": "Đặng Văn Lâm",
+    "email": "lam.dang@example.com",
+    "phoneNumber": "+84 933889900"
+  },
+  {
+    "id": 14,
+    "cognitoId": "us-east-2:manager-014",
+    "name": "Hồ Thị Thu Thảo",
+    "email": "thao.ho@example.com",
+    "phoneNumber": "+84 966112233"
+  },
+  {
+    "id": 15,
+    "cognitoId": "us-east-2:manager-015",
+    "name": "Lý Gia Hân",
+    "email": "han.ly@example.com",
+    "phoneNumber": "+84 977445566"
+  },
+  {
+    "id": 16,
+    "cognitoId": "us-east-2:manager-016",
+    "name": "Trịnh Văn Quyết",
+    "email": "quyet.trinh@example.com",
+    "phoneNumber": "+84 922778899"
+  },
+  {
+    "id": 17,
+    "cognitoId": "us-east-2:manager-017",
+    "name": "Mai Thanh Phong",
+    "email": "phong.mai@example.com",
+    "phoneNumber": "+84 955123789"
+  },
+  {
+    "id": 18,
+    "cognitoId": "us-east-2:manager-018",
+    "name": "Dương Thùy Linh",
+    "email": "linh.duong@example.com",
+    "phoneNumber": "+84 988321654"
+  },
+  {
+    "id": 19,
+    "cognitoId": "us-east-2:manager-019",
+    "name": "Nguyễn Quốc Tuấn",
+    "email": "tuan.nguyen@example.com",
+    "phoneNumber": "+84 918765432"
+  },
+  {
+    "id": 20,
+    "cognitoId": "us-east-2:manager-020",
+    "name": "Trần Bảo Ngọc",
+    "email": "ngoc.tran@example.com",
+    "phoneNumber": "+84 903456789"
+  },
+  {
+    "id": 21,
+    "cognitoId": "us-east-2:manager-021",
+    "name": "Lê Đức Anh",
+    "email": "anh.le@example.com",
+    "phoneNumber": "+84 945678901"
+  },
+  {
+    "id": 22,
+    "cognitoId": "us-east-2:manager-022",
+    "name": "Phạm Phương Thảo",
+    "email": "thao.pham@example.com",
+    "phoneNumber": "+84 967890123"
+  },
+  {
+    "id": 23,
+    "cognitoId": "us-east-2:manager-023",
+    "name": "Hoàng Minh Hiếu",
+    "email": "hieu.hoang@example.com",
+    "phoneNumber": "+84 989012345"
+  },
+  {
+    "id": 24,
+    "cognitoId": "us-east-2:manager-024",
+    "name": "Vũ Ngọc Diệp",
+    "email": "diep.vu@example.com",
+    "phoneNumber": "+84 934111222"
+  },
+  {
+    "id": 25,
+    "cognitoId": "us-east-2:manager-025",
+    "name": "Đỗ Duy Mạnh",
+    "email": "manh.do@example.com",
+    "phoneNumber": "+84 912987654"
   }
 ]

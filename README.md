@@ -13,12 +13,20 @@ npm install -D @types/express
 npm init -y
 
 // prisma 
-npm run prisma:generate 
- npx prisma migrate dev --name init
-
+CREATE EXTENSION IF NOT EXISTS postgis;
+npm install ts-node typescript --save-dev
+npm install prisma --save-dev
+npm run prisma:generate
+npx prisma migrate dev --name init
 npm run seed
-
 npm install --save-dev kill-port
+
+2
+npm install prisma ts-node typescript --save-dev
+npx prisma generate
+npx prisma migrate reset
+npx prisma migrate dev --name init
+npm run seed
 
 
 
