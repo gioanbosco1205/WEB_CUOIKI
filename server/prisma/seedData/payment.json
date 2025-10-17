@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "amountDue": 1500000,
+    "amountPaid": 1500000,
+    "dueDate": "2025-10-01T00:00:00Z",
+    "paymentDate": "2025-10-01T06:00:00Z",
+    "paymentStatus": "Paid",
+    "leaseId": 1
+  },
+  {
+    "id": 2,
+    "amountDue": 1200000,
+    "amountPaid": 800000,
+    "dueDate": "2025-10-05T00:00:00Z",
+    "paymentDate": "2025-10-06T08:00:00Z",
+    "paymentStatus": "PartiallyPaid",
+    "leaseId": 2
+  },
+  {
+    "id": 3,
+    "amountDue": 2500000,
+    "amountPaid": 0,
+    "dueDate": "2025-10-10T00:00:00Z",
+    "paymentDate": "2025-10-10T00:00:00Z",
+    "paymentStatus": "Overdue",
+    "leaseId": 3
+  },
+  {
+    "id": 4,
+    "amountDue": 3500000,
+    "amountPaid": 3500000,
+    "dueDate": "2025-10-05T00:00:00Z",
+    "paymentDate": "2025-10-04T06:00:00Z",
+    "paymentStatus": "Paid",
+    "leaseId": 4
+  },
+  {
+    "id": 5,
+    "amountDue": 3200000,
+    "amountPaid": 3200000,
+    "dueDate": "2025-10-10T00:00:00Z",
+    "paymentDate": "2025-10-10T06:00:00Z",
+    "paymentStatus": "Paid",
+    "leaseId": 5
+  },
+  {
+    "id": 6,
+    "amountDue": 12000000,
+    "amountPaid": 0,
+    "dueDate": "2025-10-15T00:00:00Z",
+    "paymentDate": "2025-10-16T00:00:00Z",
+    "paymentStatus": "Overdue",
+    "leaseId": 6
+  },
+  {
+    "id": 7,
+    "amountDue": 6000000,
+    "amountPaid": 6000000,
+    "dueDate": "2025-10-20T00:00:00Z",
+    "paymentDate": "2025-10-20T05:30:00Z",
+    "paymentStatus": "Paid",
+    "leaseId": 7
+  },
+  {
+    "id": 8,
+    "amountDue": 12500000,
+    "amountPaid": 10000000,
+    "dueDate": "2025-11-01T00:00:00Z",
+    "paymentDate": "2025-11-02T08:00:00Z",
+    "paymentStatus": "PartiallyPaid",
+    "leaseId": 8
+  }
+]
