@@ -140,9 +140,9 @@
     "country": "Viet Nam",
     "city": "Thu Dau Mot",
     "state": "Binh Duong",
-    "address": "Hẻm 336 Đ. 30 Tháng 4, Chánh Nghĩa, Thủ Dầu Một, Bình Dương, Việt Nam",
+    "address": "385/55/2/32 Lê Hồng Phong, Tổ 7, Thủ Dầu Một, Bình Dương, Việt Nam",
     "postalCode": "82000",
-    "coordinates": "POINT(10.968011023100535 106.66892006808244)"
+    "coordinates": "POINT(10.982884084096698, 106.67996656313665)"
   },
   {
     "id": 17,
@@ -178,7 +178,7 @@
     "state": "Binh Duong",
     "address": "63 Đường số 8 - KDC Hiệp Thành III, Hiệp Thành, Thủ Dầu Một, Bình Dương, Việt Nam",
     "postalCode": "82000",
-    "coordinates": "POINT(11.00017443714292 106.6686545634406)"
+    "coordinates": "POINT(10.996562691282655, 106.66832836929737)"
   },
   {
     "id": 21,
