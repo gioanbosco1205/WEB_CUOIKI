@@ -62,7 +62,7 @@
       "/Images/NhaTro/Phongtro32.jpg",
       "/Images/NhaTro/Phongtro33.jpg"],
     "amenities": ["WiFi", "Dishwasher", "AirConditioning"],
-    "highlights": ["QuietNeighborhood", "GreatView", "CloseToTransit", "HightSpeedInternet"],
+    "highlights": ["QuietNeighborhood", "GreatView", "CloseToTransit", "HighSpeedInternetAccess"],
     "isPetsAllowed": false,
     "isParkingIncluded": false,
     "beds": 1,

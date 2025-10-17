@@ -29,7 +29,7 @@ npx prisma migrate dev --name init
 npm run seed
 
 
-
+npx prisma studio
 env/client
 NEXT_PUBLIC_API_BASE_URL=http://localhost:3001
 NEXT_PUBLIC_AWS_COGNITO_USER_POOL_ID=ap-southeast-1_UWFaNnvCo
