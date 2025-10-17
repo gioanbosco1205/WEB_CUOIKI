@@ -42,3 +42,12 @@ PORT = 3001
 DATABASE_URL = "postgresql://postgres:1234567890aA@localhost:5432/realestate2?schema=public"
 
 
+  // {
+  //   "id": 1,
+  //   "country": "Việt Nam",
+  //   "city": "Thủ Dầu Một",
+  //   "state": "Bình Dương",
+  //   "address": "340/23/8, 340/35 Đ. Phú Lợi, Phú Hoà, Thủ Dầu Một, Bình Dương, Việt Nam",
+  //   "postalCode": "72000",
+  //   "coordinates": "POINT(10.982885446306781 106.678380466954)"
+  // },
