@@ -4,7 +4,7 @@
     "startDate": "2025-09-20T00:00:00Z",
     "endDate": "2026-03-20T00:00:00Z",
     "rent": 1500000,
-    "deposit": 500000,
+    "deposit": 1500000,
     "propertyId": 1,
     "tenantCognitoId": "us-east-2:tenant-001"
   },
@@ -12,8 +12,8 @@
     "id": 2,
     "startDate": "2025-09-25T00:00:00Z",
     "endDate": "2026-09-25T00:00:00Z",
-    "rent": 3000000,
-    "deposit": 1000000,
+    "rent": 1200000,
+    "deposit": 1200000,
     "propertyId": 2,
     "tenantCognitoId": "us-east-2:tenant-002"
   },
@@ -22,53 +22,53 @@
     "startDate": "2025-10-01T00:00:00Z",
     "endDate": "2026-04-01T00:00:00Z",
     "rent": 2500000,
-    "deposit": 800000,
-    "propertyId": 4,
-    "tenantCognitoId": "us-east-2:tenant-004"
+    "deposit": 2500000,
+    "propertyId": 3,
+    "tenantCognitoId": "us-east-2:tenant-003"
   },
   {
     "id": 4,
     "startDate": "2025-10-05T00:00:00Z",
     "endDate": "2026-04-05T00:00:00Z",
-    "rent": 1500000,
-    "deposit": 500000,
-    "propertyId": 1,
-    "tenantCognitoId": "us-east-2:tenant-006"
+    "rent": 3500000,
+    "deposit": 3500000,
+    "propertyId": 4,
+    "tenantCognitoId": "us-east-2:tenant-004"
   },
   {
     "id": 5,
     "startDate": "2025-10-10T00:00:00Z",
     "endDate": "2026-04-10T00:00:00Z",
-    "rent": 3000000,
-    "deposit": 1000000,
-    "propertyId": 2,
+    "rent": 3200000,
+    "deposit": 3200000,
+    "propertyId": 5,
     "tenantCognitoId": "us-east-2:tenant-005"
   },
   {
     "id": 6,
     "startDate": "2025-10-15T00:00:00Z",
     "endDate": "2026-04-15T00:00:00Z",
-    "rent": 1200000,
-    "deposit": 500000,
-    "propertyId": 3,
-    "tenantCognitoId": "us-east-2:tenant-007"
+    "rent": 12000000,
+    "deposit": 12000000,
+    "propertyId": 6,
+    "tenantCognitoId": "us-east-2:tenant-006"
   },
   {
     "id": 7,
     "startDate": "2025-10-20T00:00:00Z",
     "endDate": "2026-04-20T00:00:00Z",
-    "rent": 2500000,
-    "deposit": 800000,
-    "propertyId": 4,
-    "tenantCognitoId": "us-east-2:tenant-008"
+    "rent": 6000000,
+    "deposit": 1200000,
+    "propertyId": 7,
+    "tenantCognitoId": "us-east-2:tenant-007"
   },
   {
     "id": 8,
     "startDate": "2025-11-01T00:00:00Z",
     "endDate": "2026-05-01T00:00:00Z",
-    "rent": 2000000,
-    "deposit": 600000,
-    "propertyId": 3,
-    "tenantCognitoId": "us-east-2:tenant-003"
+    "rent": 12500000,
+    "deposit": 25000000,
+    "propertyId": 8,
+    "tenantCognitoId": "us-east-2:tenant-008"
   }
 ]

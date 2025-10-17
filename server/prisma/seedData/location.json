@@ -1,228 +1,254 @@
 [
-
   {
     "id": 1,
-    "country": "Viet Nam",
-    "city": "Thu Dau Mot",
-    "state": "Binh Duong",
     "address": "340/23/8, 340/35 Đ. Phú Lợi, Phú Hoà, Thủ Dầu Một, Bình Dương, Việt Nam",
-    "postalCode": "82000",
-    "coordinates": "POINT(10.982885446306781 106.678380466954)"
+    "city": "Thủ Dầu Một",
+    "state": "Bình Dương",
+    "country": "Việt Nam",
+    "postalCode": "72000",
+    "latitude": "10.982885446306781",
+    "longitude": "106.678380466954"
   },
+[
   {
     "id": 2,
-    "country": "Viet Nam",
-    "city": "Thu Dau Mot",
-    "state": "Binh Duong",
     "address": "Hẻm 127 Thích Quảng Đức, Phú Thọ, Thủ Dầu Một, Bình Dương, Việt Nam",
-    "postalCode": "82000",
-    "coordinates": "POINT(10.977890495677915 106.6669967421013)"
+    "city": "Thủ Dầu Một",
+    "state": "Bình Dương",
+    "country": "Việt Nam",
+    "postalCode": "72000",
+    "latitude": "10.977890495677915",
+    "longitude": "106.6669967421013"
   },
   {
     "id": 3,
-    "country": "Viet Nam",
-    "city": "Thu Dau Mot",
-    "state": "Binh Duong",
     "address": "244/37 Trần Văn Ơn, Phú Hoà, Thủ Dầu Một, Bình Dương, Việt Nam",
-    "postalCode": "82000",
-    "coordinates": "POINT(10.975904800554867 106.67664210989966)"
+    "city": "Thủ Dầu Một",
+    "state": "Bình Dương",
+    "country": "Việt Nam",
+    "postalCode": "72000",
+    "latitude": "10.975904800554867",
+    "longitude": "106.67664210989966"
   },
   {
     "id": 4,
-    "country": "Viet Nam",
-    "city": "Thu Dau Mot",
-    "state": "Binh Duong",
     "address": "Hẻm 385, Đường Lê Hồng Phong, Phường Phú Hòa, Thành phố Thủ Dầu Một, Bình Dương",
-    "postalCode": "82000",
-    "coordinates": "POINT(10.975975111048664 106.68338333099925)"
+    "city": "Thủ Dầu Một",
+    "state": "Bình Dương",
+    "country": "Việt Nam",
+    "postalCode": "72000",
+    "latitude": "10.975975111048664",
+    "longitude": "106.68338333099925"
   },
   {
     "id": 5,
-    "country": "Viet Nam",
-    "city": "Thu Dau Mot",
-    "state": "Binh Duong",
     "address": "Hẻm 336, Đường 30 Tháng 4, Phường Chánh Nghĩa, Thành phố Thủ Dầu Một, Bình Dương",
-    "postalCode": "82000",
-    "coordinates": "POINT(10.967969703992168 106.6692114940936)"
+    "city": "Thủ Dầu Một",
+    "state": "Bình Dương",
+    "country": "Việt Nam",
+    "postalCode": "72000",
+    "latitude": "10.967969703992168",
+    "longitude": "106.6692114940936"
   },
   {
     "id": 6,
-    "country": "Viet Nam",
-    "city": "Thu Dau Mot",
-    "state": "Binh Duong",
     "address": "Hẻm 113 30 Tháng 4, Phú Hoà, Thủ Dầu Một, Bình Dương, Việt Nam",
-    "postalCode": "82000",
-    "coordinates": "POINT(10.975219271675748 106.67381539533721)"
+    "city": "Thủ Dầu Một",
+    "state": "Bình Dương",
+    "country": "Việt Nam",
+    "postalCode": "72000",
+    "latitude": "10.975219271675748",
+    "longitude": "106.67381539533721"
   },
   {
     "id": 7,
-    "country": "Viet Nam",
-    "city": "Thu Dau Mot",
-    "state": "Binh Duong",
     "address": "239 Đường Hoàng Văn Thụ, Phường Chánh Nghĩa, Thủ Dầu Một, Bình Dương, Việt Nam",
-    "postalCode": "82000",
-    "coordinates": "POINT(10.97043165240117 106.66706338307092)"
+    "city": "Thủ Dầu Một",
+    "state": "Bình Dương",
+    "country": "Việt Nam",
+    "postalCode": "72000",
+    "latitude": "10.97043165240117",
+    "longitude": "106.66706338307092"
   },
   {
     "id": 8,
-    "country": "Viet Nam",
-    "city": "Thu Dau Mot",
-    "state": "Binh Duong",
     "address": "212 Đường Trần Phú, Chánh Nghĩa, Thủ Dầu Một, Bình Dương, Việt Nam",
-    "postalCode": "82000",
-    "coordinates": "POINT(10.970965323347164 106.66603014563663)"
+    "city": "Thủ Dầu Một",
+    "state": "Bình Dương",
+    "country": "Việt Nam",
+    "postalCode": "72000",
+    "latitude": "10.970965323347164",
+    "longitude": "106.66603014563663"
   },
   {
     "id": 9,
-    "country": "Viet Nam",
-    "city": "Thu Dau Mot",
-    "state": "Binh Duong",
     "address": "63 Đường số 8 - KDC Hiệp Thành III, Hiệp Thành, Thủ Dầu Một, Bình Dương, Việt Nam",
-    "postalCode": "82000",
-    "coordinates": "POINT(11.000210437508635 106.66866810066466)"
+    "city": "Thủ Dầu Một",
+    "state": "Bình Dương",
+    "country": "Việt Nam",
+    "postalCode": "72000",
+    "latitude": "11.000210437508635",
+    "longitude": "106.66866810066466"
   },
   {
     "id": 10,
-    "country": "Viet Nam",
-    "city": "Thu Dau Mot",
-    "state": "Binh Duong",
     "address": "26 Đ. D4, KDC Phúc Đạt, Thủ Dầu Một, Bình Dương, Việt Nam",
-    "postalCode": "82000",
-    "coordinates": "POINT(11.001267963109983 106.67240588601089)"
+    "city": "Thủ Dầu Một",
+    "state": "Bình Dương",
+    "country": "Việt Nam",
+    "postalCode": "72000",
+    "latitude": "11.001267963109983",
+    "longitude": "106.67240588601089"
   },
   {
     "id": 11,
-    "country": "Viet Nam",
-    "city": "Thu Dau Mot",
-    "state": "Binh Duong",
     "address": "305/47c Hẻm 305, Phú Hoà, Thủ Dầu Một, Bình Dương, Việt Nam",
-    "postalCode": "82000",
-    "coordinates": "POINT(10.980054347473017 106.68309467277041)"
+    "city": "Thủ Dầu Một",
+    "state": "Bình Dương",
+    "country": "Việt Nam",
+    "postalCode": "72000",
+    "latitude": "10.980054347473017",
+    "longitude": "106.68309467277041"
   },
   {
     "id": 12,
-    "country": "Viet Nam",
-    "city": "Thu Dau Mot",
-    "state": "Binh Duong",
     "address": "93 Nguyễn Thị Minh Khai, Phú Hoà, Thủ Dầu Một, Bình Dương, Việt Nam",
-    "postalCode": "82000",
-    "coordinates": "POINT(10.981971739367605 106.68993814954936)"
+    "city": "Thủ Dầu Một",
+    "state": "Bình Dương",
+    "country": "Việt Nam",
+    "postalCode": "72000",
+    "latitude": "10.981971739367605",
+    "longitude": "106.68993814954936"
   },
   {
     "id": 13,
-    "country": "Viet Nam",
-    "city": "Thu Dau Mot",
-    "state": "Binh Duong",
     "address": "914/10 Lê Hồng Phong, Phú Thọ, Thủ Dầu Một, Bình Dương, Việt Nam",
-    "postalCode": "82000",
-    "coordinates": "POINT(10.963018202945905 106.67637929295059)"
+    "city": "Thủ Dầu Một",
+    "state": "Bình Dương",
+    "country": "Việt Nam",
+    "postalCode": "72000",
+    "latitude": "10.963018202945905",
+    "longitude": "106.67637929295059"
   },
   {
     "id": 14,
-    "country": "Viet Nam",
-    "city": "Thu Dau Mot",
-    "state": "Binh Duong",
     "address": "301 Nguyễn Thị Minh Khai, Phú Hoà, Thủ Dầu Một, Bình Dương, Việt Nam",
-    "postalCode": "82000",
-    "coordinates": "POINT(10.972626323574984 106.69195587239176)"
+    "city": "Thủ Dầu Một",
+    "state": "Bình Dương",
+    "country": "Việt Nam",
+    "postalCode": "72000",
+    "latitude": "10.972626323574984",
+    "longitude": "106.69195587239176"
   },
   {
     "id": 15,
-    "country": "Viet Nam",
-    "city": "Thu Dau Mot",
-    "state": "Binh Duong",
     "address": "Hẻm 223 Lê Hồng Phong, Nguyễn Thị Minh Khai, Phú Hoà, Tp. Thủ Dầu Một, Bình Dương, Việt Nam",
-    "postalCode": "82000",
-    "coordinates": "POINT(10.984042486386944 106.68627545139064)"
+    "city": "Thủ Dầu Một",
+    "state": "Bình Dương",
+    "country": "Việt Nam",
+    "postalCode": "72000",
+    "latitude": "10.984042486386944",
+    "longitude": "106.68627545139064"
   },
   {
     "id": 16,
-    "country": "Viet Nam",
-    "city": "Thu Dau Mot",
-    "state": "Binh Duong",
-    "address": "385/55/2/32 Lê Hồng Phong, Tổ 7, Thủ Dầu Một, Bình Dương, Việt Nam",
-    "postalCode": "82000",
-    "coordinates": "POINT(10.982884084096698, 106.67996656313665)"
+    "address": "385/55/2/32 Lê Hồng Phong, Tổ 7, Thủ Dầu Một, Bình Dương, Việt Nam",
+    "city": "Thủ Dầu Một",
+    "state": "Bình Dương",
+    "country": "Việt Nam",
+    "postalCode": "72000",
+    "latitude": "10.982884084096698",
+    "longitude": "106.67996656313665"
   },
   {
     "id": 17,
-    "country": "Viet Nam",
-    "city": "Thu Dau Mot",
-    "state": "Binh Duong",
     "address": "11 Đ. D5, Phú Lợi, Thủ Dầu Một, Bình Dương, Việt Nam",
-    "postalCode": "82000",
-    "coordinates": "POINT(11.000307787697949 106.67241136163304)"
+    "city": "Thủ Dầu Một",
+    "state": "Bình Dương",
+    "country": "Việt Nam",
+    "postalCode": "72000",
+    "latitude": "11.000307787697949",
+    "longitude": "106.67241136163304"
   },
   {
     "id": 18,
-    "country": "Viet Nam",
-    "city": "Thu Dau Mot",
-    "state": "Binh Duong",
     "address": "212 Đường Trần Phú, Chánh Nghĩa, Thủ Dầu Một, Bình Dương, Việt Nam",
-    "postalCode": "82000",
-    "coordinates": "POINT(10.970787691739982 106.66609262434429)"
+    "city": "Thủ Dầu Một",
+    "state": "Bình Dương",
+    "country": "Việt Nam",
+    "postalCode": "72000",
+    "latitude": "10.970787691739982",
+    "longitude": "106.66609262434429"
   },
   {
     "id": 19,
-    "country": "Viet Nam",
-    "city": "Thu Dau Mot",
-    "state": "Binh Duong",
     "address": "70 Phan Bội Châu, Phú Thọ, Thủ Dầu Một, Bình Dương, Việt Nam",
-    "postalCode": "82000",
-    "coordinates": "POINT(10.948860808825998 106.66080167162463)"
+    "city": "Thủ Dầu Một",
+    "state": "Bình Dương",
+    "country": "Việt Nam",
+    "postalCode": "72000",
+    "latitude": "10.948860808825998",
+    "longitude": "106.66080167162463"
   },
   {
     "id": 20,
-    "country": "Viet Nam",
-    "city": "Thu Dau Mot",
-    "state": "Binh Duong",
     "address": "63 Đường số 8 - KDC Hiệp Thành III, Hiệp Thành, Thủ Dầu Một, Bình Dương, Việt Nam",
-    "postalCode": "82000",
-    "coordinates": "POINT(10.996562691282655, 106.66832836929737)"
+    "city": "Thủ Dầu Một",
+    "state": "Bình Dương",
+    "country": "Việt Nam",
+    "postalCode": "72000",
+    "latitude": "10.996562691282655",
+    "longitude": "106.66832836929737"
   },
   {
     "id": 21,
-    "country": "Viet Nam",
-    "city": "Thu Dau Mot",
-    "state": "Binh Duong",
     "address": "Hẻm 22 Bùi Văn Bình, Phường Phú Lợi, Thành phố Thủ Dầu Một, Bình Dương",
-    "postalCode": "82000",
-    "coordinates": "POINT(10.9874572587483 106.6870299408886)"
+    "city": "Thủ Dầu Một",
+    "state": "Bình Dương",
+    "country": "Việt Nam",
+    "postalCode": "72000",
+    "latitude": "10.9874572587483",
+    "longitude": "106.6870299408886"
   },
   {
     "id": 22,
-    "country": "Viet Nam",
-    "city": "Thu Dau Mot",
-    "state": "Binh Duong",
     "address": "Hẻm 195 Đ. 30 Tháng 4, Chánh Nghĩa, Thủ Dầu Một, Bình Dương, Việt Nam",
-    "postalCode": "82000",
-    "coordinates": "POINT(10.967745804055845 106.67014743801316)"
+    "city": "Thủ Dầu Một",
+    "state": "Bình Dương",
+    "country": "Việt Nam",
+    "postalCode": "72000",
+    "latitude": "10.967745804055845",
+    "longitude": "106.67014743801316"
   },
   {
     "id": 23,
-    "country": "Viet Nam",
-    "city": "Thu Dau Mot",
-    "state": "Binh Duong",
     "address": "946/31 khu 5, Đường Cách Mạng Tháng 8, Phường Chánh Nghĩa, Thành phố Thủ Dầu Một, Bình Dương",
-    "postalCode": "82000",
-    "coordinates": "POINT(10.968655443409999 106.66377341708913)"
+    "city": "Thủ Dầu Một",
+    "state": "Bình Dương",
+    "country": "Việt Nam",
+    "postalCode": "72000",
+    "latitude": "10.968655443409999",
+    "longitude": "106.66377341708913"
   },
   {
     "id": 24,
-    "country": "Viet Nam",
-    "city": "Thu Dau Mot",
-    "state": "Binh Duong",
     "address": "786/91/7, Đường Cách Mạng Tháng 8, Phường Chánh Nghĩa, Thành phố Thủ Dầu Một, Bình Dương",
-    "postalCode": "82000",
-    "coordinates": "POINT(10.970353683016867 106.65965872577038)"
+    "city": "Thủ Dầu Một",
+    "state": "Bình Dương",
+    "country": "Việt Nam",
+    "postalCode": "72000",
+    "latitude": "10.970353683016867",
+    "longitude": "106.65965872577038"
   },
   {
     "id": 25,
-    "country": "Viet Nam",
-    "city": "Thu Dau Mot",
-    "state": "Binh Duong",
     "address": "305 Lê Hồng Phong, Phú Hoà, Thủ Dầu Một, Bình Dương, Việt Nam",
-    "postalCode": "82000",
-    "coordinates": "POINT(10.979392931562003 106.68370835862724)"
+    "city": "Thủ Dầu Một",
+    "state": "Bình Dương",
+    "country": "Việt Nam",
+    "postalCode": "72000",
+    "latitude": "10.979392931562003",
+    "longitude": "106.68370835862724"
   }
+]
 ]
