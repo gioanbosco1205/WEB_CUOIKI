@@ -101,7 +101,7 @@ export const getProperties = async (
       }
     }
 
-    if (latitude && longitude) {
+      if (latitude && longitude) {
       const lat = parseFloat(latitude as string);
       const lng = parseFloat(longitude as string);
       const radiusInKilometers = 1000;
@@ -109,14 +109,12 @@ export const getProperties = async (
 
       whereConditions.push(
         Prisma.sql`ST_DWithin(
-          l.coordinates::geometry,
+          ST_SetSRID(ST_MakePoint(l.longitude, l.latitude), 4326),
           ST_SetSRID(ST_MakePoint(${lng}, ${lat}), 4326),
           ${degrees}
         )`
       );
-    }
-
-    const completeQuery = Prisma.sql`
+    }    const completeQuery = Prisma.sql`
       SELECT 
         p.*,
         json_build_object(
@@ -126,10 +124,8 @@ export const getProperties = async (
           'state', l.state,
           'country', l.country,
           'postalCode', l."postalCode",
-          'coordinates', json_build_object(
-            'longitude', ST_X(l."coordinates"::geometry),
-            'latitude', ST_Y(l."coordinates"::geometry)
-          )
+          'latitude', l.latitude,
+          'longitude', l.longitude
         ) as location
       FROM "Property" p
       JOIN "Location" l ON p."locationId" = l.id
@@ -248,11 +244,17 @@ export const createProperty = async (
         : [0, 0];
 
     // create location
-    const [location] = await prisma.$queryRaw<Location[]>`
-      INSERT INTO "Location" (address, city, state, country, "postalCode", coordinates)
-      VALUES (${address}, ${city}, ${state}, ${country}, ${postalCode}, ST_SetSRID(ST_MakePoint(${longitude}, ${latitude}), 4326))
-      RETURNING id, address, city, state, country, "postalCode", ST_AsText(coordinates) as coordinates;
-    `;
+    const location = await prisma.location.create({
+      data: {
+        address,
+        city,
+        state,
+        country,
+        postalCode,
+        latitude,
+        longitude
+      }
+    });
 
     // create property
     const newProperty = await prisma.property.create({

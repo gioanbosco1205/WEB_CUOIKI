@@ -69,21 +69,21 @@ model Property {
   id                Int          @id @default(autoincrement())
   name              String
   description       String
-  pricePerMonth     Float // giá thuê theo tháng 
+  pricePerMonth     Float
   securityDeposit   Float
   applicationFee    Float
   photoUrls         String[]
-  amenities         Amenity[] // tiện nghi
+  amenities         Amenity[]
   highlights        Highlight[]
   isPetsAllowed     Boolean      @default(false)
   isParkingIncluded Boolean      @default(false)
   beds              Int
   baths             Float
-  squareFeet        Int // diện tích phòng
-  propertyType      PropertyType // loại hình nhà
+  squareFeet        Int
+  propertyType      PropertyType
   postedDate        DateTime     @default(now())
-  averageRating     Float?       @default(0) // Đánh giá 
-  numberOfReviews   Int?         @default(0) // Số lượng đánh giá
+  averageRating     Float?       @default(0)
+  numberOfReviews   Int?         @default(0)
   locationId        Int
   managerCognitoId  String
 
@@ -125,11 +125,10 @@ model Location {
   state       String
   country     String
   postalCode  String
-  coordinates Unsupported("geography(Point, 4326)")
-
+  latitude    Float
+  longitude   Float
   properties Property[]
 }
-
 
 model Application {
   id              Int               @id @default(autoincrement())

@@ -23,6 +23,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 
+// Configure static file serving
+app.use('/Images', express.static('public/Images', {
+  maxAge: '1d',
+  setHeaders: function (res, path, stat) {
+    res.set('Access-Control-Allow-Origin', '*');
+    res.set('Access-Control-Allow-Methods', 'GET');
+    res.set('Access-Control-Allow-Headers', 'Content-Type');
+  }
+}));
 /* ROUTES */
 app.get("/", (req, res) => {
   res.send("This is home route");
@@ -31,7 +40,8 @@ app.get("/", (req, res) => {
 app.use("/applications", applicationRoutes);
 app.use("/properties", propertyRoutes);
 app.use("/leases", leaseRoutes);
-app.use("/tenants", authMiddleware(["tenant"]), tenantRoutes);
+//app.use("/tenants", authMiddleware(["tenant"]), tenantRoutes);
+app.use("/tenants", tenantRoutes);
 app.use("/managers", authMiddleware(["manager"]), managerRoutes);
 
 /* SERVER */
