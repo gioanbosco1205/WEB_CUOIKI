@@ -23,18 +23,14 @@ import {
   Trees,
   LucideIcon,
   BedSingle,
-} from "lucide-react";
-
-import {
-  Bed,
   Building2,
+  Bed,
   Users,
 } from "lucide-react";
 
-// =========================
-// 🎯 New Room Type for Filter
-// =========================
-
+/* =========================
+ 🎯 Room Types
+========================= */
 export enum RoomTypeEnum {
   PHONG_TRO = "Phòng trọ",
   CAN_HO = "Căn hộ mini",
@@ -52,36 +48,41 @@ export const RoomTypeIcons: Record<RoomTypeEnum, LucideIcon> = {
   [RoomTypeEnum.KY_TUC_XA]: Users,
   [RoomTypeEnum.SLEEPBOX]: BedSingle,
 };
-// =========================
 
-
-// =========================
-// 🎯 Tiện ích sinh viên quan tâm
-// =========================
+/* =========================
+ 🎯 Amenities (Tiện ích)
+========================= */
 export enum AmenityEnum {
+  Dishwasher = "Dishwasher",
+  HighSpeedInternet = "HighSpeedInternet",
+  HardwoodFloors = "HardwoodFloors",
+  WalkInClosets = "WalkInClosets",
+  Microwave = "Microwave",
+  Refrigerator = "Refrigerator",
+  Pool = "Pool",
+  Gym = "Gym",
+  Parking = "Parking",
+  PetsAllowed = "PetsAllowed",
   WiFi = "WiFi",
-  AirConditioning = "Điều hòa",
-  WasherDryer = "Máy giặt/sấy",
-  Parking = "Chỗ đậu xe",
-  PetsAllowed = "Cho phép thú cưng",
-  Gym = "Phòng tập",
-  NearSchool = "Gần trường",
 }
 
 export const AmenityIcons: Record<AmenityEnum, LucideIcon> = {
   [AmenityEnum.WiFi]: Wifi,
-  [AmenityEnum.AirConditioning]: Thermometer, // ✅ dùng enum key
-  [AmenityEnum.WasherDryer]: Waves,
+  [AmenityEnum.Gym]: Dumbbell,
   [AmenityEnum.Parking]: Car,
   [AmenityEnum.PetsAllowed]: PawPrint,
-  [AmenityEnum.Gym]: Dumbbell,
-  [AmenityEnum.NearSchool]: Building2,
+  [AmenityEnum.Dishwasher]: Waves,
+  [AmenityEnum.HighSpeedInternet]: Thermometer,
+  [AmenityEnum.HardwoodFloors]: Building2,
+  [AmenityEnum.WalkInClosets]: Building2,
+  [AmenityEnum.Microwave]: Building2,
+  [AmenityEnum.Refrigerator]: Building2,
+  [AmenityEnum.Pool]: Building2,
 };
-// =========================
 
-
-
-
+/* =========================
+ 🎯 Highlights
+========================= */
 export enum HighlightEnum {
   HighSpeedInternetAccess = "HighSpeedInternetAccess",
   WasherDryer = "WasherDryer",
@@ -101,24 +102,26 @@ export enum HighlightEnum {
 }
 
 export const HighlightIcons: Record<HighlightEnum, LucideIcon> = {
-  HighSpeedInternetAccess: Wifi,
-  WasherDryer: Waves,
-  AirConditioning: Thermometer,
-  Heating: Thermometer,
-  SmokeFree: Cigarette,
-  CableReady: Cable,
-  SatelliteTV: Tv,
-  DoubleVanities: Maximize,
-  TubShower: Bath,
-  Intercom: Phone,
-  SprinklerSystem: Sprout,
-  RecentlyRenovated: Hammer,
-  CloseToTransit: Bus,
-  GreatView: Mountain,
-  QuietNeighborhood: VolumeX,
+  [HighlightEnum.HighSpeedInternetAccess]: Wifi,
+  [HighlightEnum.WasherDryer]: Waves,
+  [HighlightEnum.AirConditioning]: Thermometer,
+  [HighlightEnum.Heating]: Thermometer,
+  [HighlightEnum.SmokeFree]: Cigarette,
+  [HighlightEnum.CableReady]: Cable,
+  [HighlightEnum.SatelliteTV]: Tv,
+  [HighlightEnum.DoubleVanities]: Maximize,
+  [HighlightEnum.TubShower]: Bath,
+  [HighlightEnum.Intercom]: Phone,
+  [HighlightEnum.SprinklerSystem]: Sprout,
+  [HighlightEnum.RecentlyRenovated]: Hammer,
+  [HighlightEnum.CloseToTransit]: Bus,
+  [HighlightEnum.GreatView]: Mountain,
+  [HighlightEnum.QuietNeighborhood]: VolumeX,
 };
 
-
+/* =========================
+ 🎯 Property Types
+========================= */
 export enum PropertyTypeEnum {
   Rooms = "Rooms",
   Tinyhouse = "Tinyhouse",
@@ -129,19 +132,19 @@ export enum PropertyTypeEnum {
 }
 
 export const PropertyTypeIcons: Record<PropertyTypeEnum, LucideIcon> = {
-  Rooms: Home,
-  Tinyhouse: Warehouse,
-  Apartment: Building,
-  Villa: Castle,
-  Townhouse: Home,
-  Cottage: Trees,
+  [PropertyTypeEnum.Rooms]: Home,
+  [PropertyTypeEnum.Tinyhouse]: Warehouse,
+  [PropertyTypeEnum.Apartment]: Building,
+  [PropertyTypeEnum.Villa]: Castle,
+  [PropertyTypeEnum.Townhouse]: Home,
+  [PropertyTypeEnum.Cottage]: Trees,
 };
 
-
-// Add this constant at the end of the file
+/* =========================
+ 🎯 Misc constants
+========================= */
 export const NAVBAR_HEIGHT = 50; // in pixels
 
-// Test users for development
 export const testUsers = {
   tenant: {
     username: "Carol White",
