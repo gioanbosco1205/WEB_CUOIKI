@@ -8,6 +8,7 @@ import { Property } from "@/types/prismaTypes";
 import { ReceiptRussianRubleIcon } from "lucide-react";
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN as string;
+console.log("Mapbox token:", mapboxgl.accessToken);
 
 const Map = () => {
   const mapContainerRef = useRef(null);
@@ -20,10 +21,10 @@ const Map = () => {
 
   useEffect(() => {
     if (isLoading || isError || !properties) {
-          console.log("No properties data:", { isLoading, isError, properties });
-          return ; 
+      console.log("No properties data:", { isLoading, isError, properties });
+      return;
     }
-    console.log("Properties for markers:",properties);
+    console.log("Properties for markers:", properties);
     const map = new mapboxgl.Map({
       container: mapContainerRef.current!,
       style: "mapbox://styles/ducpham9786/cmglnz9ez006m01s3fkd76d33",
@@ -66,7 +67,8 @@ const Map = () => {
 const createPropertyMarker = (property: Property, map: mapboxgl.Map) => {
   const marker = new mapboxgl.Marker()
     .setLngLat([
-      property.location.longitude, property.location.latitude
+      property.location.longitude,
+      property.location.latitude
     ])
     .setPopup(
       new mapboxgl.Popup().setHTML(

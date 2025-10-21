@@ -30,12 +30,12 @@ const Card = ({
         <div className="absolute bottom-4 left-4 flex gap-2">
           {property.isPetsAllowed && (
             <span className="bg-white/80 text-black text-xs font-semibold px-2 py-1 rounded-full">
-              Pets Allowed
+              Cho phép nuôi thú cưng
             </span>
           )}
           {property.isParkingIncluded && (
             <span className="bg-white/80 text-black text-xs font-semibold px-2 py-1 rounded-full">
-              Parking Included
+              Có chỗ đậu xe
             </span>
           )}
         </div>
@@ -52,6 +52,7 @@ const Card = ({
           </button>
         )}
       </div>
+      {/*Tiêu đề + Tên Phòng */}
       <div className="p-4">
         <h2 className="text-xl font-bold mb-1">
           {propertyLink ? (
@@ -66,9 +67,11 @@ const Card = ({
             property.name
           )}
         </h2>
+        {/*Địa chỉ */}
         <p className="text-gray-600 mb-2">
           {property?.location?.address}, {property?.location?.city}
         </p>
+        {/*Đánh giá sao + Giá*/}
         <div className="flex justify-between items-center">
           <div className="flex items-center mb-2">
             <Star className="w-4 h-4 text-yellow-400 mr-1" />
@@ -96,7 +99,7 @@ const Card = ({
           </span>
           <span className="flex items-center">
             <House className="w-5 h-5 mr-2" />
-            {property.squareFeet} sq ft
+            {property.squareFeet} m2
           </span>
         </div>
       </div>

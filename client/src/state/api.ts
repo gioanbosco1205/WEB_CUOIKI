@@ -83,8 +83,8 @@ export const api = createApi({
       query: (filters) => {
         const params = cleanParams({
           location: filters.location,
-          priceMin: filters.priceRange?.[0],
-          priceMax: filters.priceRange?.[1],
+          priceMin: filters.pricePerMonth?.[0],
+          priceMax: filters.pricePerMonth?.[1],
           amenities: filters.amenities?.join(","),
           availableFrom: filters.availableFrom,
           favoriteIds: filters.favoriteIds?.join(","),

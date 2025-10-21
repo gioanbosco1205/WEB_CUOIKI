@@ -57,7 +57,7 @@ const FiltersBar = () => {
   ) => {
     let newValue = value;
 
-    if (key === "priceRange" || key === "areaRange") {
+    if (key === "pricePerMonth" || key === "squareFeet") {
       const currentArrayRange = [...(filters[key] || [null, null])];
       if (isMin !== null) {
         const index = isMin ? 0 : 1;
@@ -74,6 +74,49 @@ const FiltersBar = () => {
     dispatch(setFilters(newFilters));
     updateURL(newFilters);
   };
+
+
+  const handleAmenityChange = (amenity: string) => {
+    const currentAmenities = filters.amenities || [];
+    const updatedAmenities = currentAmenities.includes(amenity)
+      ? currentAmenities.filter((a) => a !== amenity)
+      : [...currentAmenities, amenity];
+  
+    const newFilters = { ...filters, amenities: updatedAmenities };
+  
+    dispatch(setFilters(newFilters));
+    updateURL(newFilters);
+  };
+  
+
+  const handleLocationSearch = async () => {
+    try {
+      
+  
+      const response = await fetch(
+        `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
+          searchInput
+        )}.json?access_token=${
+          process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN
+        }&fuzzyMatch=true`
+      );
+  
+      const data = await response.json();
+  
+      if (data.features && data.features.length > 0) {
+        const [lng, lat] = data.features[0].center;
+           dispatch (
+             setFilters({
+                 location:searchInput,
+                 coordinates : [lng, lat]
+             })
+          )
+      }
+    } catch (err) {
+      console.error("Error fetching location data:", err);
+    }
+  };
+
 
   // -----------------------------
   // 🔹 JSX
@@ -103,8 +146,10 @@ const FiltersBar = () => {
             className="w-56 rounded-l-xl rounded-r-none border-primary-400 border-r-0"
           />
           <Button
-            className="rounded-r-xl border border-primary-400 shadow-none hover:bg-primary-700 hover:text-white"
-            onClick={() => handleFilterChange("location", searchInput, null)}
+            onClick = {handleLocationSearch}
+            className="rounded-r-xl rounded-l-none border-l-none border-primary-400 shadow-none 
+            border hover:bg-primary-700 hover:text-primary-50"
+            
           >
             <Search className="w-4 h-4" />
           </Button>
@@ -113,7 +158,7 @@ const FiltersBar = () => {
         {/* 💰 Giá tiền */}
         <div className="flex gap-2">
           <Select
-            value={filters.priceRange?.[0]?.toString() || "any"}
+            value={filters.pricePerMonth?.[0]?.toString() || "any"}
             onValueChange={(v) => handleFilterChange("priceRange", v, true)}
           >
             <SelectTrigger className="w-34 rounded-xl border-primary-400">
@@ -130,7 +175,7 @@ const FiltersBar = () => {
           </Select>
 
           <Select
-            value={filters.priceRange?.[1]?.toString() || "any"}
+            value={filters.pricePerMonth?.[1]?.toString() || "any"}
             onValueChange={(v) => handleFilterChange("priceRange", v, false)}
           >
             <SelectTrigger className="w-34 rounded-xl border-primary-400">
@@ -166,24 +211,27 @@ const FiltersBar = () => {
           </SelectContent>
         </Select>
 
-        {/* 🚻 Giới tính */}
+        {/* Tiện ích */}
         <Select
-          value={filters.gender || "any"}
-          onValueChange={(v) => handleFilterChange("gender", v, null)}
+          value ={filters.amenities?.[0]?.toString() || "any"}
+          onValueChange={(v) => handleFilterChange("amenities", v, null)}
         >
           <SelectTrigger className="w-28 rounded-xl border-primary-400">
-            <SelectValue placeholder="Giới tính" />
+            <SelectValue placeholder="Tất cả tiện ích" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="any">Giới tính</SelectItem>
-            <SelectItem value="male">Nam</SelectItem>
-            <SelectItem value="female">Nữ</SelectItem>
+            <SelectItem value="any">Tất cả tiện ích</SelectItem>
+            <SelectItem value="male">Wifi</SelectItem>
+            <SelectItem value="female">Máy Lạnh</SelectItem>
+            <SelectItem value="female">Có chỗ đậu xe</SelectItem>
+            <SelectItem value="female">Gần trường</SelectItem>
+
           </SelectContent>
         </Select>
 
         {/* 📐 Diện tích */}
         <Select
-          value={filters.areaRange?.[0]?.toString() || "any"}
+          value={filters.squareFeet?.[0]?.toString() || "any"}
           onValueChange={(v) => handleFilterChange("areaRange", v, true)}
         >
           <SelectTrigger className="w-34 rounded-xl border-primary-400">

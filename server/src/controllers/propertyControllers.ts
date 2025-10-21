@@ -1,21 +1,19 @@
 import { Request, Response } from "express";
 import { PrismaClient, Prisma } from "@prisma/client";
-import { wktToGeoJSON } from "@terraformer/wkt";
 import { S3Client } from "@aws-sdk/client-s3";
-import { Location } from "@prisma/client";
 import { Upload } from "@aws-sdk/lib-storage";
 import axios from "axios";
-
+ 
 const prisma = new PrismaClient();
-
+ 
 const s3Client = new S3Client({
   region: process.env.AWS_REGION,
 });
-
-export const getProperties = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+ 
+/**
+ * Lấy danh sách bất động sản có lọc
+ */
+export const getProperties = async (req: Request, res: Response): Promise<void> => {
   try {
     const {
       favoriteIds,
@@ -31,82 +29,56 @@ export const getProperties = async (
       latitude,
       longitude,
     } = req.query;
-
-    let whereConditions: Prisma.Sql[] = [];
-
+ 
+    // Dùng câu lệnh SQL raw với điều kiện động
+    const whereConditions: Prisma.Sql[] = [];
+ 
     if (favoriteIds) {
-      const favoriteIdsArray = (favoriteIds as string).split(",").map(Number);
-      whereConditions.push(
-        Prisma.sql`p.id IN (${Prisma.join(favoriteIdsArray)})`
-      );
+      const ids = (favoriteIds as string).split(",").map(Number);
+      whereConditions.push(Prisma.sql`p.id IN (${Prisma.join(ids)})`);
     }
-
-    if (priceMin) {
-      whereConditions.push(
-        Prisma.sql`p."pricePerMonth" >= ${Number(priceMin)}`
-      );
-    }
-
-    if (priceMax) {
-      whereConditions.push(
-        Prisma.sql`p."pricePerMonth" <= ${Number(priceMax)}`
-      );
-    }
-
-    if (beds && beds !== "any") {
-      whereConditions.push(Prisma.sql`p.beds >= ${Number(beds)}`);
-    }
-
-    if (baths && baths !== "any") {
-      whereConditions.push(Prisma.sql`p.baths >= ${Number(baths)}`);
-    }
-
-    if (squareFeetMin) {
-      whereConditions.push(
-        Prisma.sql`p."squareFeet" >= ${Number(squareFeetMin)}`
-      );
-    }
-
-    if (squareFeetMax) {
-      whereConditions.push(
-        Prisma.sql`p."squareFeet" <= ${Number(squareFeetMax)}`
-      );
-    }
-
+ 
+    if (priceMin) whereConditions.push(Prisma.sql`p."pricePerMonth" >= ${Number(priceMin)}`);
+    if (priceMax) whereConditions.push(Prisma.sql`p."pricePerMonth" <= ${Number(priceMax)}`);
+ 
+    if (beds && beds !== "any") whereConditions.push(Prisma.sql`p.beds >= ${Number(beds)}`);
+    if (baths && baths !== "any") whereConditions.push(Prisma.sql`p.baths >= ${Number(baths)}`);
+ 
+    if (squareFeetMin)
+      whereConditions.push(Prisma.sql`p."squareFeet" >= ${Number(squareFeetMin)}`);
+    if (squareFeetMax)
+      whereConditions.push(Prisma.sql`p."squareFeet" <= ${Number(squareFeetMax)}`);
+ 
     if (propertyType && propertyType !== "any") {
       whereConditions.push(
         Prisma.sql`p."propertyType" = ${propertyType}::"PropertyType"`
       );
     }
-
+ 
     if (amenities && amenities !== "any") {
-      const amenitiesArray = (amenities as string).split(",");
-      whereConditions.push(Prisma.sql`p.amenities @> ${amenitiesArray}`);
+      const arr = (amenities as string).split(",");
+      whereConditions.push(Prisma.sql`p.amenities @> ${arr}::"Amenity"[]`);
     }
-
+ 
     if (availableFrom && availableFrom !== "any") {
-      const availableFromDate =
-        typeof availableFrom === "string" ? availableFrom : null;
-      if (availableFromDate) {
-        const date = new Date(availableFromDate);
-        if (!isNaN(date.getTime())) {
-          whereConditions.push(
-            Prisma.sql`EXISTS (
-              SELECT 1 FROM "Lease" l 
-              WHERE l."propertyId" = p.id 
-              AND l."startDate" <= ${date.toISOString()}
-            )`
-          );
-        }
+      const date = new Date(availableFrom as string);
+      if (!isNaN(date.getTime())) {
+        whereConditions.push(
+          Prisma.sql`NOT EXISTS (
+            SELECT 1 FROM "Lease" l
+            WHERE l."propertyId" = p.id
+            AND l."endDate" >= ${date.toISOString()}
+          )`
+        );
       }
     }
-
-      if (latitude && longitude) {
+ 
+    if (latitude && longitude) {
       const lat = parseFloat(latitude as string);
       const lng = parseFloat(longitude as string);
-      const radiusInKilometers = 1000;
-      const degrees = radiusInKilometers / 111; // Converts kilometers to degrees
-
+      const radiusInKm = 50; // 50 km radius
+      const degrees = radiusInKm / 111; // km → degrees
+ 
       whereConditions.push(
         Prisma.sql`ST_DWithin(
           ST_SetSRID(ST_MakePoint(l.longitude, l.latitude), 4326),
@@ -114,8 +86,10 @@ export const getProperties = async (
           ${degrees}
         )`
       );
-    }    const completeQuery = Prisma.sql`
-      SELECT 
+    }
+ 
+    const completeQuery = Prisma.sql`
+      SELECT
         p.*,
         json_build_object(
           'id', l.id,
@@ -135,61 +109,54 @@ export const getProperties = async (
           : Prisma.empty
       }
     `;
-
-    const properties = await prisma.$queryRaw(completeQuery);
-
-    res.json(properties);
-  } catch (error: any) {
-    res
-      .status(500)
-      .json({ message: `Error retrieving properties: ${error.message}` });
+ 
+    const result = await prisma.$queryRaw(completeQuery);
+    res.json(result);
+  } catch (err: any) {
+    console.error("❌ Error retrieving properties:", err);
+    res.status(500).json({ message: `Error retrieving properties: ${err.message}` });
   }
 };
-
-export const getProperty = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+ 
+/**
+ * Lấy thông tin chi tiết 1 property
+ */
+export const getProperty = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
     const property = await prisma.property.findUnique({
       where: { id: Number(id) },
-      include: {
-        location: true,
-      },
+      include: { location: true, manager: true, leases: true },
     });
-
-    if (property) {
-      const coordinates: { coordinates: string }[] =
-        await prisma.$queryRaw`SELECT ST_asText(coordinates) as coordinates from "Location" where id = ${property.location.id}`;
-
-      const geoJSON: any = wktToGeoJSON(coordinates[0]?.coordinates || "");
-      const longitude = geoJSON.coordinates[0];
-      const latitude = geoJSON.coordinates[1];
-
-      const propertyWithCoordinates = {
-        ...property,
-        location: {
-          ...property.location,
-          coordinates: {
-            longitude,
-            latitude,
-          },
-        },
-      };
-      res.json(propertyWithCoordinates);
+ 
+    if (!property) {
+      res.status(404).json({ message: "Property not found" });
+      return;
     }
+ 
+    // Không cần ST_AsText nữa, vì ta đã lưu trực tiếp latitude & longitude
+    const propertyWithCoordinates = {
+      ...property,
+      location: {
+        ...property.location,
+        coordinates: {
+          longitude: property.location.longitude,
+          latitude: property.location.latitude,
+        },
+      },
+    };
+ 
+    res.json(propertyWithCoordinates);
   } catch (err: any) {
-    res
-      .status(500)
-      .json({ message: `Error retrieving property: ${err.message}` });
+    console.error("❌ Error retrieving property:", err);
+    res.status(500).json({ message: `Error retrieving property: ${err.message}` });
   }
 };
-
-export const createProperty = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+ 
+/**
+ * Tạo mới 1 property
+ */
+export const createProperty = async (req: Request, res: Response): Promise<void> => {
   try {
     const files = req.files as Express.Multer.File[];
     const {
@@ -201,7 +168,8 @@ export const createProperty = async (
       managerCognitoId,
       ...propertyData
     } = req.body;
-
+ 
+    // Upload ảnh lên S3
     const photoUrls = await Promise.all(
       files.map(async (file) => {
         const uploadParams = {
@@ -210,40 +178,34 @@ export const createProperty = async (
           Body: file.buffer,
           ContentType: file.mimetype,
         };
-
+ 
         const uploadResult = await new Upload({
           client: s3Client,
           params: uploadParams,
         }).done();
-
+ 
         return uploadResult.Location;
       })
     );
-
-    const geocodingUrl = `https://nominatim.openstreetmap.org/search?${new URLSearchParams(
-      {
-        street: address,
-        city,
-        country,
-        postalcode: postalCode,
-        format: "json",
-        limit: "1",
-      }
-    ).toString()}`;
+ 
+    // Gọi Nominatim để lấy toạ độ
+    const geocodingUrl = `https://nominatim.openstreetmap.org/search?${new URLSearchParams({
+      street: address,
+      city,
+      country,
+      postalcode: postalCode,
+      format: "json",
+      limit: "1",
+    }).toString()}`;
+ 
     const geocodingResponse = await axios.get(geocodingUrl, {
-      headers: {
-        "User-Agent": "RealEstateApp (justsomedummyemail@gmail.com",
-      },
+      headers: { "User-Agent": "RealEstateApp (example@email.com)" },
     });
-    const [longitude, latitude] =
-      geocodingResponse.data[0]?.lon && geocodingResponse.data[0]?.lat
-        ? [
-            parseFloat(geocodingResponse.data[0]?.lon),
-            parseFloat(geocodingResponse.data[0]?.lat),
-          ]
-        : [0, 0];
-
-    // create location
+ 
+    const lon = parseFloat(geocodingResponse.data?.[0]?.lon ?? "0");
+    const lat = parseFloat(geocodingResponse.data?.[0]?.lat ?? "0");
+ 
+    // Tạo location
     const location = await prisma.location.create({
       data: {
         address,
@@ -251,12 +213,12 @@ export const createProperty = async (
         state,
         country,
         postalCode,
-        latitude,
-        longitude
-      }
+        latitude: lat,
+        longitude: lon,
+      },
     });
-
-    // create property
+ 
+    // Tạo property
     const newProperty = await prisma.property.create({
       data: {
         ...propertyData,
@@ -285,11 +247,12 @@ export const createProperty = async (
         manager: true,
       },
     });
-
+ 
     res.status(201).json(newProperty);
   } catch (err: any) {
-    res
-      .status(500)
-      .json({ message: `Error creating property: ${err.message}` });
+    console.error("❌ Error creating property:", err);
+    res.status(500).json({ message: `Error creating property: ${err.message}` });
   }
 };
+ 
+ 
