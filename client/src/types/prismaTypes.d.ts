@@ -390,8 +390,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.16.3
-   * Query Engine version: bb420e667c1820a8c05a38023385f6cc7ef8e83a
+   * Prisma Client JS version: 6.17.1
+   * Query Engine version: 272a37d34178c2894197e17273bf937f25acdeac
    */
   export type PrismaVersion = {
     client: string
@@ -1047,6 +1047,18 @@ export namespace Prisma {
             args: Prisma.LocationFindManyArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$LocationPayload>[]
           }
+          create: {
+            args: Prisma.LocationCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LocationPayload>
+          }
+          createMany: {
+            args: Prisma.LocationCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.LocationCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LocationPayload>[]
+          }
           delete: {
             args: Prisma.LocationDeleteArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$LocationPayload>
@@ -1066,6 +1078,10 @@ export namespace Prisma {
           updateManyAndReturn: {
             args: Prisma.LocationUpdateManyAndReturnArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$LocationPayload>[]
+          }
+          upsert: {
+            args: Prisma.LocationUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$LocationPayload>
           }
           aggregate: {
             args: Prisma.LocationAggregateArgs<ExtArgs>
@@ -5433,10 +5449,14 @@ export namespace Prisma {
 
   export type LocationAvgAggregateOutputType = {
     id: number | null
+    latitude: number | null
+    longitude: number | null
   }
 
   export type LocationSumAggregateOutputType = {
     id: number | null
+    latitude: number | null
+    longitude: number | null
   }
 
   export type LocationMinAggregateOutputType = {
@@ -5446,6 +5466,8 @@ export namespace Prisma {
     state: string | null
     country: string | null
     postalCode: string | null
+    latitude: number | null
+    longitude: number | null
   }
 
   export type LocationMaxAggregateOutputType = {
@@ -5455,6 +5477,8 @@ export namespace Prisma {
     state: string | null
     country: string | null
     postalCode: string | null
+    latitude: number | null
+    longitude: number | null
   }
 
   export type LocationCountAggregateOutputType = {
@@ -5464,16 +5488,22 @@ export namespace Prisma {
     state: number
     country: number
     postalCode: number
+    latitude: number
+    longitude: number
     _all: number
   }
 
 
   export type LocationAvgAggregateInputType = {
     id?: true
+    latitude?: true
+    longitude?: true
   }
 
   export type LocationSumAggregateInputType = {
     id?: true
+    latitude?: true
+    longitude?: true
   }
 
   export type LocationMinAggregateInputType = {
@@ -5483,6 +5513,8 @@ export namespace Prisma {
     state?: true
     country?: true
     postalCode?: true
+    latitude?: true
+    longitude?: true
   }
 
   export type LocationMaxAggregateInputType = {
@@ -5492,6 +5524,8 @@ export namespace Prisma {
     state?: true
     country?: true
     postalCode?: true
+    latitude?: true
+    longitude?: true
   }
 
   export type LocationCountAggregateInputType = {
@@ -5501,6 +5535,8 @@ export namespace Prisma {
     state?: true
     country?: true
     postalCode?: true
+    latitude?: true
+    longitude?: true
     _all?: true
   }
 
@@ -5597,6 +5633,8 @@ export namespace Prisma {
     state: string
     country: string
     postalCode: string
+    latitude: number
+    longitude: number
     _count: LocationCountAggregateOutputType | null
     _avg: LocationAvgAggregateOutputType | null
     _sum: LocationSumAggregateOutputType | null
@@ -5625,10 +5663,22 @@ export namespace Prisma {
     state?: boolean
     country?: boolean
     postalCode?: boolean
+    latitude?: boolean
+    longitude?: boolean
     properties?: boolean | Location$propertiesArgs<ExtArgs>
     _count?: boolean | LocationCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["location"]>
 
+  export type LocationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    address?: boolean
+    city?: boolean
+    state?: boolean
+    country?: boolean
+    postalCode?: boolean
+    latitude?: boolean
+    longitude?: boolean
+  }, ExtArgs["result"]["location"]>
 
   export type LocationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
@@ -5637,6 +5687,8 @@ export namespace Prisma {
     state?: boolean
     country?: boolean
     postalCode?: boolean
+    latitude?: boolean
+    longitude?: boolean
   }, ExtArgs["result"]["location"]>
 
   export type LocationSelectScalar = {
@@ -5646,13 +5698,16 @@ export namespace Prisma {
     state?: boolean
     country?: boolean
     postalCode?: boolean
+    latitude?: boolean
+    longitude?: boolean
   }
 
-  export type LocationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "address" | "city" | "state" | "country" | "postalCode", ExtArgs["result"]["location"]>
+  export type LocationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "address" | "city" | "state" | "country" | "postalCode" | "latitude" | "longitude", ExtArgs["result"]["location"]>
   export type LocationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     properties?: boolean | Location$propertiesArgs<ExtArgs>
     _count?: boolean | LocationCountOutputTypeDefaultArgs<ExtArgs>
   }
+  export type LocationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
   export type LocationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $LocationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5667,6 +5722,8 @@ export namespace Prisma {
       state: string
       country: string
       postalCode: string
+      latitude: number
+      longitude: number
     }, ExtArgs["result"]["location"]>
     composites: {}
   }
@@ -5755,6 +5812,58 @@ export namespace Prisma {
      * 
      */
     findMany<T extends LocationFindManyArgs>(args?: SelectSubset<T, LocationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Location.
+     * @param {LocationCreateArgs} args - Arguments to create a Location.
+     * @example
+     * // Create one Location
+     * const Location = await prisma.location.create({
+     *   data: {
+     *     // ... data to create a Location
+     *   }
+     * })
+     * 
+     */
+    create<T extends LocationCreateArgs>(args: SelectSubset<T, LocationCreateArgs<ExtArgs>>): Prisma__LocationClient<$Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Locations.
+     * @param {LocationCreateManyArgs} args - Arguments to create many Locations.
+     * @example
+     * // Create many Locations
+     * const location = await prisma.location.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends LocationCreateManyArgs>(args?: SelectSubset<T, LocationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Locations and returns the data saved in the database.
+     * @param {LocationCreateManyAndReturnArgs} args - Arguments to create many Locations.
+     * @example
+     * // Create many Locations
+     * const location = await prisma.location.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Locations and only return the `id`
+     * const locationWithIdOnly = await prisma.location.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends LocationCreateManyAndReturnArgs>(args?: SelectSubset<T, LocationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
      * Delete a Location.
@@ -5849,6 +5958,25 @@ export namespace Prisma {
      * 
      */
     updateManyAndReturn<T extends LocationUpdateManyAndReturnArgs>(args: SelectSubset<T, LocationUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Location.
+     * @param {LocationUpsertArgs} args - Arguments to update or create a Location.
+     * @example
+     * // Update or create a Location
+     * const location = await prisma.location.upsert({
+     *   create: {
+     *     // ... data to create a Location
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Location we want to update
+     *   }
+     * })
+     */
+    upsert<T extends LocationUpsertArgs>(args: SelectSubset<T, LocationUpsertArgs<ExtArgs>>): Prisma__LocationClient<$Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
@@ -6026,6 +6154,8 @@ export namespace Prisma {
     readonly state: FieldRef<"Location", 'String'>
     readonly country: FieldRef<"Location", 'String'>
     readonly postalCode: FieldRef<"Location", 'String'>
+    readonly latitude: FieldRef<"Location", 'Float'>
+    readonly longitude: FieldRef<"Location", 'Float'>
   }
     
 
@@ -6226,6 +6356,58 @@ export namespace Prisma {
   }
 
   /**
+   * Location create
+   */
+  export type LocationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Location
+     */
+    omit?: LocationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Location.
+     */
+    data: XOR<LocationCreateInput, LocationUncheckedCreateInput>
+  }
+
+  /**
+   * Location createMany
+   */
+  export type LocationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Locations.
+     */
+    data: LocationCreateManyInput | LocationCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Location createManyAndReturn
+   */
+  export type LocationCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Location
+     */
+    omit?: LocationOmit<ExtArgs> | null
+    /**
+     * The data used to create many Locations.
+     */
+    data: LocationCreateManyInput | LocationCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
    * Location update
    */
   export type LocationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6293,6 +6475,36 @@ export namespace Prisma {
      * Limit how many Locations to update.
      */
     limit?: number
+  }
+
+  /**
+   * Location upsert
+   */
+  export type LocationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Location
+     */
+    select?: LocationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Location
+     */
+    omit?: LocationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LocationInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Location to update in case it exists.
+     */
+    where: LocationWhereUniqueInput
+    /**
+     * In case the Location found by the `where` argument doesn't exist, create a new Location with this data.
+     */
+    create: XOR<LocationCreateInput, LocationUncheckedCreateInput>
+    /**
+     * In case the Location was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<LocationUpdateInput, LocationUncheckedUpdateInput>
   }
 
   /**
@@ -9963,7 +10175,9 @@ export namespace Prisma {
     city: 'city',
     state: 'state',
     country: 'country',
-    postalCode: 'postalCode'
+    postalCode: 'postalCode',
+    latitude: 'latitude',
+    longitude: 'longitude'
   };
 
   export type LocationScalarFieldEnum = (typeof LocationScalarFieldEnum)[keyof typeof LocationScalarFieldEnum]
@@ -10456,6 +10670,8 @@ export namespace Prisma {
     state?: StringFilter<"Location"> | string
     country?: StringFilter<"Location"> | string
     postalCode?: StringFilter<"Location"> | string
+    latitude?: FloatFilter<"Location"> | number
+    longitude?: FloatFilter<"Location"> | number
     properties?: PropertyListRelationFilter
   }
 
@@ -10466,6 +10682,8 @@ export namespace Prisma {
     state?: SortOrder
     country?: SortOrder
     postalCode?: SortOrder
+    latitude?: SortOrder
+    longitude?: SortOrder
     properties?: PropertyOrderByRelationAggregateInput
   }
 
@@ -10479,6 +10697,8 @@ export namespace Prisma {
     state?: StringFilter<"Location"> | string
     country?: StringFilter<"Location"> | string
     postalCode?: StringFilter<"Location"> | string
+    latitude?: FloatFilter<"Location"> | number
+    longitude?: FloatFilter<"Location"> | number
     properties?: PropertyListRelationFilter
   }, "id">
 
@@ -10489,6 +10709,8 @@ export namespace Prisma {
     state?: SortOrder
     country?: SortOrder
     postalCode?: SortOrder
+    latitude?: SortOrder
+    longitude?: SortOrder
     _count?: LocationCountOrderByAggregateInput
     _avg?: LocationAvgOrderByAggregateInput
     _max?: LocationMaxOrderByAggregateInput
@@ -10506,6 +10728,8 @@ export namespace Prisma {
     state?: StringWithAggregatesFilter<"Location"> | string
     country?: StringWithAggregatesFilter<"Location"> | string
     postalCode?: StringWithAggregatesFilter<"Location"> | string
+    latitude?: FloatWithAggregatesFilter<"Location"> | number
+    longitude?: FloatWithAggregatesFilter<"Location"> | number
   }
 
   export type ApplicationWhereInput = {
@@ -11037,12 +11261,37 @@ export namespace Prisma {
     phoneNumber?: StringFieldUpdateOperationsInput | string
   }
 
+  export type LocationCreateInput = {
+    address: string
+    city: string
+    state: string
+    country: string
+    postalCode: string
+    latitude: number
+    longitude: number
+    properties?: PropertyCreateNestedManyWithoutLocationInput
+  }
+
+  export type LocationUncheckedCreateInput = {
+    id?: number
+    address: string
+    city: string
+    state: string
+    country: string
+    postalCode: string
+    latitude: number
+    longitude: number
+    properties?: PropertyUncheckedCreateNestedManyWithoutLocationInput
+  }
+
   export type LocationUpdateInput = {
     address?: StringFieldUpdateOperationsInput | string
     city?: StringFieldUpdateOperationsInput | string
     state?: StringFieldUpdateOperationsInput | string
     country?: StringFieldUpdateOperationsInput | string
     postalCode?: StringFieldUpdateOperationsInput | string
+    latitude?: FloatFieldUpdateOperationsInput | number
+    longitude?: FloatFieldUpdateOperationsInput | number
     properties?: PropertyUpdateManyWithoutLocationNestedInput
   }
 
@@ -11053,7 +11302,20 @@ export namespace Prisma {
     state?: StringFieldUpdateOperationsInput | string
     country?: StringFieldUpdateOperationsInput | string
     postalCode?: StringFieldUpdateOperationsInput | string
+    latitude?: FloatFieldUpdateOperationsInput | number
+    longitude?: FloatFieldUpdateOperationsInput | number
     properties?: PropertyUncheckedUpdateManyWithoutLocationNestedInput
+  }
+
+  export type LocationCreateManyInput = {
+    id?: number
+    address: string
+    city: string
+    state: string
+    country: string
+    postalCode: string
+    latitude: number
+    longitude: number
   }
 
   export type LocationUpdateManyMutationInput = {
@@ -11062,6 +11324,8 @@ export namespace Prisma {
     state?: StringFieldUpdateOperationsInput | string
     country?: StringFieldUpdateOperationsInput | string
     postalCode?: StringFieldUpdateOperationsInput | string
+    latitude?: FloatFieldUpdateOperationsInput | number
+    longitude?: FloatFieldUpdateOperationsInput | number
   }
 
   export type LocationUncheckedUpdateManyInput = {
@@ -11071,6 +11335,8 @@ export namespace Prisma {
     state?: StringFieldUpdateOperationsInput | string
     country?: StringFieldUpdateOperationsInput | string
     postalCode?: StringFieldUpdateOperationsInput | string
+    latitude?: FloatFieldUpdateOperationsInput | number
+    longitude?: FloatFieldUpdateOperationsInput | number
   }
 
   export type ApplicationCreateInput = {
@@ -11732,10 +11998,14 @@ export namespace Prisma {
     state?: SortOrder
     country?: SortOrder
     postalCode?: SortOrder
+    latitude?: SortOrder
+    longitude?: SortOrder
   }
 
   export type LocationAvgOrderByAggregateInput = {
     id?: SortOrder
+    latitude?: SortOrder
+    longitude?: SortOrder
   }
 
   export type LocationMaxOrderByAggregateInput = {
@@ -11745,6 +12015,8 @@ export namespace Prisma {
     state?: SortOrder
     country?: SortOrder
     postalCode?: SortOrder
+    latitude?: SortOrder
+    longitude?: SortOrder
   }
 
   export type LocationMinOrderByAggregateInput = {
@@ -11754,10 +12026,14 @@ export namespace Prisma {
     state?: SortOrder
     country?: SortOrder
     postalCode?: SortOrder
+    latitude?: SortOrder
+    longitude?: SortOrder
   }
 
   export type LocationSumOrderByAggregateInput = {
     id?: SortOrder
+    latitude?: SortOrder
+    longitude?: SortOrder
   }
 
   export type EnumApplicationStatusFilter<$PrismaModel = never> = {
@@ -12014,6 +12290,8 @@ export namespace Prisma {
   }
 
   export type LocationCreateNestedOneWithoutPropertiesInput = {
+    create?: XOR<LocationCreateWithoutPropertiesInput, LocationUncheckedCreateWithoutPropertiesInput>
+    connectOrCreate?: LocationCreateOrConnectWithoutPropertiesInput
     connect?: LocationWhereUniqueInput
   }
 
@@ -12139,6 +12417,9 @@ export namespace Prisma {
   }
 
   export type LocationUpdateOneRequiredWithoutPropertiesNestedInput = {
+    create?: XOR<LocationCreateWithoutPropertiesInput, LocationUncheckedCreateWithoutPropertiesInput>
+    connectOrCreate?: LocationCreateOrConnectWithoutPropertiesInput
+    upsert?: LocationUpsertWithoutPropertiesInput
     connect?: LocationWhereUniqueInput
     update?: XOR<XOR<LocationUpdateToOneWithWhereWithoutPropertiesInput, LocationUpdateWithoutPropertiesInput>, LocationUncheckedUpdateWithoutPropertiesInput>
   }
@@ -12459,6 +12740,20 @@ export namespace Prisma {
     update?: LeaseUpdateWithWhereUniqueWithoutTenantInput | LeaseUpdateWithWhereUniqueWithoutTenantInput[]
     updateMany?: LeaseUpdateManyWithWhereWithoutTenantInput | LeaseUpdateManyWithWhereWithoutTenantInput[]
     deleteMany?: LeaseScalarWhereInput | LeaseScalarWhereInput[]
+  }
+
+  export type PropertyCreateNestedManyWithoutLocationInput = {
+    create?: XOR<PropertyCreateWithoutLocationInput, PropertyUncheckedCreateWithoutLocationInput> | PropertyCreateWithoutLocationInput[] | PropertyUncheckedCreateWithoutLocationInput[]
+    connectOrCreate?: PropertyCreateOrConnectWithoutLocationInput | PropertyCreateOrConnectWithoutLocationInput[]
+    createMany?: PropertyCreateManyLocationInputEnvelope
+    connect?: PropertyWhereUniqueInput | PropertyWhereUniqueInput[]
+  }
+
+  export type PropertyUncheckedCreateNestedManyWithoutLocationInput = {
+    create?: XOR<PropertyCreateWithoutLocationInput, PropertyUncheckedCreateWithoutLocationInput> | PropertyCreateWithoutLocationInput[] | PropertyUncheckedCreateWithoutLocationInput[]
+    connectOrCreate?: PropertyCreateOrConnectWithoutLocationInput | PropertyCreateOrConnectWithoutLocationInput[]
+    createMany?: PropertyCreateManyLocationInputEnvelope
+    connect?: PropertyWhereUniqueInput | PropertyWhereUniqueInput[]
   }
 
   export type PropertyUpdateManyWithoutLocationNestedInput = {
@@ -12920,6 +13215,32 @@ export namespace Prisma {
     _max?: NestedEnumPaymentStatusFilter<$PrismaModel>
   }
 
+  export type LocationCreateWithoutPropertiesInput = {
+    address: string
+    city: string
+    state: string
+    country: string
+    postalCode: string
+    latitude: number
+    longitude: number
+  }
+
+  export type LocationUncheckedCreateWithoutPropertiesInput = {
+    id?: number
+    address: string
+    city: string
+    state: string
+    country: string
+    postalCode: string
+    latitude: number
+    longitude: number
+  }
+
+  export type LocationCreateOrConnectWithoutPropertiesInput = {
+    where: LocationWhereUniqueInput
+    create: XOR<LocationCreateWithoutPropertiesInput, LocationUncheckedCreateWithoutPropertiesInput>
+  }
+
   export type ManagerCreateWithoutManagedPropertiesInput = {
     cognitoId: string
     name: string
@@ -13056,6 +13377,12 @@ export namespace Prisma {
     create: XOR<TenantCreateWithoutPropertiesInput, TenantUncheckedCreateWithoutPropertiesInput>
   }
 
+  export type LocationUpsertWithoutPropertiesInput = {
+    update: XOR<LocationUpdateWithoutPropertiesInput, LocationUncheckedUpdateWithoutPropertiesInput>
+    create: XOR<LocationCreateWithoutPropertiesInput, LocationUncheckedCreateWithoutPropertiesInput>
+    where?: LocationWhereInput
+  }
+
   export type LocationUpdateToOneWithWhereWithoutPropertiesInput = {
     where?: LocationWhereInput
     data: XOR<LocationUpdateWithoutPropertiesInput, LocationUncheckedUpdateWithoutPropertiesInput>
@@ -13067,6 +13394,8 @@ export namespace Prisma {
     state?: StringFieldUpdateOperationsInput | string
     country?: StringFieldUpdateOperationsInput | string
     postalCode?: StringFieldUpdateOperationsInput | string
+    latitude?: FloatFieldUpdateOperationsInput | number
+    longitude?: FloatFieldUpdateOperationsInput | number
   }
 
   export type LocationUncheckedUpdateWithoutPropertiesInput = {
@@ -13076,6 +13405,8 @@ export namespace Prisma {
     state?: StringFieldUpdateOperationsInput | string
     country?: StringFieldUpdateOperationsInput | string
     postalCode?: StringFieldUpdateOperationsInput | string
+    latitude?: FloatFieldUpdateOperationsInput | number
+    longitude?: FloatFieldUpdateOperationsInput | number
   }
 
   export type ManagerUpsertWithoutManagedPropertiesInput = {
@@ -13607,15 +13938,15 @@ export namespace Prisma {
     create: XOR<PropertyCreateWithoutLocationInput, PropertyUncheckedCreateWithoutLocationInput>
   }
 
+  export type PropertyCreateManyLocationInputEnvelope = {
+    data: PropertyCreateManyLocationInput | PropertyCreateManyLocationInput[]
+    skipDuplicates?: boolean
+  }
+
   export type PropertyUpsertWithWhereUniqueWithoutLocationInput = {
     where: PropertyWhereUniqueInput
     update: XOR<PropertyUpdateWithoutLocationInput, PropertyUncheckedUpdateWithoutLocationInput>
     create: XOR<PropertyCreateWithoutLocationInput, PropertyUncheckedCreateWithoutLocationInput>
-  }
-
-  export type PropertyCreateManyLocationInputEnvelope = {
-    data: PropertyCreateManyLocationInput | PropertyCreateManyLocationInput[]
-    skipDuplicates?: boolean
   }
 
   export type PropertyUpdateWithWhereUniqueWithoutLocationInput = {
@@ -14687,6 +15018,28 @@ export namespace Prisma {
     propertyId?: IntFieldUpdateOperationsInput | number
   }
 
+  export type PropertyCreateManyLocationInput = {
+    id?: number
+    name: string
+    description: string
+    pricePerMonth: number
+    securityDeposit: number
+    applicationFee: number
+    photoUrls?: PropertyCreatephotoUrlsInput | string[]
+    amenities?: PropertyCreateamenitiesInput | $Enums.Amenity[]
+    highlights?: PropertyCreatehighlightsInput | $Enums.Highlight[]
+    isPetsAllowed?: boolean
+    isParkingIncluded?: boolean
+    beds: number
+    baths: number
+    squareFeet: number
+    propertyType: $Enums.PropertyType
+    postedDate?: Date | string
+    averageRating?: number | null
+    numberOfReviews?: number | null
+    managerCognitoId: string
+  }
+
   export type PropertyUpdateWithoutLocationInput = {
     name?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
@@ -14736,28 +15089,6 @@ export namespace Prisma {
     applications?: ApplicationUncheckedUpdateManyWithoutPropertyNestedInput
     favoritedBy?: TenantUncheckedUpdateManyWithoutFavoritesNestedInput
     tenants?: TenantUncheckedUpdateManyWithoutPropertiesNestedInput
-  }
-
-  export type PropertyCreateManyLocationInput = {
-    id?: number
-    name: string
-    description: string
-    pricePerMonth: number
-    securityDeposit: number
-    applicationFee: number
-    photoUrls?: PropertyCreatephotoUrlsInput | string[]
-    amenities?: PropertyCreateamenitiesInput | $Enums.Amenity[]
-    highlights?: PropertyCreatehighlightsInput | $Enums.Highlight[]
-    isPetsAllowed?: boolean
-    isParkingIncluded?: boolean
-    beds: number
-    baths: number
-    squareFeet: number
-    propertyType: $Enums.PropertyType
-    postedDate?: Date | string
-    averageRating?: number | null
-    numberOfReviews?: number | null
-    managerCognitoId: string
   }
 
   export type PropertyUncheckedUpdateManyWithoutLocationInput = {

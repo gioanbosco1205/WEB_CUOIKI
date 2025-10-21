@@ -16,38 +16,32 @@ const ImagePreviews = ({ images }: ImagePreviewsProps) => {
   };
 
   return (
-    <div className="relative h-[450px] w-full">
-      {images.map((image, index) => (
-        <div
-          key={image}
-          className={`absolute inset-0 transition-opacity duration-500 ease-in-out ${
-            index === currentImageIndex ? "opacity-100" : "opacity-0"
-          }`}
-        >
-          <Image
-            src={image}
-            alt={`Property Image ${index + 1}`}
-            fill
-            priority={index == 0}
-            className="object-cover cursor-pointer transition-transform duration-500 ease-in-out"
-          />
-        </div>
-      ))}
-      <button
-        onClick={handlePrev}
-        className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-primary-700 bg-opacity-50 p-2 rounded-full focus:outline-none focus:ring focus:ring-secondary-300"
-        aria-label="Previous image"
-      >
-        <ChevronLeft className="text-white" />
-      </button>
-      <button
-        onClick={handleNext}
-        className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-primary-700 bg-opacity-50 p-2 rounded-full focus:outline-none focus:ring focus:ring-secondary-300"
-        aria-label="Previous image"
-      >
-        <ChevronRight className="text-white" />
-      </button>
-    </div>
+    <div className="relative flex justify-center items-center bg-gray-100 rounded-lg overflow-hidden">
+  <div className="relative w-auto max-h-[550px]">
+    <Image
+      src={images[currentImageIndex]}
+      alt={`Property Image ${currentImageIndex + 1}`}
+      width={600}        // Chiều ngang tối đa
+      height={800}       // Chiều dọc tự co
+      className="object-contain rounded-lg"
+    />
+  </div>
+
+  {/* Nút điều hướng */}
+  <button
+    onClick={handlePrev}
+    className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 p-2 rounded-full"
+  >
+    <ChevronLeft className="text-white" />
+  </button>
+  <button
+    onClick={handleNext}
+    className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 p-2 rounded-full"
+  >
+    <ChevronRight className="text-white" />
+  </button>
+</div>
+
   );
 };
 
