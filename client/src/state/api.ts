@@ -237,7 +237,7 @@ export const api = createApi({
         });
       },
     }),
-
+// tạo property
     createProperty: build.mutation<Property, FormData>({
       query: (newProperty) => ({
         url: `properties`,
