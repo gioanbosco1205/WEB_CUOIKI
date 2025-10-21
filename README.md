@@ -12,6 +12,7 @@ npm install -D @types/express
 // server 
 npm init -y
 
+hello
 // prisma 
 CREATE EXTENSION IF NOT EXISTS postgis;
 npm install ts-node typescript --save-dev
