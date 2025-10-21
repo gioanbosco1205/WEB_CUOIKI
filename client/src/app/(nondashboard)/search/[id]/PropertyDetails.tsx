@@ -4,6 +4,7 @@ import { formatEnumString } from "@/lib/utils";
 import { useGetPropertyQuery } from "@/state/api";
 import { HelpCircle } from "lucide-react";
 import React from "react";
+import { amenityMap, highlightMap } from "@/components/property/amenitiesMap";
 
 const PropertyDetails = ({ propertyId }: { propertyId: number }) => {
   const { data: property, isError, isLoading } = useGetPropertyQuery(propertyId);
@@ -13,51 +14,54 @@ const PropertyDetails = ({ propertyId }: { propertyId: number }) => {
 
   return (
     <div className="mb-6">
-      {/* Amenities */}
-      <div>
-        <h2 className="text-xl font-semibold my-3">Property Amenities</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-          {property.amenities.map((amenity: string) => {
-            const key = amenity as AmenityEnum;
-            const Icon = AmenityIcons[key] || HelpCircle;
-            return (
-              <div
-                key={amenity}
-                className="flex flex-col items-center border rounded-xl py-8 px-4"
-              >
-                <Icon className="w-8 h-8 mb-2 text-gray-700" />
-                <span className="text-sm text-center text-gray-700">
-                  {formatEnumString(amenity)}
-                </span>
-              </div>
-            );
-          })}
+     {/* Amenities */}
+<div>
+  <h2 className="text-xl font-semibold my-3">Tiện nghi phòng</h2>
+  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+    {property.amenities.map((amenity: string) => {
+      const item = amenityMap[amenity];
+      const Icon = item?.icon;
+      return (
+        <div
+          key={amenity}
+          className="flex flex-col items-center border rounded-xl py-8 px-4"
+        >
+          {Icon && <Icon className="w-8 h-8 mb-2 text-gray-700" />}
+          <span className="text-sm text-center text-gray-700">
+            {item?.label || amenity}
+          </span>
         </div>
-      </div>
+      );
+    })}
+  </div>
+</div>
 
       {/* Highlights */}
-      <div className="mt-12 mb-16">
-        <h3 className="text-xl font-semibold text-primary-800 dark:text-primary-100">
-          Highlights
-        </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-4 w-full">
-          {property.highlights.map((highlight: string) => {
-            const key = highlight as HighlightEnum;
-            const Icon = HighlightIcons[key] || HelpCircle;
-            return (
-              <div
-                key={highlight}
-                className="flex flex-col items-center border rounded-xl py-8 px-4"
-              >
-                <Icon className="w-8 h-8 mb-2 text-primary-600 dark:text-primary-300" />
-                <span className="text-sm text-center text-primary-600 dark:text-primary-300">
-                  {formatEnumString(highlight)}
-                </span>
-              </div>
-            );
-          })}
+<div className="mt-12 mb-16">
+  <h3 className="text-xl font-semibold text-primary-800 dark:text-primary-100">
+    Nổi bật
+  </h3>
+  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-4 w-full">
+    {property.highlights.map((highlight: string) => {
+      const item = highlightMap[highlight];
+      const Icon = item?.icon;
+      return (
+        <div
+          key={highlight}
+          className="flex flex-col items-center border rounded-xl py-8 px-4"
+        >
+          {Icon && (
+            <Icon className="w-8 h-8 mb-2 text-primary-600 dark:text-primary-300" />
+          )}
+          <span className="text-sm text-center text-primary-600 dark:text-primary-300">
+            {item?.label || highlight}
+          </span>
         </div>
-      </div>
+      );
+    })}
+  </div>
+</div>
+
 
       {/* Tabs Section */}
       <div>
