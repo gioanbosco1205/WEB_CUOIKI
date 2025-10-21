@@ -8,6 +8,7 @@ import { Property } from "@/types/prismaTypes";
 import { ReceiptRussianRubleIcon } from "lucide-react";
 
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN as string;
+console.log("Mapbox token:", mapboxgl.accessToken);
 
 const Map = () => {
   const mapContainerRef = useRef(null);
