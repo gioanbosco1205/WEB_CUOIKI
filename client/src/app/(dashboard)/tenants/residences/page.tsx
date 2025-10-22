@@ -5,12 +5,12 @@ import Header from "@/components/Header";
 import Loading from "@/components/Loading";
 import {
   useGetAuthUserQuery,
-  useGetPropertiesQuery,
+  useGetCurrentResidencesQuery,
   useGetTenantQuery,
 } from "@/state/api";
 import React from "react";
 
-const Favorites = () => {
+const Residences = () => {
   const { data: authUser } = useGetAuthUserQuery();
   const { data: tenant } = useGetTenantQuery(
     authUser?.cognitoInfo?.userId || "",
@@ -20,40 +20,39 @@ const Favorites = () => {
   );
 
   const {
-    data: favoriteProperties,
+    data: currentResidences,
     isLoading,
     error,
-  } = useGetPropertiesQuery(
-    { favoriteIds: tenant?.favorites?.map((fav: { id: number }) => fav.id) },
-    { skip: !tenant?.favorites || tenant?.favorites.length === 0 }
-  );
+  } = useGetCurrentResidencesQuery(authUser?.cognitoInfo?.userId || "", {
+    skip: !authUser?.cognitoInfo?.userId,
+  });
 
   if (isLoading) return <Loading />;
-  if (error) return <div>Error loading favorites</div>;
+  if (error) return <div>Lỗi tải phòng cao cấp</div>;
 
   return (
     <div className="dashboard-container">
       <Header
-        title="Danh sách yêu thích"
-        subtitle="Xem tất cả các bất động sản bạn đã đánh dấu yêu thích"
+        title="Phòng cao cấp "
+        subtitle="Xem tất cả các phòng cao cấp hiện tại của bạn"
       />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {favoriteProperties?.map((property) => (
+        {currentResidences?.map((property) => (
           <Card
             key={property.id}
             property={property}
-            isFavorite={true}
+            isFavorite={tenant?.favorites.includes(property.id) || false}
             onFavoriteToggle={() => {}}
             showFavoriteButton={false}
             propertyLink={`/tenants/residences/${property.id}`}
           />
         ))}
       </div>
-      {(!favoriteProperties || favoriteProperties.length === 0) && (
-        <p>Bạn chưa có phòng trọ yêu thích nào.</p>
+      {(!currentResidences || currentResidences.length === 0) && (
+        <p>Bạn chưa có phòng cao cấp nào </p>
       )}
     </div>
   );
 };
 
-export default Favorites;
+export default Residences;

@@ -34,8 +34,8 @@ export const getProperties = async (req: Request, res: Response): Promise<void> 
     const whereConditions: Prisma.Sql[] = [];
  
     if (favoriteIds) {
-      const ids = (favoriteIds as string).split(",").map(Number);
-      whereConditions.push(Prisma.sql`p.id IN (${Prisma.join(ids)})`);
+      const favoriteIdsArray = (favoriteIds as string).split(",").map(Number);
+      whereConditions.push(Prisma.sql`p.id IN (${Prisma.join(favoriteIdsArray)})`);
     }
  
     if (priceMin) whereConditions.push(Prisma.sql`p."pricePerMonth" >= ${Number(priceMin)}`);

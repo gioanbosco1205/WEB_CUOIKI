@@ -36,7 +36,8 @@ const SingleListing = () => {
         </div>
 
         <div className="order-1 md:order-2">
-          <ContactWidget onOpenModal={() => setIsModalOpen(true)} />
+        <ContactWidget property={property} onOpenModal={() => setIsModalOpen(true)} />
+
         </div>
       </div>
 
