@@ -39,13 +39,14 @@ const PaymentMethod = () => {
         <div>
           {/* Card Info */}
           <div className="flex gap-10">
-            <div className="w-36 h-20 bg-blue-600 flex items-center justify-center rounded-md">
-              <span className="text-white text-2xl font-bold">VISA</span>
+            <div className="w-36 h-20 bg-blue-800 flex items-center justify-center rounded-md">
+                <span className="text-white text-2xl font-bold">BIDV</span>
             </div>
+
             <div className="flex flex-col justify-between">
               <div>
                 <div className="flex items-start gap-5">
-                  <h3 className="text-lg font-semibold">Visa sẽ hết hạn vào 2024</h3>
+                  <h3 className="text-lg font-semibold">BIDV sẽ hết hạn vào 2024</h3>
                   <span className="text-sm font-medium border border-primary-700 text-primary-700 px-3 py-1 rounded-full">
                     Mặc định 
                   </span>
@@ -124,21 +125,21 @@ const ResidenceCard = ({
         <hr className="my-4" />
         <div className="flex justify-between items-center">
           <div className="xl:flex">
-            <div className="text-gray-500 mr-2">Ngày bắt đầu: </div>
+            <div className="text-gray-500 mr-2">Bắt đầu: </div>
             <div className="font-semibold">
               {new Date(currentLease.startDate).toLocaleDateString()}
             </div>
           </div>
           <div className="border-[0.5px] border-primary-300 h-4" />
           <div className="xl:flex">
-            <div className="text-gray-500 mr-2">Ngày kết thúc: </div>
+            <div className="text-gray-500 mr-2">Kết thúc vào: </div>
             <div className="font-semibold">
               {new Date(currentLease.endDate).toLocaleDateString()}
             </div>
           </div>
           <div className="border-[0.5px] border-primary-300 h-4" />
           <div className="xl:flex">
-            <div className="text-gray-500 mr-2">Thời gian thanh toán tiếp theo: </div>
+            <div className="text-gray-500 mr-2">Thanh toán tiếp theo: </div>
             <div className="font-semibold">
               {new Date(currentLease.endDate).toLocaleDateString()}
             </div>
