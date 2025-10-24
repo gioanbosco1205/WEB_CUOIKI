@@ -29,7 +29,7 @@ import {
 } from "lucide-react";
 
 /* =========================
- 🎯 Room Types
+ 🎯 Loại phòng (Room Types)
 ========================= */
 export enum RoomTypeEnum {
   PHONG_TRO = "Phòng trọ",
@@ -50,7 +50,7 @@ export const RoomTypeIcons: Record<RoomTypeEnum, LucideIcon> = {
 };
 
 /* =========================
- 🎯 Amenities (Tiện ích)
+ 🎯 Tiện ích (Amenities)
 ========================= */
 export enum AmenityEnum {
   Dishwasher = "Dishwasher",
@@ -65,6 +65,20 @@ export enum AmenityEnum {
   PetsAllowed = "PetsAllowed",
   WiFi = "WiFi",
 }
+
+export const AmenityLabels: Record<AmenityEnum, string> = {
+  [AmenityEnum.Dishwasher]: "Máy rửa chén",
+  [AmenityEnum.HighSpeedInternet]: "Internet tốc độ cao",
+  [AmenityEnum.HardwoodFloors]: "Sàn gỗ",
+  [AmenityEnum.WalkInClosets]: "Tủ quần áo rộng",
+  [AmenityEnum.Microwave]: "Lò vi sóng",
+  [AmenityEnum.Refrigerator]: "Tủ lạnh",
+  [AmenityEnum.Pool]: "Hồ bơi",
+  [AmenityEnum.Gym]: "Phòng tập thể dục",
+  [AmenityEnum.Parking]: "Bãi đỗ xe",
+  [AmenityEnum.PetsAllowed]: "Cho phép thú cưng",
+  [AmenityEnum.WiFi]: "Wi-Fi",
+};
 
 export const AmenityIcons: Record<AmenityEnum, LucideIcon> = {
   [AmenityEnum.WiFi]: Wifi,
@@ -81,7 +95,7 @@ export const AmenityIcons: Record<AmenityEnum, LucideIcon> = {
 };
 
 /* =========================
- 🎯 Highlights
+ 🎯 Đặc điểm nổi bật (Highlights)
 ========================= */
 export enum HighlightEnum {
   HighSpeedInternetAccess = "HighSpeedInternetAccess",
@@ -100,6 +114,24 @@ export enum HighlightEnum {
   GreatView = "GreatView",
   QuietNeighborhood = "QuietNeighborhood",
 }
+
+export const HighlightLabels: Record<HighlightEnum, string> = {
+  [HighlightEnum.HighSpeedInternetAccess]: "Truy cập Internet tốc độ cao",
+  [HighlightEnum.WasherDryer]: "Máy giặt và máy sấy",
+  [HighlightEnum.AirConditioning]: "Điều hòa không khí",
+  [HighlightEnum.Heating]: "Hệ thống sưởi",
+  [HighlightEnum.SmokeFree]: "Khu vực không hút thuốc",
+  [HighlightEnum.CableReady]: "Sẵn sàng truyền hình cáp",
+  [HighlightEnum.SatelliteTV]: "Truyền hình vệ tinh",
+  [HighlightEnum.DoubleVanities]: "Bồn rửa đôi",
+  [HighlightEnum.TubShower]: "Bồn tắm & vòi sen",
+  [HighlightEnum.Intercom]: "Hệ thống liên lạc nội bộ",
+  [HighlightEnum.SprinklerSystem]: "Hệ thống phun nước chữa cháy",
+  [HighlightEnum.RecentlyRenovated]: "Mới được cải tạo",
+  [HighlightEnum.CloseToTransit]: "Gần phương tiện công cộng",
+  [HighlightEnum.GreatView]: "Tầm nhìn đẹp",
+  [HighlightEnum.QuietNeighborhood]: "Khu dân cư yên tĩnh",
+};
 
 export const HighlightIcons: Record<HighlightEnum, LucideIcon> = {
   [HighlightEnum.HighSpeedInternetAccess]: Wifi,
@@ -120,7 +152,7 @@ export const HighlightIcons: Record<HighlightEnum, LucideIcon> = {
 };
 
 /* =========================
- 🎯 Property Types
+ 🎯 Loại bất động sản (Property Types)
 ========================= */
 export enum PropertyTypeEnum {
   Rooms = "Rooms",
@@ -130,6 +162,15 @@ export enum PropertyTypeEnum {
   Townhouse = "Townhouse",
   Cottage = "Cottage",
 }
+
+export const PropertyTypeLabels: Record<PropertyTypeEnum, string> = {
+  [PropertyTypeEnum.Rooms]: "Phòng",
+  [PropertyTypeEnum.Tinyhouse]: "Nhà nhỏ",
+  [PropertyTypeEnum.Apartment]: "Căn hộ",
+  [PropertyTypeEnum.Villa]: "Biệt thự",
+  [PropertyTypeEnum.Townhouse]: "Nhà phố",
+  [PropertyTypeEnum.Cottage]: "Nhà gỗ",
+};
 
 export const PropertyTypeIcons: Record<PropertyTypeEnum, LucideIcon> = {
   [PropertyTypeEnum.Rooms]: Home,
@@ -141,9 +182,9 @@ export const PropertyTypeIcons: Record<PropertyTypeEnum, LucideIcon> = {
 };
 
 /* =========================
- 🎯 Misc constants
+ 🎯 Khác
 ========================= */
-export const NAVBAR_HEIGHT = 50; // in pixels
+export const NAVBAR_HEIGHT = 50;
 
 export const testUsers = {
   tenant: {
