@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "applicationDate": "2025-09-15T08:00:00Z",
+    "status": "Pending",
+    "propertyId": 1,
+    "tenantCognitoId": "us-east-2:tenant-001",
+    "name": "Nguyễn Thị Mai",
+    "email": "mai.nguyen@example.com",
+    "phoneNumber": "+84 988112233",
+    "message": "Em muốn thuê phòng này gần trường học ạ.",
+    "leaseId": 1
+  },
+  {
+    "id": 2,
+    "applicationDate": "2025-09-17T09:30:00Z",
+    "status": "Approved",
+    "propertyId": 2,
+    "tenantCognitoId": "us-east-2:tenant-002",
+    "name": "Trần Quốc Dũng",
+    "email": "dung.tran@example.com",
+    "phoneNumber": "+84 983224466",
+    "message": "Em làm việc gần đây, muốn thuê dài hạn.",
+    "leaseId": 2
+  },
+  {
+    "id": 3,
+    "applicationDate": "2025-09-20T13:15:00Z",
+    "status": "Denied",
+    "propertyId": 3,
+    "tenantCognitoId": "us-east-2:tenant-003",
+    "name": "Phạm Thanh Hòa",
+    "email": "hoa.pham@example.com",
+    "phoneNumber": "+84 945667788",
+    "message": "Em xin thuê 3 tháng trước khi ra trường.",
+    "leaseId": null
+  },
+  {
+    "id": 4,
+    "applicationDate": "2025-09-22T10:00:00Z",
+    "status": "Approved",
+    "propertyId": 4,
+    "tenantCognitoId": "us-east-2:tenant-004",
+    "name": "Lê Anh Khoa",
+    "email": "khoa.le@example.com",
+    "phoneNumber": "+84 977889900",
+    "message": "Em muốn thuê phòng này cùng bạn em ạ.",
+    "leaseId": 3
+  },
+  {
+    "id": 5,
+    "applicationDate": "2025-09-25T15:00:00Z",
+    "status": "Pending",
+    "propertyId": 2,
+    "tenantCognitoId": "us-east-2:tenant-005",
+    "name": "Vũ Thị Hương",
+    "email": "huong.vu@example.com",
+    "phoneNumber": "+84 912345999",
+    "message": "Em muốn ở gần chợ Thủ Dầu Một.",
+    "leaseId": null
+  },
+  {
+    "id": 6,
+    "applicationDate": "2025-09-27T09:00:00Z",
+    "status": "Approved",
+    "propertyId": 1,
+    "tenantCognitoId": "us-east-2:tenant-006",
+    "name": "Đặng Văn Quý",
+    "email": "quy.dang@example.com",
+    "phoneNumber": "+84 933889977",
+    "message": "Em là sinh viên năm nhất, mong được duyệt sớm.",
+    "leaseId": 4
+  },
+  {
+    "id": 7,
+    "applicationDate": "2025-09-30T11:20:00Z",
+    "status": "Denied",
+    "propertyId": 3,
+    "tenantCognitoId": "us-east-2:tenant-007",
+    "name": "Hoàng Mỹ Linh",
+    "email": "linh.hoang@example.com",
+    "phoneNumber": "+84 939441122",
+    "message": "Em muốn thuê 2 tháng thử.",
+    "leaseId": null
+  },
+  {
+    "id": 8,
+    "applicationDate": "2025-10-01T08:45:00Z",
+    "status": "Pending",
+    "propertyId": 4,
+    "tenantCognitoId": "us-east-2:tenant-008",
+    "name": "Ngô Đức Bình",
+    "email": "binh.ngo@example.com",
+    "phoneNumber": "+84 988776655",
+    "message": "Xin duyệt sớm giúp em, cảm ơn ạ.",
+    "leaseId": null
+  }
+]
