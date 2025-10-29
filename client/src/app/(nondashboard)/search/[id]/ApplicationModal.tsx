@@ -34,7 +34,7 @@ const ApplicationModal = ({
   const onSubmit = async (data: ApplicationFormData) => {
     if (!authUser || authUser.userRole !== "tenant") {
       console.error(
-        "You must be logged in as a tenant to submit an application"
+        "Bạn phải đăng nhập với tư cách là người thuê nhà để gửi đơn đăng ký"
       );
       return;
     }

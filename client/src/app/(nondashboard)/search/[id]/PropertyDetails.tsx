@@ -79,7 +79,7 @@ const PropertyDetails = ({ propertyId }: { propertyId: number }) => {
             <TabsTrigger value="parking">Bãi đỗ xe</TabsTrigger>
           </TabsList>
           <TabsContent value="required-fees" className="w-1/3">
-            <p className="font-semibold mt-5 mb-2">One time move in fees</p>
+            <p className="font-semibold mt-5 mb-2">Phí chuyển đến một lần</p>
             <hr />
             <div className="flex justify-between py-2 bg-secondary-50">
               <span className="text-primary-700 font-medium">Phí đăng ký phòng</span>

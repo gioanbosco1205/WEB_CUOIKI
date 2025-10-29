@@ -24,18 +24,27 @@ const Applications = () => {
 
   // 🧩 Mutation xoá application
   const [deleteApplication] = useDeleteApplicationMutation();
+  
+  const [applicationsList, setApplicationsList] = React.useState<any[]>([]);
 
-  const handleDelete = async (id: string) => {
-    if (!confirm("Bạn có chắc muốn xoá đơn ứng tuyển này không?")) return;
-    try {
-      await deleteApplication(id).unwrap();
-      alert("Đã xoá thành công!");
-    } catch (error) {
-      console.error("Lỗi khi xoá đơn:", error);
-      alert("Xoá thất bại. Vui lòng thử lại!");
-    }
-  };
+  React.useEffect(() => {
+  if (applications) setApplicationsList(applications);
+  }, [applications]);
 
+const handleDelete = async (id: string) => {
+  if (!confirm("Bạn có chắc muốn xoá đơn ứng tuyển này không?")) return;
+  try {
+    await deleteApplication(id).unwrap();
+    // Loại bỏ application khỏi state local
+    setApplicationsList((prev) => prev.filter((app) => app.id !== id));
+    alert("Đã xoá thành công!");
+  } catch (error) {
+    console.error("Lỗi khi xoá đơn:", error);
+    alert("Xoá thất bại. Vui lòng thử lại!");
+  }
+};
+
+  
   if (isLoading) return <Loading />;
   if (isError || !applications) return <div>Error fetching applications</div>;
 
@@ -46,7 +55,7 @@ const Applications = () => {
         subtitle="Theo dõi và quản lý các đơn xin cho thuê bất động sản của bạn"
       />
       <div className="w-full">
-        {applications?.map((application) => (
+        {applicationsList?.map((application) => (
           <ApplicationCard
             key={application.id}
             application={application}

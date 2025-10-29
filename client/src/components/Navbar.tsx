@@ -134,7 +134,7 @@ const Navbar = () => {
                       )
                     }
                   >
-                    Go to Dashboard
+                   Đi tới Trang tổng quan
                   </DropdownMenuItem>
                   <DropdownMenuSeparator className="bg-primary-200" />
                   <DropdownMenuItem
