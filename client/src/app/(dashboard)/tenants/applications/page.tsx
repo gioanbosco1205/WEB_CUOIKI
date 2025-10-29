@@ -3,8 +3,12 @@
 import ApplicationCard from "@/components/ApplicationCard";
 import Header from "@/components/Header";
 import Loading from "@/components/Loading";
-import { useGetApplicationsQuery, useGetAuthUserQuery } from "@/state/api";
-import { CircleCheckBig, Clock, Download, XCircle } from "lucide-react";
+import {
+  useGetApplicationsQuery,
+  useGetAuthUserQuery,
+  useDeleteApplicationMutation,
+} from "@/state/api";
+import { CircleCheckBig, Clock, Download, XCircle, Trash2 } from "lucide-react";
 import React from "react";
 
 const Applications = () => {
@@ -17,6 +21,20 @@ const Applications = () => {
     userId: authUser?.cognitoInfo?.userId,
     userType: "tenant",
   });
+
+  // 🧩 Mutation xoá application
+  const [deleteApplication] = useDeleteApplicationMutation();
+
+  const handleDelete = async (id: string) => {
+    if (!confirm("Bạn có chắc muốn xoá đơn ứng tuyển này không?")) return;
+    try {
+      await deleteApplication(id).unwrap();
+      alert("Đã xoá thành công!");
+    } catch (error) {
+      console.error("Lỗi khi xoá đơn:", error);
+      alert("Xoá thất bại. Vui lòng thử lại!");
+    }
+  };
 
   if (isLoading) return <Loading />;
   if (isError || !applications) return <div>Error fetching applications</div>;
@@ -53,13 +71,24 @@ const Applications = () => {
                 </div>
               )}
 
-              <button
-                className={`bg-white border border-gray-300 text-gray-700 py-2 px-4
-                          rounded-md flex items-center justify-center hover:bg-primary-700 hover:text-primary-50`}
-              >
-                <Download className="w-5 h-5 mr-2" />
-                Tải xuống hợp đồng 
-              </button>
+              <div className="flex gap-3">
+                <button
+                  className={`bg-white border border-gray-300 text-gray-700 py-2 px-4
+                            rounded-md flex items-center justify-center hover:bg-primary-700 hover:text-primary-50`}
+                >
+                  <Download className="w-5 h-5 mr-2" />
+                  Tải xuống hợp đồng
+                </button>
+
+                {/* 🗑️ Nút xoá */}
+                <button
+                  onClick={() => handleDelete(application.id)}
+                  className="bg-red-100 border border-red-300 text-red-700 py-2 px-4 rounded-md flex items-center justify-center hover:bg-red-600 hover:text-white"
+                >
+                  <Trash2 className="w-5 h-5 mr-2" />
+                  Xoá
+                </button>
+              </div>
             </div>
           </ApplicationCard>
         ))}

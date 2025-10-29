@@ -3,7 +3,11 @@
 import Card from "@/components/Card";
 import Header from "@/components/Header";
 import Loading from "@/components/Loading";
-import { useGetAuthUserQuery, useGetManagerPropertiesQuery } from "@/state/api";
+import { 
+  useGetAuthUserQuery, 
+  useGetManagerPropertiesQuery,
+  useDeletePropertyMutation, 
+} from "@/state/api";
 import React from "react";
 
 const Properties = () => {
@@ -16,6 +20,20 @@ const Properties = () => {
     skip: !authUser?.cognitoInfo?.userId,
   });
 
+  // ✅ Thêm mutation xoá
+  const [deleteProperty, { isLoading: isDeleting }] = useDeletePropertyMutation();
+
+  const handleDelete = async (propertyId: string) => {
+    if (confirm("Bạn có chắc muốn xoá tin đăng này?")) {
+      try {
+        await deleteProperty(propertyId).unwrap();
+      } catch (err) {
+        alert("Đã xảy ra lỗi khi xoá tin đăng.");
+      }
+    }
+  };
+  
+
   if (isLoading) return <Loading />;
   if (error) return <div>Error loading manager properties</div>;
 
@@ -27,14 +45,22 @@ const Properties = () => {
       />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {managerProperties?.map((property) => (
-          <Card
-            key={property.id}
-            property={property}
-            isFavorite={false}
-            onFavoriteToggle={() => {}}
-            showFavoriteButton={false}
-            propertyLink={`/managers/properties/${property.id}`}
-          />
+          <div key={property.id} className="relative">
+            <Card
+              property={property}
+              isFavorite={false}
+              onFavoriteToggle={() => {}}
+              showFavoriteButton={false}
+              propertyLink={`/managers/properties/${property.id}`}
+            />
+            <button
+              onClick={() => handleDelete(property.id)}
+              disabled={isDeleting}
+              className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 text-sm"
+            >
+              Xoá
+            </button>
+          </div>
         ))}
       </div>
       {(!managerProperties || managerProperties.length === 0) && (

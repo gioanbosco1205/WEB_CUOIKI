@@ -8,6 +8,9 @@ import multer from "multer";
 import path from "path";
 import { authMiddleware } from "../middleware/authMiddleware";
 
+import { deleteProperty } from "../controllers/propertyControllers";
+
+
 // ✅ Cấu hình multer để lưu ảnh lên ổ đĩa local
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -31,5 +34,7 @@ router.post(
   upload.array("photos"), // upload nhiều ảnh
   createProperty
 );
+router.delete("/:id", authMiddleware(["manager"]), deleteProperty);
+
 
 export default router;

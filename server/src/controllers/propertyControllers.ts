@@ -232,3 +232,32 @@ export const createProperty = async (req: Request, res: Response): Promise<void>
     res.status(500).json({ message: `Error creating property: ${err.message}` });
   }
 };
+
+/**
+ * Xóa 1 property theo ID
+ */
+export const deleteProperty = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params;
+
+    // Kiểm tra property có tồn tại không
+    const existing = await prisma.property.findUnique({
+      where: { id: Number(id) },
+    });
+
+    if (!existing) {
+      res.status(404).json({ message: "Không tìm thấy tin đăng cần xoá" });
+      return;
+    }
+
+    // Xóa property
+    await prisma.property.delete({
+      where: { id: Number(id) },
+    });
+
+    res.status(200).json({ message: "Đã xoá tin đăng thành công" });
+  } catch (err: any) {
+    console.error("❌ Lỗi khi xoá property:", err);
+    res.status(500).json({ message: `Lỗi khi xoá property: ${err.message}` });
+  }
+};

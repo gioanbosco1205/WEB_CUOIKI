@@ -86,7 +86,7 @@ export const api = createApi({
           priceMin: filters.pricePerMonth?.[0],
           priceMax: filters.pricePerMonth?.[1],
           amenities: Array.isArray(filters.amenities)
-           ? filters.amenities.join(","): "",          
+           ? filters.amenities.join(","): "",  
           availableFrom: filters.availableFrom,
           favoriteIds: filters.favoriteIds?.join(","),
           latitude: filters.latitude,
@@ -344,10 +344,41 @@ export const api = createApi({
         });
       },
     }),
+
+// Xoá đơn đăng ký người thuê
+    deleteApplication: build.mutation<void, string>({
+      query: (applicationId) => ({
+        url: `applications/${applicationId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [{ type: "Applications", id: "LIST" }],
+      async onQueryStarted(_, { queryFulfilled }) {
+        await withToast(queryFulfilled, {
+          success: "Xoá đơn đăng ký thành công!",
+          error: "Không thể xoá đơn đăng ký.",
+        });
+      },
+    }),
+    // xoá bài đăng bên người cho thuê
+deleteProperty: build.mutation<void, string>({
+  query: (propertyId) => ({
+    url: `properties/${propertyId}`,
+    method: "DELETE",
+  }),
+  invalidatesTags: [{ type: "Properties", id: "LIST" }],
+  async onQueryStarted(_, { queryFulfilled }) {
+    await withToast(queryFulfilled, {
+      success: "Xoá tin đăng thành công!",
+      error: "Không thể xoá tin đăng.",
+    });
+    },
+  }), 
   }),
 });
 
 export const {
+  useDeletePropertyMutation,
+  useDeleteApplicationMutation,
   useGetAuthUserQuery,
   useUpdateTenantSettingsMutation,
   useUpdateManagerSettingsMutation,
