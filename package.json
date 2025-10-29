@@ -4,18 +4,11 @@
     "@fortawesome/free-brands-svg-icons": "^7.1.0",
     "@fortawesome/free-solid-svg-icons": "^7.1.0",
     "@fortawesome/react-fontawesome": "^3.1.0",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "multer": "^2.0.2"
   },
   "devDependencies": {
     "@types/express": "^5.0.3",
-    "kill-port": "^2.0.1",
-    "prisma": "^6.17.1",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.9.3"
-  },
-  "scripts": {
-    "prisma:generate": "prisma generate",
-    "prisma:migrate": "prisma migrate dev",
-    "seed": "ts-node prisma/seed.ts"
+    "kill-port": "^2.0.1"
   }
 }

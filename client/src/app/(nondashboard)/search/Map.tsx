@@ -27,8 +27,10 @@ const Map = () => {
     console.log("Properties for markers:", properties);
     const map = new mapboxgl.Map({
       container: mapContainerRef.current!,
-      style: "mapbox://styles/ducpham9786/cmglnz9ez006m01s3fkd76d33",
-      center: filters.coordinates || [106.6519, 10.9804],
+      style: "mapbox://styles/thanhduong1/cmgqqw45x00d701sd7rx1cmab",
+      center: filters.longitude && filters.latitude
+  ? [filters.longitude, filters.latitude]
+  : [106.6519, 10.9804],
       zoom: 13,
     });
 
@@ -45,7 +47,7 @@ const Map = () => {
     resizeMap();
 
     return () => map.remove();
-  }, [isLoading, isError, properties, filters.coordinates]);
+  }, [isLoading, isError, properties, filters.longitude, filters.latitude]);
 
   if (isLoading) return <>Loading...</>;
   if (isError || !properties) return <div>Failed to fetch properties</div>;

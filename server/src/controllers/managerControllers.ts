@@ -1,13 +1,12 @@
 import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
-import { wktToGeoJSON } from "@terraformer/wkt";
 
 const prisma = new PrismaClient();
 
-export const getManager = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+/**
+ * Lấy thông tin manager theo cognitoId
+ */
+export const getManager = async (req: Request, res: Response): Promise<void> => {
   try {
     const { cognitoId } = req.params;
     const manager = await prisma.manager.findUnique({
@@ -20,16 +19,17 @@ export const getManager = async (
       res.status(404).json({ message: "Manager not found" });
     }
   } catch (error: any) {
+    console.error("❌ Error retrieving manager:", error);
     res
       .status(500)
       .json({ message: `Error retrieving manager: ${error.message}` });
   }
 };
 
-export const createManager = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+/**
+ * Tạo manager mới
+ */
+export const createManager = async (req: Request, res: Response): Promise<void> => {
   try {
     const { cognitoId, name, email, phoneNumber } = req.body;
 
@@ -44,16 +44,17 @@ export const createManager = async (
 
     res.status(201).json(manager);
   } catch (error: any) {
+    console.error("❌ Error creating manager:", error);
     res
       .status(500)
       .json({ message: `Error creating manager: ${error.message}` });
   }
 };
 
-export const updateManager = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+/**
+ * Cập nhật thông tin manager
+ */
+export const updateManager = async (req: Request, res: Response): Promise<void> => {
   try {
     const { cognitoId } = req.params;
     const { name, email, phoneNumber } = req.body;
@@ -69,42 +70,50 @@ export const updateManager = async (
 
     res.json(updateManager);
   } catch (error: any) {
+    console.error("❌ Error updating manager:", error);
     res
       .status(500)
       .json({ message: `Error updating manager: ${error.message}` });
   }
 };
 
-export const getManagerProperties = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+/**
+ * Lấy danh sách bất động sản của manager
+ */
+export const getManagerProperties = async (req: Request, res: Response): Promise<void> => {
   try {
     const { cognitoId } = req.params;
+    console.log("👉 Received cognitoId:", cognitoId);
+
+    // Lấy danh sách property của manager
     const properties = await prisma.property.findMany({
       where: { managerCognitoId: cognitoId },
       include: {
-        location: true,
+        location: true, // include bảng Location liên kết
       },
     });
 
+    // Xử lý gộp tọa độ từ bảng Location
     const propertiesWithFormattedLocation = await Promise.all(
       properties.map(async (property) => {
-        const coordinates: { coordinates: string }[] =
-          await prisma.$queryRaw`SELECT ST_asText(coordinates) as coordinates from "Location" where id = ${property.location.id}`;
+        if (!property.location) {
+          return { ...property, location: null };
+        }
 
-        const geoJSON: any = wktToGeoJSON(coordinates[0]?.coordinates || "");
-        const longitude = geoJSON.coordinates[0];
-        const latitude = geoJSON.coordinates[1];
+        // ✅ Không còn query ST_asText nữa
+        const location = await prisma.location.findUnique({
+          where: { id: property.location.id },
+          select: { latitude: true, longitude: true },
+        });
+
+        const longitude = location?.longitude || 0;
+        const latitude = location?.latitude || 0;
 
         return {
           ...property,
           location: {
             ...property.location,
-            coordinates: {
-              longitude,
-              latitude,
-            },
+            coordinates: { longitude, latitude },
           },
         };
       })
@@ -112,6 +121,7 @@ export const getManagerProperties = async (
 
     res.json(propertiesWithFormattedLocation);
   } catch (err: any) {
+    console.error("❌ Error retrieving manager properties:", err);
     res
       .status(500)
       .json({ message: `Error retrieving manager properties: ${err.message}` });

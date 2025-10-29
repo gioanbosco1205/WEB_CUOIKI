@@ -92,10 +92,10 @@ export const CustomFormField: React.FC<FormFieldProps> = ({
       case "select":
         return (
           <Select
-            value={field.value || (initialValue as string)}
-            defaultValue={field.value || (initialValue as string)}
-            onValueChange={field.onChange}
-          >
+  value={field.value ?? ""}
+  onValueChange={field.onChange}
+>
+
             <SelectTrigger
               className={`w-full border-gray-200 p-4 ${inputClassName}`}
             >

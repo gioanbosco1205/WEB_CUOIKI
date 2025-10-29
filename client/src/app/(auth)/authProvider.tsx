@@ -126,8 +126,8 @@ const components = {
 const formFields = {
   signIn: {
     username: {
-      placeholder: "Nhập email của bạn",
-      label: "Email",
+      placeholder: "Nhập tên người dùng của bạn",
+      label: "Tên người dùng",
       isRequired: true,
     },
     password: {

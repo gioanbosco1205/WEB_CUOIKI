@@ -5,20 +5,36 @@ import {
   createProperty,
 } from "../controllers/propertyControllers";
 import multer from "multer";
+import path from "path";
 import { authMiddleware } from "../middleware/authMiddleware";
 
-const storage = multer.memoryStorage();
+import { deleteProperty } from "../controllers/propertyControllers";
+
+
+// ✅ Cấu hình multer để lưu ảnh lên ổ đĩa local
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, "../uploads/")); // thư mục lưu ảnh
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + "-" + file.originalname); // tên file không trùng
+  },
+});
+
 const upload = multer({ storage: storage });
 
 const router = express.Router();
 
+// ✅ Các route
 router.get("/", getProperties);
 router.get("/:id", getProperty);
 router.post(
   "/",
   authMiddleware(["manager"]),
-  upload.array("photos"),
+  upload.array("photos"), // upload nhiều ảnh
   createProperty
 );
+router.delete("/:id", authMiddleware(["manager"]), deleteProperty);
+
 
 export default router;

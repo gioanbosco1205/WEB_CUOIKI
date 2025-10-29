@@ -7,7 +7,8 @@ export interface FiltersState {
   squareFeet?: [number | null, number | null]; // diên tích phong
   amenities?: string[]; // Các tiện ích: Wifi, Máy lạnh, Gác lửng, Gần trường...
   availableFrom?: string;
-  coordinates?: [number, number];
+  latitude?: number ; 
+  longitude?: number ; 
   favoriteIds?: number[];
   distanceToSchool?: [number | null, number | null]; // khoảng cách đến trường
 }
@@ -27,7 +28,8 @@ export const initialState: InitialStateTypes = {
     squareFeet: [null, null],
     amenities: [],
     availableFrom: "any",
-    coordinates: [106.6519, 10.9804],
+    latitude: 10.9804,
+    longitude: 106.6519,
     distanceToSchool: [null, null], // thêm này để tránh lỗi TS
   },
   isFiltersFullOpen: false,

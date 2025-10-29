@@ -29,10 +29,10 @@ const AppSidebar = ({ userType }: AppSidebarProps) => {
   const navLinks =
     userType === "manager"
       ? [
-          { icon: Building, label: "Properties", href: "/managers/properties" },
+          { icon: Building, label: "Phòng hiện tại", href: "/managers/properties" },
           {
             icon: FileText,
-            label: "Applications",
+            label: "Ứng dụng",
             href: "/managers/applications",
           },
           { icon: Settings, label: "Cài Đặt", href: "/managers/settings" },
@@ -69,7 +69,7 @@ const AppSidebar = ({ userType }: AppSidebarProps) => {
               {open ? (
                 <>
                   <h1 className="text-xl font-bold text-gray-800">
-                    {userType === "manager" ? "Manager View" : "Renter View"}
+                    {userType === "manager" ? "Trang quản lý" : "Cho người thuê"}
                   </h1>
                   <button
                     className="hover:bg-gray-100 p-2 rounded-md"

@@ -34,7 +34,7 @@ const ApplicationModal = ({
   const onSubmit = async (data: ApplicationFormData) => {
     if (!authUser || authUser.userRole !== "tenant") {
       console.error(
-        "You must be logged in as a tenant to submit an application"
+        "Bạn phải đăng nhập với tư cách là người thuê nhà để gửi đơn đăng ký"
       );
       return;
     }
@@ -53,36 +53,36 @@ const ApplicationModal = ({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="bg-white">
         <DialogHeader className="mb-4">
-          <DialogTitle>Submit Application for this Property</DialogTitle>
+          <DialogTitle>Đăng ký thuê </DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
             <CustomFormField
               name="name"
-              label="Name"
+              label="Tên của bạn"
               type="text"
-              placeholder="Enter your full name"
+              placeholder="Vui lòng nhập tên đầy đủ của bạn"
             />
             <CustomFormField
               name="email"
               label="Email"
               type="email"
-              placeholder="Enter your email address"
+              placeholder="Vui lòng nhập địa chỉ email của bạn"
             />
             <CustomFormField
               name="phoneNumber"
-              label="Phone Number"
+              label="Số điện thoại"
               type="text"
-              placeholder="Enter your phone number"
+              placeholder="Vui lòng nhập số điện thoại của bạn"
             />
             <CustomFormField
               name="message"
-              label="Message (Optional)"
+              label="Tin nhắn (Tùy chọn)"
               type="textarea"
-              placeholder="Enter any additional information"
+              placeholder="Nhập thông tin bổ sung nếu có"
             />
             <Button type="submit" className="bg-primary-700 text-white w-full">
-              Submit Application
+              Gửi đơn đăng ký
             </Button>
           </form>
         </Form>

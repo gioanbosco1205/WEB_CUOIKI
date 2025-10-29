@@ -80,7 +80,7 @@ const Navbar = () => {
               {authUser.userRole?.toLowerCase() === "manager" ? (
                 <>
                   <Plus className="h-4 w-4" />
-                  <span className="hidden md:block ml-2">Add New Property</span>
+                  <span className="hidden md:block ml-2">Thêm mới bất động sản</span>
                 </>
               ) : (
                 <>
@@ -134,7 +134,7 @@ const Navbar = () => {
                       )
                     }
                   >
-                    Go to Dashboard
+                   Đi tới Trang tổng quan
                   </DropdownMenuItem>
                   <DropdownMenuSeparator className="bg-primary-200" />
                   <DropdownMenuItem

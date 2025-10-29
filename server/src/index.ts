@@ -12,6 +12,9 @@ import propertyRoutes from "./routes/propertyRoutes";
 import leaseRoutes from "./routes/leaseRoutes";
 import applicationRoutes from "./routes/applicationRoutes";
 
+import path from "path";
+
+
 /* CONFIGURATIONS */
 dotenv.config();
 const app = express();
@@ -46,6 +49,10 @@ app.use("/managers", authMiddleware(["manager"]), managerRoutes);
 
 /* SERVER */
 const port = Number(process.env.PORT) || 3002;
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
 app.listen(port, "0.0.0.0", () => {
   console.log(`Server running on port ${port}`);
 });
+// Cho phép truy cập thư mục uploads (dùng để xem ảnh local)
+

@@ -49,7 +49,7 @@ import {
         });
       }
     };
-  
+    console.log("authUser", authUser?.userInfo);
     if (isLoading) return <>Loading...</>;
     if (isError || !properties) return <div>Failed to fetch properties</div>;
   
@@ -82,7 +82,7 @@ import {
                   key={property.id}
                   property={property}
                   isFavorite={
-                    tenant?.favorites?.some(
+                    authUser?.userInfo?.favorites?.some(
                       (fav: Property) => fav.id === property.id
                     ) || false
                   }

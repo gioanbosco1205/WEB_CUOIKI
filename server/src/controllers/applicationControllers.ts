@@ -165,6 +165,7 @@ export const createApplication = async (
   }
 };
 
+
 export const updateApplicationStatus = async (
   req: Request,
   res: Response
@@ -246,3 +247,37 @@ export const updateApplicationStatus = async (
       .json({ message: `Error updating application status: ${error.message}` });
   }
 };
+
+// Xoá đơn đăng ký của Appication 
+export const deleteApplication = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params;
+
+    const application = await prisma.application.findUnique({
+      where: { id: Number(id) },
+    });
+
+    if (!application) {
+      res.status(404).json({ message: "Application not found." });
+      return;
+    }
+
+    // Nếu có lease liên kết, có thể xóa luôn (nếu bạn muốn)
+    if (application.leaseId) {
+      await prisma.lease.delete({
+        where: { id: application.leaseId },
+      });
+    }
+
+    await prisma.application.delete({
+      where: { id: Number(id) },
+    });
+
+    res.json({ message: "Application deleted successfully." });
+  } catch (error: any) {
+    console.error("Error deleting application:", error);
+    res.status(500).json({ message: `Error deleting application: ${error.message}` });
+  }
+};
+
+
