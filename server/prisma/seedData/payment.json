@@ -5,7 +5,7 @@
     "amountPaid": 1500000,
     "dueDate": "2025-10-01T00:00:00Z",
     "paymentDate": "2025-10-01T06:00:00Z",
-    "paymentStatus": "Paid",
+    "paymentStatus": "Đã thanh toán",
     "leaseId": 1
   },
   {
@@ -14,7 +14,7 @@
     "amountPaid": 800000,
     "dueDate": "2025-10-05T00:00:00Z",
     "paymentDate": "2025-10-06T08:00:00Z",
-    "paymentStatus": "PartiallyPaid",
+    "paymentStatus": "Thanh toán một phần",
     "leaseId": 2
   },
   {
@@ -23,7 +23,7 @@
     "amountPaid": 0,
     "dueDate": "2025-10-10T00:00:00Z",
     "paymentDate": "2025-10-10T00:00:00Z",
-    "paymentStatus": "Overdue",
+    "paymentStatus": "Quá hạn",
     "leaseId": 3
   },
   {
@@ -32,7 +32,7 @@
     "amountPaid": 3500000,
     "dueDate": "2025-10-05T00:00:00Z",
     "paymentDate": "2025-10-04T06:00:00Z",
-    "paymentStatus": "Paid",
+    "paymentStatus": "Đã thanh toán",
     "leaseId": 4
   },
   {
@@ -41,7 +41,7 @@
     "amountPaid": 3200000,
     "dueDate": "2025-10-10T00:00:00Z",
     "paymentDate": "2025-10-10T06:00:00Z",
-    "paymentStatus": "Paid",
+    "paymentStatus": "Đã thanh toán",
     "leaseId": 5
   },
   {
@@ -50,7 +50,7 @@
     "amountPaid": 0,
     "dueDate": "2025-10-15T00:00:00Z",
     "paymentDate": "2025-10-16T00:00:00Z",
-    "paymentStatus": "Overdue",
+    "paymentStatus": "Quá hạn",
     "leaseId": 6
   },
   {
@@ -59,7 +59,7 @@
     "amountPaid": 6000000,
     "dueDate": "2025-10-20T00:00:00Z",
     "paymentDate": "2025-10-20T05:30:00Z",
-    "paymentStatus": "Paid",
+    "paymentStatus": "Đã thanh toán",
     "leaseId": 7
   },
   {
@@ -68,7 +68,7 @@
     "amountPaid": 10000000,
     "dueDate": "2025-11-01T00:00:00Z",
     "paymentDate": "2025-11-02T08:00:00Z",
-    "paymentStatus": "PartiallyPaid",
+    "paymentStatus": "Thanh toán một phần",
     "leaseId": 8
   }
 ]
