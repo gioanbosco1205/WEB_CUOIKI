@@ -180,7 +180,31 @@ export const PropertyTypeIcons: Record<PropertyTypeEnum, LucideIcon> = {
   [PropertyTypeEnum.Townhouse]: Home,
   [PropertyTypeEnum.Cottage]: Trees,
 };
+//
+export enum ApplicationStatus {
+  Pending = "Pending",
+  Denied = "Denied",
+  Approved = "Approved",
+}
+export const ApplicationStatusLabels: Record<ApplicationStatus, string> = {
+  [ApplicationStatus.Pending]: "Đang chờ",
+  [ApplicationStatus.Denied]: "Từ chối",
+  [ApplicationStatus.Approved]: "Đã duyệt",
+};
 
+//
+enum PaymentStatus {
+  Pending = "Pending",
+  Paid = "Paid",
+  PartiallyPaid = "PartiallyPaid",
+  Overdue = "Overdue",
+}
+export const PaymentStatusLabels: Record<PaymentStatus, string> = {
+  [PaymentStatus.Pending]: "Đang chờ thanh toán",
+  [PaymentStatus.Paid]: "Đã thanh toán",
+  [PaymentStatus.PartiallyPaid]: "Thanh toán một phần",
+  [PaymentStatus.Overdue]: "Quá hạn",
+};
 /* =========================
  🎯 Khác
 ========================= */
