@@ -390,7 +390,7 @@ export const {
   useGetTenantQuery,
   useAddFavoritePropertyMutation,
   useRemoveFavoritePropertyMutation,
-  useGetLeasesQuery,
+  useGetLeasesQuery, 
   useGetPropertyLeasesQuery,
   useGetPaymentsQuery,
   useGetApplicationsQuery,
