@@ -5,7 +5,7 @@ import Header from "@/components/Header";
 import { Form } from "@/components/ui/form";
 import { PropertyFormData, propertySchema } from "@/lib/schemas";
 import { useCreatePropertyMutation, useGetAuthUserQuery } from "@/state/api";
-import { AmenityEnum, HighlightEnum, PropertyTypeEnum } from "@/lib/constants";
+import { AmenityEnum, AmenityLabels, HighlightEnum, HighlightLabels, PropertyTypeEnum, PropertyTypeLabels } from "@/lib/constants";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
 import { useForm } from "react-hook-form";
@@ -59,7 +59,15 @@ const NewProperty = () => {
     });
 
     formData.append("managerCognitoId", authUser.cognitoInfo.userId);
-    await createProperty(formData);
+
+    try {
+      await createProperty(formData).unwrap();
+      alert("Tạo bất động sản thành công!");
+      form.reset();
+    } catch (error) {
+      alert("Lỗi khi tạo bất động sản");
+      console.error(error);
+    }
   };
 
   return (
@@ -71,22 +79,14 @@ const NewProperty = () => {
 
       <div className="bg-white rounded-xl p-6">
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="p-4 space-y-10"
-          >
+          <form onSubmit={form.handleSubmit(onSubmit)} className="p-4 space-y-10">
+            {/* ... (giữ nguyên toàn bộ form như cũ) */}
             {/* Thông tin cơ bản */}
             <div>
-              <h2 className="text-lg font-semibold mb-4">
-                Thông tin cơ bản
-              </h2>
+              <h2 className="text-lg font-semibold mb-4">Thông tin cơ bản</h2>
               <div className="space-y-4">
                 <CustomFormField name="name" label="Tên bất động sản" />
-                <CustomFormField
-                  name="description"
-                  label="Mô tả chi tiết"
-                  type="textarea"
-                />
+                <CustomFormField name="description" label="Mô tả chi tiết" type="textarea" />
               </div>
             </div>
 
@@ -95,22 +95,10 @@ const NewProperty = () => {
             {/* Phí */}
             <div className="space-y-6">
               <h2 className="text-lg font-semibold mb-4">Phí</h2>
-              <CustomFormField
-                name="pricePerMonth"
-                label="Giá thuê hàng tháng (VND)"
-                type="number"
-              />
+              <CustomFormField name="pricePerMonth" label="Giá thuê hàng tháng (VND)" type="number" />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <CustomFormField
-                  name="securityDeposit"
-                  label="Tiền đặt cọc (VND)"
-                  type="number"
-                />
-                <CustomFormField
-                  name="applicationFee"
-                  label="Phí đăng ký (VND)"
-                  type="number"
-                />
+                <CustomFormField name="securityDeposit" label="Tiền đặt cọc (VND)" type="number" />
+                <CustomFormField name="applicationFee" label="Phí đăng ký (VND)" type="number" />
               </div>
             </div>
 
@@ -118,38 +106,16 @@ const NewProperty = () => {
 
             {/* Chi tiết phòng */}
             <div className="space-y-6">
-              <h2 className="text-lg font-semibold mb-4">
-                Chi tiết bất động sản
-              </h2>
+              <h2 className="text-lg font-semibold mb-4">Chi tiết bất động sản</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <CustomFormField
-                  name="beds"
-                  label="Số phòng ngủ"
-                  type="number"
-                />
-                <CustomFormField
-                  name="baths"
-                  label="Số phòng tắm"
-                  type="number"
-                />
-                <CustomFormField
-                  name="squareFeet"
-                  label="Diện tích (m²)"
-                  type="number"
-                />
+                <CustomFormField name="beds" label="Số phòng ngủ" type="number" />
+                <CustomFormField name="baths" label="Số phòng tắm" type="number" />
+                <CustomFormField name="squareFeet" label="Diện tích (m²)" type="number" />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                <CustomFormField
-                  name="isPetsAllowed"
-                  label="Cho phép thú cưng"
-                  type="switch"
-                />
-                <CustomFormField
-                  name="isParkingIncluded"
-                  label="Bao gồm chỗ đậu xe"
-                  type="switch"
-                />
+                <CustomFormField name="isPetsAllowed" label="Cho phép thú cưng" type="switch" />
+                <CustomFormField name="isParkingIncluded" label="Bao gồm chỗ đậu xe" type="switch" />
               </div>
 
               <div className="mt-4">
@@ -157,9 +123,9 @@ const NewProperty = () => {
                   name="propertyType"
                   label="Loại bất động sản"
                   type="select"
-                  options={Object.keys(PropertyTypeEnum).map((type) => ({
-                    value: type,
-                    label: type,
+                  options={Object.entries(PropertyTypeEnum).map(([key, value]) => ({
+                    value,
+                    label: PropertyTypeLabels[value],
                   }))}
                 />
               </div>
@@ -169,9 +135,7 @@ const NewProperty = () => {
 
             {/* Tiện ích và điểm nổi bật */}
             <div>
-              <h2 className="text-lg font-semibold mb-4">
-                Tiện ích & điểm nổi bật
-              </h2>
+              <h2 className="text-lg font-semibold mb-4">Tiện ích & điểm nổi bật</h2>
               <div className="space-y-6">
                 <CustomFormField
                   name="amenities"
@@ -179,7 +143,7 @@ const NewProperty = () => {
                   type="select"
                   options={Object.keys(AmenityEnum).map((amenity) => ({
                     value: amenity,
-                    label: amenity,
+                    label: AmenityLabels[amenity as AmenityEnum],
                   }))}
                 />
                 <CustomFormField
@@ -188,7 +152,7 @@ const NewProperty = () => {
                   type="select"
                   options={Object.keys(HighlightEnum).map((highlight) => ({
                     value: highlight,
-                    label: highlight,
+                    label: HighlightLabels[highlight as HighlightEnum],
                   }))}
                 />
               </div>
@@ -198,24 +162,15 @@ const NewProperty = () => {
 
             {/* Ảnh */}
             <div>
-              <h2 className="text-lg font-semibold mb-4">
-                Hình ảnh bất động sản
-              </h2>
-              <CustomFormField
-                name="photoUrls"
-                label="Tải ảnh lên"
-                type="file"
-                accept="image/*"
-              />
+              <h2 className="text-lg font-semibold mb-4">Hình ảnh bất động sản</h2>
+              <CustomFormField name="photoUrls" label="Tải ảnh lên" type="file" accept="image/*" />
             </div>
 
             <hr className="my-6 border-gray-200" />
 
             {/* Thông tin bổ sung */}
             <div className="space-y-6">
-              <h2 className="text-lg font-semibold mb-4">
-                Thông tin bổ sung
-              </h2>
+              <h2 className="text-lg font-semibold mb-4">Thông tin bổ sung</h2>
 
               <CustomFormField name="address" label="Địa chỉ" />
 
@@ -228,10 +183,7 @@ const NewProperty = () => {
               <CustomFormField name="country" label="Khu vực" />
             </div>
 
-            <Button
-              type="submit"
-              className="bg-primary-700 text-white w-full mt-8"
-            >
+            <Button type="submit" className="bg-primary-700 text-white w-full mt-8">
               Lưu thông tin bất động sản
             </Button>
           </form>

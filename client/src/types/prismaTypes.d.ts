@@ -94,12 +94,12 @@ export type Amenity = (typeof Amenity)[keyof typeof Amenity]
 
 
 export const PropertyType: {
-  Rooms: 'Rooms',
-  Tinyhouse: 'Tinyhouse',
-  Apartment: 'Apartment',
-  Villa: 'Villa',
-  Townhouse: 'Townhouse',
-  Cottage: 'Cottage'
+  ROOM: 'ROOM',
+  MINI_APARTMENT: 'MINI_APARTMENT',
+  HOUSE: 'HOUSE',
+  APARTMENT: 'APARTMENT',
+  DORMITORY: 'DORMITORY',
+  SLEEPBOX: 'SLEEPBOX'
 };
 
 export type PropertyType = (typeof PropertyType)[keyof typeof PropertyType]
@@ -390,8 +390,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.17.1
-   * Query Engine version: 272a37d34178c2894197e17273bf937f25acdeac
+   * Prisma Client JS version: 6.16.3
+   * Query Engine version: bb420e667c1820a8c05a38023385f6cc7ef8e83a
    */
   export type PrismaVersion = {
     client: string

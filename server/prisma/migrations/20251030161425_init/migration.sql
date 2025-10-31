@@ -8,7 +8,7 @@ CREATE TYPE "Highlight" AS ENUM ('HighSpeedInternetAccess', 'WasherDryer', 'AirC
 CREATE TYPE "Amenity" AS ENUM ('WasherDryer', 'AirConditioning', 'Dishwasher', 'HighSpeedInternet', 'HardwoodFloors', 'WalkInClosets', 'Microwave', 'Refrigerator', 'Pool', 'Gym', 'Parking', 'PetsAllowed', 'WiFi');
 
 -- CreateEnum
-CREATE TYPE "PropertyType" AS ENUM ('Rooms', 'Tinyhouse', 'Apartment', 'Villa', 'Townhouse', 'Cottage');
+CREATE TYPE "PropertyType" AS ENUM ('ROOM', 'MINI_APARTMENT', 'HOUSE', 'APARTMENT', 'DORMITORY', 'SLEEPBOX');
 
 -- CreateEnum
 CREATE TYPE "ApplicationStatus" AS ENUM ('Pending', 'Denied', 'Approved');

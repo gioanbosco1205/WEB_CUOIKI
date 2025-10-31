@@ -16,11 +16,21 @@ function toCamelCase(str: string): string {
   return str.charAt(0).toLowerCase() + str.slice(1);
 }
 
+function normalizeDates(obj: any) {
+  const dateFields = ["startDate", "endDate", "dueDate", "paymentDate", "applicationDate", "postedDate"];
+  for (const field of dateFields) {
+    if (obj[field] && typeof obj[field] === "string") {
+      obj[field] = new Date(obj[field]);
+    }
+  }
+  return obj;
+}
+
 async function insertLocationData(locations: any[]) {
   for (const location of locations) {
     const { id, country, city, state, address, postalCode, latitude, longitude } = location;
     try {
-      await (prisma as any).location.create({
+      await prisma.location.create({
         data: {
           id,
           country,
@@ -39,7 +49,6 @@ async function insertLocationData(locations: any[]) {
   }
 }
 
-
 async function resetSequence(modelName: string) {
   const quotedModelName = `"${toPascalCase(modelName)}"`;
 
@@ -55,9 +64,7 @@ async function resetSequence(modelName: string) {
 
   const nextId = maxIdResult[0].id + 1;
   await prisma.$executeRaw(
-    Prisma.raw(`
-    SELECT setval(pg_get_serial_sequence('${quotedModelName}', 'id'), coalesce(max(id)+1, ${nextId}), false) FROM ${quotedModelName};
-  `)
+    Prisma.sql`SELECT setval(pg_get_serial_sequence(${Prisma.raw("'" + quotedModelName + "'")}, 'id'), coalesce(max(id)+1, ${nextId}), false) FROM ${Prisma.raw(quotedModelName)};`
   );
   console.log(`Reset sequence for ${modelName} to ${nextId}`);
 }
@@ -96,38 +103,53 @@ async function main() {
     "payment.json", // Depends on lease
   ];
 
-  // Delete all existing data
   await deleteAllData(orderedFileNames);
 
-  // Seed data
   for (const fileName of orderedFileNames) {
     const filePath = path.join(dataDirectory, fileName);
     const jsonData = JSON.parse(fs.readFileSync(filePath, "utf-8"));
-    const modelName = toPascalCase(
-      path.basename(fileName, path.extname(fileName))
-    );
+    const modelName = toPascalCase(path.basename(fileName, path.extname(fileName)));
     const modelNameCamel = toCamelCase(modelName);
 
-    if (modelName === "Location") {
-      await insertLocationData(jsonData);
-    } else {
-      const model = (prisma as any)[modelNameCamel];
-      try {
+    const model = (prisma as any)[modelNameCamel];
+
+    try {
+      if (modelName === "Location") {
+        await insertLocationData(jsonData);
+      } else if (modelName === "Payment") {
+        // ✅ Xử lý riêng Payment
         for (const item of jsonData) {
-          await model.create({
-            data: item,
+          const data = normalizeDates(item);
+
+          // Bổ sung ngày thanh toán nếu thiếu
+          if (!data.paymentDate) data.paymentDate = new Date();
+
+          // Dùng leaseId (đơn giản hơn connect)
+          await prisma.payment.create({
+            data: {
+              amountDue: data.amountDue,
+              amountPaid: data.amountPaid,
+              dueDate: data.dueDate,
+              paymentDate: data.paymentDate,
+              paymentStatus: data.paymentStatus,
+              leaseId: data.leaseId, // ✅ chỉ leaseId thôi
+            },
           });
         }
-        console.log(`Seeded ${modelName} with data from ${fileName}`);
-      } catch (error) {
-        console.error(`Error seeding data for ${modelName}:`, error);
+      } else {
+        // Các model còn lại
+        for (const item of jsonData) {
+          const data = normalizeDates(item);
+          await model.create({ data });
+        }
       }
+
+      console.log(`Seeded ${modelName} with data from ${fileName}`);
+      await resetSequence(modelName);
+      await sleep(500);
+    } catch (error) {
+      console.error(`Error seeding data for ${modelName}:`, error);
     }
-
-    // Reset the sequence after seeding each model
-    await resetSequence(modelName);
-
-    await sleep(1000);
   }
 }
 

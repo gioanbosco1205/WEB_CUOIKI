@@ -52,7 +52,8 @@ import {
     console.log("authUser", authUser?.userInfo);
     if (isLoading) return <>Loading...</>;
     if (isError || !properties) return <div>Failed to fetch properties</div>;
-  
+      console.log("All properties fetched from database:", properties);
+
     return (
       <div className="w-full">
         <h3 className="text-sm px-4 font-bold">
