@@ -66,20 +66,22 @@ export const getProperties = async (req: Request, res: Response): Promise<void> 
       }
     }
 
-    if (latitude && longitude) {
-      const lat = parseFloat(latitude as string);
-      const lng = parseFloat(longitude as string);
-      const radiusInKm = 50;
-      const degrees = radiusInKm / 111;
-
-      whereConditions.push(
-        Prisma.sql`ST_DWithin(
-          ST_SetSRID(ST_MakePoint(l.longitude, l.latitude), 4326),
-          ST_SetSRID(ST_MakePoint(${lng}, ${lat}), 4326),
-          ${degrees}
-        )`
-      );
-    }
+    // if (latitude && longitude && latitude !== "null" && longitude !== "null" && latitude !== "" && longitude !== "") {
+    //   const lat = parseFloat(latitude as string);
+    //   const lng = parseFloat(longitude as string);
+    
+    //   const radiusInKm = 50;
+    //   const degrees = radiusInKm / 111;
+    
+    //   whereConditions.push(
+    //     Prisma.sql`ST_DWithin(
+    //       ST_SetSRID(ST_MakePoint(l.longitude, l.latitude), 4326),
+    //       ST_SetSRID(ST_MakePoint(${lng}, ${lat}), 4326),
+    //       ${degrees}
+    //     )`
+    //   );
+    // }
+    
 
     const completeQuery = Prisma.sql`
       SELECT
