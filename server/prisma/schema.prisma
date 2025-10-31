@@ -44,12 +44,12 @@ enum Amenity {
 }
 
 enum PropertyType {
-  Rooms
-  Tinyhouse
-  Apartment
-  Villa
-  Townhouse
-  Cottage
+  ROOM          // Phòng trọ
+  MINI_APARTMENT // Căn hộ mini
+  HOUSE          // Nhà nguyên căn
+  APARTMENT      // Chung cư
+  DORMITORY      // Ký túc xá
+  SLEEPBOX       // Sleepbox
 }
 
 enum ApplicationStatus {

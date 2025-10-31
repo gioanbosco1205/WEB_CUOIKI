@@ -4,6 +4,41 @@ import axios from "axios";
 
 const prisma = new PrismaClient();
 
+// Lấy Mapbox token từ biến môi trường
+const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
+
+if (!MAPBOX_TOKEN) {
+  console.warn("⚠️ Chưa có Mapbox token! Hãy thêm NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN vào môi trường.");
+}
+
+/**
+ * Lấy tọa độ từ Mapbox
+ */
+async function getCoordinatesMapbox(fullAddress: string): Promise<{ lat: number; lon: number }> {
+  try {
+    const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(fullAddress)}.json`;
+    const response = await axios.get(url, {
+      params: {
+        access_token: MAPBOX_TOKEN,
+        limit: 1,
+        country: "VN",
+      },
+    });
+
+    if (!response.data.features || response.data.features.length === 0) {
+      console.warn(`❌ Không tìm thấy địa chỉ: ${fullAddress}`);
+      return { lat: 0, lon: 0 };
+    }
+
+    const feature = response.data.features[0];
+    const [lon, lat] = feature.center; // Mapbox trả về [longitude, latitude]
+    return { lat, lon };
+  } catch (err: any) {
+    console.error("❌ Lỗi khi gọi Mapbox Geocoding:", err.message);
+    return { lat: 0, lon: 0 };
+  }
+}
+
 /**
  * Lấy danh sách bất động sản có lọc
  */
@@ -81,7 +116,6 @@ export const getProperties = async (req: Request, res: Response): Promise<void> 
     //     )`
     //   );
     // }
-    
 
     const completeQuery = Prisma.sql`
       SELECT
@@ -164,26 +198,11 @@ export const createProperty = async (req: Request, res: Response): Promise<void>
     } = req.body;
 
     // ✅ Dùng ảnh local
-    const photoUrls = files.map((file) => {
-      return `${req.protocol}://${req.get("host")}/uploads/${file.filename}`;
-    });
+    const photoUrls = files.map((file) => `${req.protocol}://${req.get("host")}/uploads/${file.filename}`);
 
-    // 📍 Gọi Nominatim để lấy tọa độ
-    const geocodingUrl = `https://nominatim.openstreetmap.org/search?${new URLSearchParams({
-      street: address,
-      city,
-      country,
-      postalcode: postalCode,
-      format: "json",
-      limit: "1",
-    }).toString()}`;
-
-    const geocodingResponse = await axios.get(geocodingUrl, {
-      headers: { "User-Agent": "RealEstateApp (example@email.com)" },
-    });
-
-    const lon = parseFloat(geocodingResponse.data?.[0]?.lon ?? "0");
-    const lat = parseFloat(geocodingResponse.data?.[0]?.lat ?? "0");
+    // 📍 Lấy tọa độ từ Mapbox
+    const fullAddress = `${address}, ${city}, ${state}, ${country}${postalCode ? `, ${postalCode}` : ""}`;
+    const { lat, lon } = await getCoordinatesMapbox(fullAddress);
 
     // 🗺️ Tạo location
     const location = await prisma.location.create({
@@ -205,14 +224,8 @@ export const createProperty = async (req: Request, res: Response): Promise<void>
         photoUrls,
         locationId: location.id,
         managerCognitoId,
-        amenities:
-          typeof propertyData.amenities === "string"
-            ? propertyData.amenities.split(",")
-            : [],
-        highlights:
-          typeof propertyData.highlights === "string"
-            ? propertyData.highlights.split(",")
-            : [],
+        amenities: typeof propertyData.amenities === "string" ? propertyData.amenities.split(",") : [],
+        highlights: typeof propertyData.highlights === "string" ? propertyData.highlights.split(",") : [],
         isPetsAllowed: propertyData.isPetsAllowed === "true",
         isParkingIncluded: propertyData.isParkingIncluded === "true",
         pricePerMonth: parseFloat(propertyData.pricePerMonth),

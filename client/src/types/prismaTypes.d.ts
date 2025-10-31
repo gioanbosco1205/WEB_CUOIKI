@@ -94,12 +94,12 @@ export type Amenity = (typeof Amenity)[keyof typeof Amenity]
 
 
 export const PropertyType: {
-  Rooms: 'Rooms',
-  Tinyhouse: 'Tinyhouse',
-  Apartment: 'Apartment',
-  Villa: 'Villa',
-  Townhouse: 'Townhouse',
-  Cottage: 'Cottage'
+  ROOM: 'ROOM',
+  MINI_APARTMENT: 'MINI_APARTMENT',
+  HOUSE: 'HOUSE',
+  APARTMENT: 'APARTMENT',
+  DORMITORY: 'DORMITORY',
+  SLEEPBOX: 'SLEEPBOX'
 };
 
 export type PropertyType = (typeof PropertyType)[keyof typeof PropertyType]

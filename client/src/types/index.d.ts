@@ -45,13 +45,13 @@ declare global {
   }
 
   enum PropertyTypeEnum {
-    Rooms = "Rooms",
-    Tinyhouse = "Tinyhouse",
-    Apartment = "Apartment",
-    Villa = "Villa",
-    Townhouse = "Townhouse",
-    Cottage = "Cottage",
-  }
+  ROOM = "ROOM",
+  MINI_APARTMENT = "MINI_APARTMENT",
+  HOUSE = "HOUSE",
+  APARTMENT = "APARTMENT",
+  DORMITORY = "DORMITORY",
+  SLEEPBOX = "SLEEPBOX",
+}
 
   interface SidebarLinkProps {
     href: string;
