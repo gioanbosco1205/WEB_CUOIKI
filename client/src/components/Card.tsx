@@ -84,7 +84,7 @@ const Card = ({
           </div>
           <p className="text-lg font-bold mb-3">
             ${property.pricePerMonth.toFixed(0)}{" "}
-            <span className="text-gray-600 text-base font-normal"> /month</span>
+            <span className="text-gray-600 text-base font-normal"> /Tháng</span>
           </p>
         </div>
         <hr />
