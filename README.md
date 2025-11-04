@@ -20,6 +20,7 @@ npx prisma migrate reset
 npx prisma migrate dev --name init
 
 npm run seed
+npx prisma studio
 
 npm install --save-dev kill-port
 

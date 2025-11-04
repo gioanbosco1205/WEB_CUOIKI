@@ -59,7 +59,7 @@ const ApplicationCard = ({
         <div className="flex flex-col justify-between w-full lg:basis-2/12 lg:h-48 py-2 gap-3 lg:gap-0">
           <div>
             <div className="flex justify-between items-center">
-              <span className="text-gray-500">Status:</span>
+              <span className="text-gray-500">Trạng thái:</span>
               <span
                 className={`px-2 py-1 ${statusColor} text-white rounded-full text-sm`}
               >
@@ -69,15 +69,15 @@ const ApplicationCard = ({
             <hr className="mt-3" />
           </div>
           <div className="flex justify-between">
-            <span className="text-gray-500">Start Date:</span>{" "}
+            <span className="text-gray-500">Ngày bắt đầu:</span>{" "}
             {new Date(application.lease?.startDate).toLocaleDateString()}
           </div>
           <div className="flex justify-between">
-            <span className="text-gray-500">End Date:</span>{" "}
+            <span className="text-gray-500">Ngày kết thúc:</span>{" "}
             {new Date(application.lease?.endDate).toLocaleDateString()}
           </div>
           <div className="flex justify-between">
-            <span className="text-gray-500">Next Payment:</span>{" "}
+            <span className="text-gray-500">Lần thanh toán tiếp theo:</span>{" "}
             {new Date(application.lease?.nextPaymentDate).toLocaleDateString()}
           </div>
         </div>

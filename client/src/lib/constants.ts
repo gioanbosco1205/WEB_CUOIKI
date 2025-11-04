@@ -26,28 +26,37 @@ import {
   Building2,
   Bed,
   Users,
-} from "lucide-react";
+} from "lucide-react"
 
 /* =========================
- 🎯 Loại phòng (Room Types)
+ 🎯 Loại bất động sản (Property Types)
 ========================= */
-export enum RoomTypeEnum {
-  PHONG_TRO = "Phòng trọ",
-  CAN_HO = "Căn hộ mini",
-  NHA_NGUYEN_CAN = "Nhà nguyên căn",
-  CHUNG_CU = "Chung cư",
-  KY_TUC_XA = "Ký túc xá",
-  SLEEPBOX = "Sleepbox",
+export enum PropertyTypeEnum {
+  ROOM = "ROOM",
+  MINI_APARTMENT = "MINI_APARTMENT",
+  HOUSE = "HOUSE",
+  APARTMENT = "APARTMENT",
+  DORMITORY = "DORMITORY",
+  SLEEPBOX = "SLEEPBOX",
 }
 
-export const RoomTypeIcons: Record<RoomTypeEnum, LucideIcon> = {
-  [RoomTypeEnum.PHONG_TRO]: Bed,
-  [RoomTypeEnum.CAN_HO]: Building2,
-  [RoomTypeEnum.NHA_NGUYEN_CAN]: Home,
-  [RoomTypeEnum.CHUNG_CU]: Building,
-  [RoomTypeEnum.KY_TUC_XA]: Users,
-  [RoomTypeEnum.SLEEPBOX]: BedSingle,
-};
+export const PropertyTypeLabels: Record<PropertyTypeEnum, string> = {
+  [PropertyTypeEnum.ROOM]: "Phòng trọ",
+  [PropertyTypeEnum.MINI_APARTMENT]: "Căn hộ mini",
+  [PropertyTypeEnum.HOUSE]: "Nhà nguyên căn",
+  [PropertyTypeEnum.APARTMENT]: "Chung cư",
+  [PropertyTypeEnum.DORMITORY]: "Ký túc xá",
+  [PropertyTypeEnum.SLEEPBOX]: "Sleepbox",
+}
+
+export const PropertyTypeIcons: Record<PropertyTypeEnum, LucideIcon> = {
+  [PropertyTypeEnum.ROOM]: Bed,
+  [PropertyTypeEnum.MINI_APARTMENT]: Building2,
+  [PropertyTypeEnum.HOUSE]: Home,
+  [PropertyTypeEnum.APARTMENT]: Building,
+  [PropertyTypeEnum.DORMITORY]: Users,
+  [PropertyTypeEnum.SLEEPBOX]: BedSingle,
+}
 
 /* =========================
  🎯 Tiện ích (Amenities)
@@ -78,7 +87,7 @@ export const AmenityLabels: Record<AmenityEnum, string> = {
   [AmenityEnum.Parking]: "Bãi đỗ xe",
   [AmenityEnum.PetsAllowed]: "Cho phép thú cưng",
   [AmenityEnum.WiFi]: "Wi-Fi",
-};
+}
 
 export const AmenityIcons: Record<AmenityEnum, LucideIcon> = {
   [AmenityEnum.WiFi]: Wifi,
@@ -92,7 +101,7 @@ export const AmenityIcons: Record<AmenityEnum, LucideIcon> = {
   [AmenityEnum.Microwave]: Building2,
   [AmenityEnum.Refrigerator]: Building2,
   [AmenityEnum.Pool]: Building2,
-};
+}
 
 /* =========================
  🎯 Đặc điểm nổi bật (Highlights)
@@ -131,7 +140,7 @@ export const HighlightLabels: Record<HighlightEnum, string> = {
   [HighlightEnum.CloseToTransit]: "Gần phương tiện công cộng",
   [HighlightEnum.GreatView]: "Tầm nhìn đẹp",
   [HighlightEnum.QuietNeighborhood]: "Khu dân cư yên tĩnh",
-};
+}
 
 export const HighlightIcons: Record<HighlightEnum, LucideIcon> = {
   [HighlightEnum.HighSpeedInternetAccess]: Wifi,
@@ -149,66 +158,12 @@ export const HighlightIcons: Record<HighlightEnum, LucideIcon> = {
   [HighlightEnum.CloseToTransit]: Bus,
   [HighlightEnum.GreatView]: Mountain,
   [HighlightEnum.QuietNeighborhood]: VolumeX,
-};
-
-/* =========================
- 🎯 Loại bất động sản (Property Types)
-========================= */
-export enum PropertyTypeEnum {
-  Rooms = "Rooms",
-  Tinyhouse = "Tinyhouse",
-  Apartment = "Apartment",
-  Villa = "Villa",
-  Townhouse = "Townhouse",
-  Cottage = "Cottage",
 }
 
-export const PropertyTypeLabels: Record<PropertyTypeEnum, string> = {
-  [PropertyTypeEnum.Rooms]: "Phòng",
-  [PropertyTypeEnum.Tinyhouse]: "Nhà nhỏ",
-  [PropertyTypeEnum.Apartment]: "Căn hộ",
-  [PropertyTypeEnum.Villa]: "Biệt thự",
-  [PropertyTypeEnum.Townhouse]: "Nhà phố",
-  [PropertyTypeEnum.Cottage]: "Nhà gỗ",
-};
-
-export const PropertyTypeIcons: Record<PropertyTypeEnum, LucideIcon> = {
-  [PropertyTypeEnum.Rooms]: Home,
-  [PropertyTypeEnum.Tinyhouse]: Warehouse,
-  [PropertyTypeEnum.Apartment]: Building,
-  [PropertyTypeEnum.Villa]: Castle,
-  [PropertyTypeEnum.Townhouse]: Home,
-  [PropertyTypeEnum.Cottage]: Trees,
-};
-//
-export enum ApplicationStatus {
-  Pending = "Pending",
-  Denied = "Denied",
-  Approved = "Approved",
-}
-export const ApplicationStatusLabels: Record<ApplicationStatus, string> = {
-  [ApplicationStatus.Pending]: "Đang chờ",
-  [ApplicationStatus.Denied]: "Từ chối",
-  [ApplicationStatus.Approved]: "Đã duyệt",
-};
-
-//
-enum PaymentStatus {
-  Pending = "Pending",
-  Paid = "Paid",
-  PartiallyPaid = "PartiallyPaid",
-  Overdue = "Overdue",
-}
-export const PaymentStatusLabels: Record<PaymentStatus, string> = {
-  [PaymentStatus.Pending]: "Đang chờ thanh toán",
-  [PaymentStatus.Paid]: "Đã thanh toán",
-  [PaymentStatus.PartiallyPaid]: "Thanh toán một phần",
-  [PaymentStatus.Overdue]: "Quá hạn",
-};
 /* =========================
  🎯 Khác
 ========================= */
-export const NAVBAR_HEIGHT = 50;
+export const NAVBAR_HEIGHT = 50
 
 export const testUsers = {
   tenant: {
@@ -229,4 +184,4 @@ export const testUsers = {
     },
   },
   managerRole: "manager",
-};
+}

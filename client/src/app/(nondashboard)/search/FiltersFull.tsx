@@ -9,8 +9,7 @@ import {
   AmenityIcons,
   AmenityLabels,
   PropertyTypeEnum,
-  RoomTypeEnum,
-  RoomTypeIcons,
+  PropertyTypeIcons,
 } from "@/lib/constants";
 import { initialState, setFilters } from "@/state";
 import { useAppSelector } from "@/state/redux";
@@ -111,7 +110,7 @@ const FiltersFull = () => {
         <div>
           <h4 className="font-bold mb-2">Loại hình chỗ ở</h4>
           <div className="grid grid-cols-2 gap-4">
-            {Object.entries(RoomTypeIcons).map(([type, Icon]) => (
+            {Object.entries(PropertyTypeIcons).map(([type, Icon]) => (
               <div
                 key={type}
                 className={cn(

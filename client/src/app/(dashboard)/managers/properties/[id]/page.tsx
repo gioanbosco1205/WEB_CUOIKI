@@ -42,7 +42,7 @@ const PropertyTenants = () => {
         new Date(payment.dueDate).getMonth() === currentDate.getMonth() &&
         new Date(payment.dueDate).getFullYear() === currentDate.getFullYear()
     );
-    return currentMonthPayment?.paymentStatus || "Not Paid";
+    return currentMonthPayment?.paymentStatus || "Chưa thanh toán ";
   };
 
   return (
@@ -100,18 +100,18 @@ const PropertyTenants = () => {
                     <TableCell>
                       <div className="flex items-center space-x-3">
                         <Image
-  src={
-    lease.tenant.avatar
-      ? lease.tenant.avatar.startsWith("http")
-        ? lease.tenant.avatar
-        : `http://localhost:3001/uploads/${lease.tenant.avatar}`
-      : "/landing-i1.png"
-  }
-  alt={lease.tenant.name}
-  width={40}
-  height={40}
-  className="rounded-full object-cover"
-/>
+                        src={
+                         lease.tenant.avatar
+                         ? lease.tenant.avatar.startsWith("http")
+                         ? lease.tenant.avatar
+                          : `http://localhost:3001/uploads/${lease.tenant.avatar}`
+                          : "/landing-i1.png"
+                          }
+                           alt={lease.tenant.name}
+                            width={40}
+                           height={40}
+                           className="rounded-full object-cover"
+                          />
                         <div>
                           <div className="font-semibold">
                             {lease.tenant.name}

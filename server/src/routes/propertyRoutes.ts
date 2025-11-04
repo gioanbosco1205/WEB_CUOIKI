@@ -7,7 +7,7 @@ import {
 import multer from "multer";
 import path from "path";
 import { authMiddleware } from "../middleware/authMiddleware";
-
+import { getLeases } from "../controllers/leaseControllers";
 import { deleteProperty } from "../controllers/propertyControllers";
 
 
@@ -28,6 +28,8 @@ const router = express.Router();
 // ✅ Các route
 router.get("/", getProperties);
 router.get("/:id", getProperty);
+router.get("/:id/leases", authMiddleware(["manager", "tenant"]), getLeases);
+
 router.post(
   "/",
   authMiddleware(["manager"]),

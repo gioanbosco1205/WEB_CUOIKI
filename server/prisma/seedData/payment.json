@@ -22,8 +22,8 @@
     "amountDue": 2500000,
     "amountPaid": 0,
     "dueDate": "2025-10-10T00:00:00Z",
-    "paymentDate": "2025-10-10T00:00:00Z",
-    "paymentStatus": "Quá hạn",
+    "paymentDate": null,
+    "paymentStatus": "Overdue",
     "leaseId": 3
   },
   {
@@ -49,8 +49,8 @@
     "amountDue": 12000000,
     "amountPaid": 0,
     "dueDate": "2025-10-15T00:00:00Z",
-    "paymentDate": "2025-10-16T00:00:00Z",
-    "paymentStatus": "Quá hạn",
+    "paymentDate": null,
+    "paymentStatus": "Overdue",
     "leaseId": 6
   },
   {
