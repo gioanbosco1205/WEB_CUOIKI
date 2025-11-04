@@ -2,7 +2,7 @@
   {
     "id": 1,
     "applicationDate": "2025-09-15T08:00:00Z",
-    "status": "Đang chờ",
+    "status": "Pending",
     "propertyId": 1,
     "tenantCognitoId": "us-east-2:tenant-001",
     "name": "Nguyễn Thị Mai",
@@ -14,7 +14,7 @@
   {
     "id": 2,
     "applicationDate": "2025-09-17T09:30:00Z",
-    "status": "Đã duyệt",
+    "status": "Approved",
     "propertyId": 2,
     "tenantCognitoId": "us-east-2:tenant-002",
     "name": "Trần Quốc Dũng",
@@ -26,7 +26,7 @@
   {
     "id": 3,
     "applicationDate": "2025-09-20T13:15:00Z",
-    "status": "Từ chối",
+    "status": "Denied",
     "propertyId": 3,
     "tenantCognitoId": "us-east-2:tenant-003",
     "name": "Phạm Thanh Hòa",
@@ -38,7 +38,7 @@
   {
     "id": 4,
     "applicationDate": "2025-09-22T10:00:00Z",
-    "status": "Đã duyệt",
+    "status": "Approved",
     "propertyId": 4,
     "tenantCognitoId": "us-east-2:tenant-004",
     "name": "Lê Anh Khoa",
@@ -50,7 +50,7 @@
   {
     "id": 5,
     "applicationDate": "2025-09-25T15:00:00Z",
-    "status": "Đang chờ",
+    "status": "Pending",
     "propertyId": 2,
     "tenantCognitoId": "us-east-2:tenant-005",
     "name": "Vũ Thị Hương",
@@ -62,7 +62,7 @@
   {
     "id": 6,
     "applicationDate": "2025-09-27T09:00:00Z",
-    "status": "Đã duyệt",
+    "status": "Approved",
     "propertyId": 1,
     "tenantCognitoId": "us-east-2:tenant-006",
     "name": "Đặng Văn Quý",
@@ -74,7 +74,7 @@
   {
     "id": 7,
     "applicationDate": "2025-09-30T11:20:00Z",
-    "status": "Từ chối",
+    "status": "Denied",
     "propertyId": 3,
     "tenantCognitoId": "us-east-2:tenant-007",
     "name": "Hoàng Mỹ Linh",
@@ -86,7 +86,7 @@
   {
     "id": 8,
     "applicationDate": "2025-10-01T08:45:00Z",
-    "status": "Đang chờ",
+    "status": "Pending",
     "propertyId": 4,
     "tenantCognitoId": "us-east-2:tenant-008",
     "name": "Ngô Đức Bình",
