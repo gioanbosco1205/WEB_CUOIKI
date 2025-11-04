@@ -118,7 +118,7 @@ getProperties: build.query<
       providesTags: (result, error, id) => [{ type: "PropertyDetails", id }],
       async onQueryStarted(_, { queryFulfilled }) {
         await withToast(queryFulfilled, {
-          error: "Failed to load property details.",
+          error: "Tải chi tiết bất động sản thất bại.",
         });
       },
     }),
@@ -129,10 +129,22 @@ getProperties: build.query<
       providesTags: (result) => [{ type: "Tenants", id: result?.id }],
       async onQueryStarted(_, { queryFulfilled }) {
         await withToast(queryFulfilled, {
-          error: "Failed to load tenant profile.",
+          error: "Không thể tải hồ sơ người thuê.",
         });
       },
     }),
+
+    getTenantContracts: build.query<
+  { tenant: Tenant; leases: Lease[]; properties: Property[] },
+  string // tenantCognitoId
+>({
+query: (cognitoId) => `api/tenants/contracts/${cognitoId}`,
+  async onQueryStarted(_, { queryFulfilled }) {
+    await withToast(queryFulfilled, {
+      error: "Không thể tải hợp đồng thuê.",
+    });
+  },
+}),
 
     getCurrentResidences: build.query<Property[], string>({
       query: (cognitoId) => `tenants/${cognitoId}/current-residences`,
@@ -145,7 +157,7 @@ getProperties: build.query<
           : [{ type: "Properties", id: "LIST" }],
       async onQueryStarted(_, { queryFulfilled }) {
         await withToast(queryFulfilled, {
-          error: "Failed to fetch current residences.",
+          error: "Không thể tải danh sách nơi cư trú hiện tại.",
         });
       },
     }),
@@ -162,8 +174,8 @@ getProperties: build.query<
       invalidatesTags: (result) => [{ type: "Tenants", id: result?.id }],
       async onQueryStarted(_, { queryFulfilled }) {
         await withToast(queryFulfilled, {
-          success: "Settings updated successfully!",
-          error: "Failed to update settings.",
+          success: "Cập nhật cài đặt thành công!",
+          error: "Không thể cập nhật cài đặt.",
         });
       },
     }),
@@ -182,8 +194,8 @@ getProperties: build.query<
       ],
       async onQueryStarted(_, { queryFulfilled }) {
         await withToast(queryFulfilled, {
-          success: "Added to favorites!!",
-          error: "Failed to add to favorites",
+          success: "Đã thêm vào danh sách yêu thích!",
+          error: "Không thể thêm vào danh sách yêu thích.",
         });
       },
     }),
@@ -202,8 +214,8 @@ getProperties: build.query<
       ],
       async onQueryStarted(_, { queryFulfilled }) {
         await withToast(queryFulfilled, {
-          success: "Removed from favorites!",
-          error: "Failed to remove from favorites.",
+          success: "Đã xóa khỏi danh sách yêu thích!",
+          error: "Không thể xóa khỏi danh sách yêu thích.",
         });
       },
     }),
@@ -220,7 +232,7 @@ getProperties: build.query<
           : [{ type: "Properties", id: "LIST" }],
       async onQueryStarted(_, { queryFulfilled }) {
         await withToast(queryFulfilled, {
-          error: "Failed to load manager profile.",
+          error: "Không tải được hồ sơ quản lý.",
         });
       },
     }),
@@ -237,8 +249,8 @@ getProperties: build.query<
       invalidatesTags: (result) => [{ type: "Managers", id: result?.id }],
       async onQueryStarted(_, { queryFulfilled }) {
         await withToast(queryFulfilled, {
-          success: "Settings updated successfully!",
-          error: "Failed to update settings.",
+          success: "Đã cập nhật cài đặt thành công!",
+          error: "Không thể cập nhật cài đặt.",
         });
       },
     }),
@@ -255,8 +267,8 @@ getProperties: build.query<
       ],
       async onQueryStarted(_, { queryFulfilled }) {
         await withToast(queryFulfilled, {
-          success: "Property created successfully!",
-          error: "Failed to create property.",
+          success: "Đăng tin bất động sản thành công!",
+          error: "Không thể đăng tin bất động sản.",
         });
       },
     }),
@@ -267,7 +279,7 @@ getProperties: build.query<
       providesTags: ["Leases"],
       async onQueryStarted(_, { queryFulfilled }) {
         await withToast(queryFulfilled, {
-          error: "Failed to fetch leases.",
+          error: "Lỗi tải danh sách hợp đồng thuê.",
         });
       },
     }),
@@ -277,7 +289,7 @@ getProperties: build.query<
       providesTags: ["Leases"],
       async onQueryStarted(_, { queryFulfilled }) {
         await withToast(queryFulfilled, {
-          error: "Failed to fetch property leases.",
+          error: "Lỗi tải hợp đồng thuê của bất động sản.",
         });
       },
     }),
@@ -287,10 +299,12 @@ getProperties: build.query<
       providesTags: ["Payments"],
       async onQueryStarted(_, { queryFulfilled }) {
         await withToast(queryFulfilled, {
-          error: "Failed to fetch payment info.",
+          error: "Lỗi tải danh sách thanh toán.",
         });
       },
     }),
+
+
 
     // application related endpoints
     getApplications: build.query<
@@ -311,7 +325,7 @@ getProperties: build.query<
       providesTags: ["Applications"],
       async onQueryStarted(_, { queryFulfilled }) {
         await withToast(queryFulfilled, {
-          error: "Failed to fetch applications.",
+          error: "Lỗi tải danh sách đơn đăng ký.",
         });
       },
     }),
@@ -328,8 +342,8 @@ getProperties: build.query<
       invalidatesTags: ["Applications", "Leases"],
       async onQueryStarted(_, { queryFulfilled }) {
         await withToast(queryFulfilled, {
-          success: "Application status updated successfully!",
-          error: "Failed to update application settings.",
+          success: "Cập nhật trạng thái đơn đăng ký thành công!",
+          error: "Cập nhật trạng thái đơn đăng ký thất bại.",
         });
       },
     }),
@@ -343,8 +357,8 @@ getProperties: build.query<
       invalidatesTags: ["Applications"],
       async onQueryStarted(_, { queryFulfilled }) {
         await withToast(queryFulfilled, {
-          success: "Application created successfully!",
-          error: "Failed to create applications.",
+          success: "Đơn đăng ký đã được tạo thành công!",
+          error: "Không thể tạo đơn đăng ký.",
         });
       },
     }),
@@ -380,6 +394,8 @@ deleteProperty: build.mutation<void, string>({
   }),
 });
 
+
+
 export const {
   useDeletePropertyMutation,
   useDeleteApplicationMutation,
@@ -400,4 +416,6 @@ export const {
   useGetApplicationsQuery,
   useUpdateApplicationStatusMutation,
   useCreateApplicationMutation,
+  useGetTenantContractsQuery,
+
 } = api;

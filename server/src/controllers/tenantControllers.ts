@@ -81,43 +81,38 @@ export const getCurrentResidences = async (
 ): Promise<void> => {
   try {
     const { cognitoId } = req.params;
+
+    // Lấy tất cả property mà tenant đó đang thuê
     const properties = await prisma.property.findMany({
       where: { tenants: { some: { cognitoId } } },
       include: {
-        location: true,
+        location: true, // Bảng location đã có latitude và longitude
       },
     });
 
-    const residencesWithFormattedLocation = await Promise.all(
-      properties.map(async (property) => {
-        const coordinates: { coordinates: string }[] =
-          await prisma.$queryRaw`SELECT ST_asText(coordinates) as coordinates from "Location" where id = ${property.location.id}`;
+    // Format kết quả trả về (không cần queryRaw hay wktToGeoJSON)
+    const residences = properties.map((property) => ({
+      ...property,
+      location: {
+        id: property.location.id,
+        address: property.location.address,
+        city: property.location.city,
+        state: property.location.state,
+        country: property.location.country,
+        postalCode: property.location.postalCode,
+        latitude: property.location.latitude,
+        longitude: property.location.longitude,
+      },
+    }));
 
-        const geoJSON: any = wktToGeoJSON(coordinates[0]?.coordinates || "");
-        const longitude = geoJSON.coordinates[0];
-        const latitude = geoJSON.coordinates[1];
-
-        return {
-          ...property,
-          location: {
-            ...property.location,
-            coordinates: {
-              longitude,
-              latitude,
-            },
-          },
-        };
-      })
-    );
-
-    res.json(residencesWithFormattedLocation);
+    res.json(residences);
   } catch (err: any) {
-    res
-      .status(500)
-      .json({ message: `Error retrieving manager properties: ${err.message}` });
+    console.error("❌ Error retrieving current residences:", err);
+    res.status(500).json({
+      message: `Error retrieving current residences: ${err.message}`,
+    });
   }
 };
-
 export const addFavoriteProperty = async (
   req: Request,
   res: Response
@@ -181,5 +176,40 @@ export const removeFavoriteProperty = async (
     res
       .status(500)
       .json({ message: `Error removing favorite property: ${err.message}` });
+  }
+};
+
+// Lấy hợp đồng thuê (leases) và property của tenant
+export const getTenantContracts = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const { cognitoId } = req.params;
+
+    const tenant = await prisma.tenant.findUnique({
+      where: { cognitoId },
+      include: {
+        leases: {
+          include: {
+            property: true, // lấy thông tin bất động sản kèm lease
+          },
+        },
+        properties: true, // các property tenant sở hữu nếu có
+      },
+    });
+
+    if (!tenant) {
+      res.status(404).json({ message: "Tenant not found" });
+      return;
+    }
+
+    res.status(200).json({
+      tenant,
+      leases: tenant.leases,
+      properties: tenant.properties,
+    });
+  } catch (error: any) {
+    res.status(500).json({ message: `Error retrieving tenant contracts: ${error.message}` });
   }
 };

@@ -46,8 +46,8 @@ const ApplicationCard = ({
               </div>
             </div>
             <div className="text-xl font-semibold">
-              ${application.property.pricePerMonth}{" "}
-              <span className="text-sm font-normal">/ month</span>
+              {application.property.pricePerMonth}{" "}
+              <span className="text-sm font-normal"> VNĐ / Tháng</span>
             </div>
           </div>
         </div>
@@ -63,7 +63,12 @@ const ApplicationCard = ({
               <span
                 className={`px-2 py-1 ${statusColor} text-white rounded-full text-sm`}
               >
-                {application.status}
+               {application.status === "Approved"
+                ? "Đã phê duyệt"
+                : application.status === "Denied"
+               ? "Bị từ chối"
+               : "Đang chờ duyệt"
+               }
               </span>
             </div>
             <hr className="mt-3" />
@@ -89,17 +94,17 @@ const ApplicationCard = ({
         <div className="flex flex-col justify-start gap-5 w-full lg:basis-3/12 lg:h-48 py-2">
           <div>
             <div className="text-lg font-semibold">
-              {userType === "manager" ? "Tenant" : "Manager"}
+            {userType === "manager" ? "Người thuê" : "Người quản lý"}
             </div>
             <hr className="mt-3" />
           </div>
           <div className="flex gap-4">
             <div>
               <Image
-                src="/landing-i1.png"
+                src="/landing-i7.png"
                 alt={contactPerson.name}
-                width={40}
-                height={40}
+                width={100}
+                height={100}
                 className="rounded-full mr-2 min-w-[40px] min-h-[40px]"
               />
             </div>

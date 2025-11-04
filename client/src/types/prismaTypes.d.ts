@@ -87,7 +87,8 @@ export const Amenity: {
   Gym: 'Gym',
   Parking: 'Parking',
   PetsAllowed: 'PetsAllowed',
-  WiFi: 'WiFi'
+  WiFi: 'WiFi',
+  CloseToTransit: 'CloseToTransit'
 };
 
 export type Amenity = (typeof Amenity)[keyof typeof Amenity]

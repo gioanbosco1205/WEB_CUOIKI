@@ -53,7 +53,7 @@ const FeaturesSection = () => {
                   'Truy cập vào các đánh giá và xếp hạng của người dùng để hiểu rõ hơn',
                   'Tìm danh sách cho thuê đáng tin cậy và đã được xác minh để đảm bảo trải nghiệm ,'
                 ][index]}
-                linkText={['Explore', 'Search', 'Discover'][index]}
+                linkText={['Xem thêm', 'Tìm phòng', 'Khám phá thêm'][index]}
                 linkHref={['/explore', '/search', '/discover'][index]}
               />
             </motion.div>

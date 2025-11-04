@@ -108,14 +108,29 @@ const NewProperty = () => {
             <div className="space-y-6">
               <h2 className="text-lg font-semibold mb-4">Chi tiết bất động sản</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <CustomFormField name="beds" label="Số phòng ngủ" type="number" />
-                <CustomFormField name="baths" label="Số phòng tắm" type="number" />
-                <CustomFormField name="squareFeet" label="Diện tích (m²)" type="number" />
+                <CustomFormField 
+                    name="beds" 
+                    label="Số phòng ngủ"
+                    type="number" />
+                <CustomFormField  
+                    name="baths" 
+                    label="Số phòng tắm" 
+                    type="number" />
+                <CustomFormField 
+                name="squareFeet" 
+                label="Diện tích (m²)" 
+                type="number" />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                <CustomFormField name="isPetsAllowed" label="Cho phép thú cưng" type="switch" />
-                <CustomFormField name="isParkingIncluded" label="Bao gồm chỗ đậu xe" type="switch" />
+                <CustomFormField 
+                name="isPetsAllowed" 
+                label="Cho phép thú cưng" 
+                type="switch" />
+                <CustomFormField 
+                name="isParkingIncluded" 
+                label="Bao gồm chỗ đậu xe" 
+                type="switch" />
               </div>
 
               <div className="mt-4">
@@ -163,7 +178,11 @@ const NewProperty = () => {
             {/* Ảnh */}
             <div>
               <h2 className="text-lg font-semibold mb-4">Hình ảnh bất động sản</h2>
-              <CustomFormField name="photoUrls" label="Tải ảnh lên" type="file" accept="image/*" />
+              <CustomFormField 
+                name="photoUrls" 
+                label="Tải ảnh lên" 
+                type="file" 
+                accept="image/*" />
             </div>
 
             <hr className="my-6 border-gray-200" />

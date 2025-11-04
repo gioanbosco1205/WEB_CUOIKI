@@ -37,7 +37,7 @@ const Applications = () => {
   };
 
   if (isLoading) return <Loading />;
-  if (isError || !applications) return <div>Error fetching applications</div>;
+  if (isError || !applications) return <div>Lỗi tìm đơn đăng ký</div>;
 
   const filteredApplications = applications?.filter((application) => {
     if (activeTab === "all") return true;
@@ -90,7 +90,7 @@ const Applications = () => {
                       <div className="flex flex-wrap items-center">
                         <File className="w-5 h-5 mr-2 flex-shrink-0" />
                         <span className="mr-2">
-                          Application submitted on{" "}
+                            Đơn đăng ký được nộp vào ngày{" "}
                           {new Date(
                             application.applicationDate
                           ).toLocaleDateString()}
@@ -107,11 +107,11 @@ const Applications = () => {
                           }`}
                         >
                           {application.status === "Approved" &&
-                            "This application has been approved."}
+                            "Đơn của bạn đã được chấp nhận."}
                           {application.status === "Denied" &&
-                            "This application has been denied."}
+                            "Đơn của bạn đã bị từ chối."}
                           {application.status === "Pending" &&
-                            "This application is pending review."}
+                            "Đơn của bạn đang được chờ xem xét."}
                         </span>
                       </div>
                     </div>
@@ -125,7 +125,7 @@ const Applications = () => {
                         scroll={false}
                       >
                         <Hospital className="w-5 h-5 mr-2" />
-                        Property Details
+                        Chi tiết tài sản
                       </Link>
                       {application.status === "Approved" && (
                         <button
@@ -133,7 +133,7 @@ const Applications = () => {
                           rounded-md flex items-center justify-center hover:bg-primary-700 hover:text-primary-50`}
                         >
                           <Download className="w-5 h-5 mr-2" />
-                          Download Agreement
+                          Tải xuống hợp đồng 
                         </button>
                       )}
                       {application.status === "Pending" && (
@@ -144,7 +144,7 @@ const Applications = () => {
                               handleStatusChange(application.id, "Approved")
                             }
                           >
-                            Approve
+                            Chấp thuận
                           </button>
                           <button
                             className="px-4 py-2 text-sm text-white bg-red-600 rounded hover:bg-red-500"
@@ -152,7 +152,7 @@ const Applications = () => {
                               handleStatusChange(application.id, "Denied")
                             }
                           >
-                            Deny
+                            Từ chối 
                           </button>
                         </>
                       )}
