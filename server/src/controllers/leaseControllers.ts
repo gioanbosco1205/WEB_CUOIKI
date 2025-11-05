@@ -46,3 +46,34 @@ export const getLeasePayments = async (
       .json({ message: `Error retrieving lease payments: ${error.message}` });
   }
 };
+
+export const getLeaseContract = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { id } = req.params; // id này là propertyId được truyền từ frontend
+
+    const lease = await prisma.lease.findFirst({
+      where: { propertyId: Number(id) }, // lấy lease theo propertyId
+      include: {
+        tenant: true,
+        property: true,
+      },
+    });
+
+    if (!lease) {
+      res.status(404).json({ message: "Không tìm thấy hợp đồng thuê." });
+      return;
+    }
+
+    res.json({
+      leaseId: lease.id,
+      startDate: lease.startDate,
+      endDate: lease.endDate,
+      rent: lease.rent,
+      deposit: lease.deposit,
+      tenant: lease.tenant,
+      property: lease.property,
+    });
+  } catch (error: any) {
+    res.status(500).json({ message: `Lỗi khi lấy hợp đồng thuê: ${error.message}` });
+  }
+};

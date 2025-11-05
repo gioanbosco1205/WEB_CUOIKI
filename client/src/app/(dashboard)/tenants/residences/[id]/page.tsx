@@ -115,8 +115,8 @@ const ResidenceCard = ({
             </div>
           </div>
           <div className="text-xl font-bold">
-            ${currentLease.rent}{" "}
-            <span className="text-gray-500 text-sm font-normal">/ Tháng</span>
+            {currentLease.rent}{" "}
+            <span className="text-gray-500 text-sm font-normal"> VNĐ / Tháng</span>
           </div>
         </div>
       </div>
@@ -207,19 +207,28 @@ const BillingHistory = ({ payments }: { payments: Payment[] }) => {
                   </div>
                 </TableCell>
                 <TableCell>
-                  <span
-                    className={`px-2 py-1 rounded-full text-xs font-semibold border ${
-                      payment.paymentStatus === "Paid"
-                        ? "bg-green-100 text-green-800 border-green-300"
-                        : "bg-yellow-100 text-yellow-800 border-yellow-300"
-                    }`}
-                  >
-                    {payment.paymentStatus === "Paid" ? (
-                      <Check className="w-4 h-4 inline-block mr-1" />
-                    ) : null}
-                    {payment.paymentStatus}
-                  </span>
+               <span
+                className={`px-2 py-1 rounded-full text-xs font-semibold border ${
+                payment.paymentStatus === "Paid"
+               ? "bg-green-100 text-green-800 border-green-300"
+               : payment.paymentStatus === "Pending"
+                  ? "bg-yellow-100 text-yellow-800 border-yellow-300"
+                  : "bg-red-100 text-red-800 border-red-300"
+                  }`}
+                >
+                {payment.paymentStatus === "Paid" ? (
+                <Check className="w-4 h-4 inline-block mr-1" />
+                ) : null}
+
+                  {/* 🔹 Dịch sang tiếng Việt */}
+                  {payment.paymentStatus === "Paid"
+                 ? "Đã thanh toán"
+                  : payment.paymentStatus === "Pending"
+                  ? "Đang chờ"
+                  : "Thất bại"}
+                 </span>
                 </TableCell>
+
                 <TableCell>
                   {new Date(payment.paymentDate).toLocaleDateString()}
                 </TableCell>
@@ -227,7 +236,7 @@ const BillingHistory = ({ payments }: { payments: Payment[] }) => {
                 <TableCell>
                   <button className="border border-gray-300 text-gray-700 py-2 px-4 rounded-md flex items-center justify-center font-semibold hover:bg-primary-700 hover:text-primary-50">
                     <ArrowDownToLineIcon className="w-4 h-4 mr-1" />
-                    Download
+                    Tải xuống
                   </button>
                 </TableCell>
               </TableRow>

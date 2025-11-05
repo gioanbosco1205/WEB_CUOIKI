@@ -18,6 +18,7 @@ import { Search } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import {PropertyTypeLabels,PropertyTypeValues} from "@/lib/constants"
 
 const FiltersFull = () => {
   const dispatch = useDispatch();
@@ -108,30 +109,34 @@ const FiltersFull = () => {
 
         {/* Loại hình phòng */}
         <div>
-          <h4 className="font-bold mb-2">Loại hình chỗ ở</h4>
-          <div className="grid grid-cols-2 gap-4">
-            {Object.entries(PropertyTypeIcons).map(([type, Icon]) => (
-              <div
-                key={type}
-                className={cn(
-                  "flex flex-col items-center justify-center p-4 border rounded-xl cursor-pointer",
-                  localFilters.roomType === type
-                    ? "border-black bg-primary-100"
-                    : "border-gray-200 bg-white"
-                )}
-                onClick={() =>
-                  setLocalFilters((prev) => ({
-                    ...prev,
-                    roomType: prev.roomType === type ? "" : type,
-                  }))
-                }
-              >
-                <Icon className="w-6 h-6 mb-2" />
-                <span>{type}</span>
-              </div>
-            ))}
-          </div>
-        </div>
+  <h4 className="font-bold mb-2">Loại hình chỗ ở</h4>
+  <div className="grid grid-cols-2 gap-4">
+    {Object.entries(PropertyTypeIcons).map(([type, Icon]) => (
+      <div
+        key={PropertyTypeValues[type as PropertyTypeEnum]} // key đúng
+        className={cn(
+          "flex flex-col items-center justify-center p-4 border rounded-xl cursor-pointer",
+          localFilters.roomType === PropertyTypeValues[type as PropertyTypeEnum] // so sánh với giá trị backend
+            ? "border-black bg-primary-100"
+            : "border-gray-200 bg-white"
+        )}
+        onClick={() =>
+          setLocalFilters((prev) => ({
+            ...prev,
+            roomType:
+              prev.roomType === PropertyTypeValues[type as PropertyTypeEnum]
+                ? ""
+                : PropertyTypeValues[type as PropertyTypeEnum], // lưu giá trị đúng
+          }))
+        }
+      >
+        <Icon className="w-6 h-6 mb-2" />
+        <span>{PropertyTypeLabels[type as PropertyTypeEnum]}</span> {/* vẫn hiển thị nhãn */}
+      </div>
+    ))}
+  </div>
+</div>
+
 
         {/* Giá tiền */}
         <div>

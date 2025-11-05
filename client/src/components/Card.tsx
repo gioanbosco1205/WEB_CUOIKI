@@ -83,7 +83,7 @@ const Card = ({
             </span>
           </div>
           <p className="text-lg font-bold mb-3">
-            ${property.pricePerMonth.toFixed(0)}{" "}
+            {property.pricePerMonth.toFixed(0)} VNĐ {" "}
             <span className="text-gray-600 text-base font-normal"> /Tháng</span>
           </p>
         </div>

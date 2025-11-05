@@ -76,41 +76,42 @@ export const api = createApi({
     }),
 
     // property related endpoints
-    getProperties: build.query<
-      Property[],
-      Partial<FiltersState> & { favoriteIds?: number[] }
-    >({
-      query: (filters) => {
-        const params = cleanParams({
-          location: filters.location,
-          priceMin: filters.pricePerMonth?.[0],
-          priceMax: filters.pricePerMonth?.[1],
-          amenities: Array.isArray(filters.amenities)
-            ? filters.amenities.join(",")
-            : "",
-          availableFrom: filters.availableFrom,
-          favoriteIds: filters.favoriteIds?.join(","),
-          ...(filters.latitude && filters.longitude
-            ? { latitude: filters.latitude, longitude: filters.longitude }
-            : {}),
-        });
-        
+getProperties: build.query<
+  Property[],
+  Partial<FiltersState> & { favoriteIds?: number[] }
+>({
+  query: (filters) => {
+    const params = cleanParams({
+      location: filters.location,
+      priceMin: filters.pricePerMonth?.[0],
+      priceMax: filters.pricePerMonth?.[1],
+      amenities: Array.isArray(filters.amenities)
+        ? filters.amenities.join(",")
+        : "",
+      availableFrom: filters.availableFrom,
+      favoriteIds: filters.favoriteIds?.join(","),
+      latitude: filters.latitude,
+      longitude: filters.longitude,
+      limit: 1000, // <-- thêm dòng này để fetch nhiều hơn 25
+      offset: 0,   // <-- nếu backend hỗ trợ phân trang
+    });
 
-        return { url: "properties", params };
-      },
-      providesTags: (result) =>
-        result
-          ? [
-              ...result.map(({ id }) => ({ type: "Properties" as const, id })),
-              { type: "Properties", id: "LIST" },
-            ]
-          : [{ type: "Properties", id: "LIST" }],
-      async onQueryStarted(_, { queryFulfilled }) {
-        await withToast(queryFulfilled, {
-          error: "Tải danh sách bất động sản thất bại.",
-        });
-      },
-    }),
+    return { url: "properties", params };
+  },
+  providesTags: (result) =>
+    result
+      ? [
+          ...result.map(({ id }) => ({ type: "Properties" as const, id })),
+          { type: "Properties", id: "LIST" },
+        ]
+      : [{ type: "Properties", id: "LIST" }],
+  async onQueryStarted(_, { queryFulfilled }) {
+    await withToast(queryFulfilled, {
+      error: "Failed to fetch properties.",
+    });
+  },
+}),
+
 
     getProperty: build.query<Property, number>({
       query: (id) => `properties/${id}`,
@@ -132,6 +133,18 @@ export const api = createApi({
         });
       },
     }),
+
+    getTenantContracts: build.query<
+  { tenant: Tenant; leases: Lease[]; properties: Property[] },
+  string // tenantCognitoId
+>({
+query: (cognitoId) => `api/tenants/contracts/${cognitoId}`,
+  async onQueryStarted(_, { queryFulfilled }) {
+    await withToast(queryFulfilled, {
+      error: "Không thể tải hợp đồng thuê.",
+    });
+  },
+}),
 
     getCurrentResidences: build.query<Property[], string>({
       query: (cognitoId) => `tenants/${cognitoId}/current-residences`,
@@ -291,6 +304,8 @@ export const api = createApi({
       },
     }),
 
+
+
     // application related endpoints
     getApplications: build.query<
       Application[],
@@ -379,6 +394,8 @@ deleteProperty: build.mutation<void, string>({
   }),
 });
 
+
+
 export const {
   useDeletePropertyMutation,
   useDeleteApplicationMutation,
@@ -399,4 +416,6 @@ export const {
   useGetApplicationsQuery,
   useUpdateApplicationStatusMutation,
   useCreateApplicationMutation,
+  useGetTenantContractsQuery,
+
 } = api;

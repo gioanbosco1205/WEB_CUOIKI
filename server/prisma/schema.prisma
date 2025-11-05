@@ -41,6 +41,8 @@ enum Amenity {
   Parking
   PetsAllowed
   WiFi
+  CloseToTransit
+
 }
 
 enum PropertyType {
