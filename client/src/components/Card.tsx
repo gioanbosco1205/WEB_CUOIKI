@@ -45,9 +45,8 @@ const Card = ({
             onClick={onFavoriteToggle}
           >
             <Heart
-              className={`w-5 h-5 ${
-                isFavorite ? "text-red-500 fill-red-500" : "text-gray-600"
-              }`}
+              className={`w-5 h-5 ${isFavorite ? "text-red-500 fill-red-500" : "text-gray-600"
+                }`}
             />
           </button>
         )}
@@ -72,21 +71,21 @@ const Card = ({
           {property?.location?.address}, {property?.location?.city}
         </p>
         {/*Đánh giá sao + Giá*/}
-        <div className="flex justify-between items-center">
-          <div className="flex items-center mb-2">
+        <div className="flex flex-col justify-between">
+          <p className="text-lg font-bold mb-1">
+            {property.pricePerMonth.toLocaleString("vi-VN")}
+            <span className="text-gray-600 text-base font-normal"> VNĐ/Tháng</span>
+          </p>
+
+          <div className="flex items-center mt-1">
             <Star className="w-4 h-4 text-yellow-400 mr-1" />
-            <span className="font-semibold">
-              {property.averageRating.toFixed(1)}
-            </span>
+            <span className="font-semibold">{property.averageRating.toFixed(1)}</span>
             <span className="text-gray-600 ml-1">
               ({property.numberOfReviews} Reviews)
             </span>
           </div>
-          <p className="text-lg font-bold mb-3">
-            ${property.pricePerMonth.toFixed(0)}{" "}
-            <span className="text-gray-600 text-base font-normal"> /Tháng</span>
-          </p>
         </div>
+
         <hr />
         <div className="flex justify-between items-center gap-4 text-gray-600 mt-5">
           <span className="flex items-center">

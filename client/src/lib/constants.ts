@@ -57,6 +57,14 @@ export const PropertyTypeIcons: Record<PropertyTypeEnum, LucideIcon> = {
   [PropertyTypeEnum.DORMITORY]: Users,
   [PropertyTypeEnum.SLEEPBOX]: BedSingle,
 }
+export const PropertyTypeValues: Record<PropertyTypeEnum, string> = {
+  [PropertyTypeEnum.ROOM]: "phong_tro",
+  [PropertyTypeEnum.MINI_APARTMENT]: "can_ho",
+  [PropertyTypeEnum.HOUSE]: "nha_nguyen_can",
+  [PropertyTypeEnum.APARTMENT]: "chung_cu",
+  [PropertyTypeEnum.DORMITORY]: "ky_tuc_xa",
+  [PropertyTypeEnum.SLEEPBOX]: "sleepbox",
+}
 
 /* =========================
  🎯 Tiện ích (Amenities)
@@ -73,6 +81,7 @@ export enum AmenityEnum {
   Parking = "Parking",
   PetsAllowed = "PetsAllowed",
   WiFi = "WiFi",
+  
 }
 
 export const AmenityLabels: Record<AmenityEnum, string> = {

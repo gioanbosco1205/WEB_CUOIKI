@@ -150,7 +150,7 @@ const PropertyTenants = () => {
                       items-center justify-center font-semibold hover:bg-primary-700 hover:text-primary-50`}
                       >
                         <ArrowDownToLine className="w-4 h-4 mr-1" />
-                        Download Agreement
+                        Tải hợp đồng
                       </button>
                     </TableCell>
                   </TableRow>
