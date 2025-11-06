@@ -45,9 +45,8 @@ const Card = ({
             onClick={onFavoriteToggle}
           >
             <Heart
-              className={`w-5 h-5 ${
-                isFavorite ? "text-red-500 fill-red-500" : "text-gray-600"
-              }`}
+              className={`w-5 h-5 ${isFavorite ? "text-red-500 fill-red-500" : "text-gray-600"
+                }`}
             />
           </button>
         )}
@@ -83,8 +82,8 @@ const Card = ({
             </span>
           </div>
           <p className="text-lg font-bold mb-3">
-            {property.pricePerMonth.toFixed(0)} VNĐ {" "}
-            <span className="text-gray-600 text-base font-normal"> /Tháng</span>
+            {property.pricePerMonth.toLocaleString("vi-VN")} 
+            <span className="text-gray-600 text-base font-normal">VNĐ/Tháng</span>
           </p>
         </div>
         <hr />

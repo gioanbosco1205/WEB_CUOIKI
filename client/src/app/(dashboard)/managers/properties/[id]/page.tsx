@@ -128,7 +128,7 @@ const PropertyTenants = () => {
                       </div>
                       <div>{new Date(lease.endDate).toLocaleDateString()}</div>
                     </TableCell>
-                    <TableCell>${lease.rent.toFixed(2)}</TableCell>
+                    <TableCell>{lease.rent.toLocaleString()}Vnd/Tháng</TableCell>
                     <TableCell>
                       <span
                         className={`px-2 py-1 rounded-full text-xs font-semibold ${
@@ -150,7 +150,7 @@ const PropertyTenants = () => {
                       items-center justify-center font-semibold hover:bg-primary-700 hover:text-primary-50`}
                       >
                         <ArrowDownToLine className="w-4 h-4 mr-1" />
-                        Download Agreement
+                        Tải hợp đồng
                       </button>
                     </TableCell>
                   </TableRow>

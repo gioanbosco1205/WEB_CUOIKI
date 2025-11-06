@@ -18,7 +18,8 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@fortawesome/*": ["./node_modules/@fortawesome/*"]
     },
     "typeRoots": ["./node_modules/@types", "./src/types"],
     "types": [],
