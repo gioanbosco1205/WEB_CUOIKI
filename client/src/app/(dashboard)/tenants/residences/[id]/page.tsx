@@ -220,7 +220,6 @@ const BillingHistory = ({ payments }: { payments: Payment[] }) => {
                 <Check className="w-4 h-4 inline-block mr-1" />
                 ) : null}
 
-                  {/* 🔹 Dịch sang tiếng Việt */}
                   {payment.paymentStatus === "Paid"
                  ? "Đã thanh toán"
                   : payment.paymentStatus === "Pending"
@@ -232,7 +231,7 @@ const BillingHistory = ({ payments }: { payments: Payment[] }) => {
                 <TableCell>
                   {new Date(payment.paymentDate).toLocaleDateString()}
                 </TableCell>
-                <TableCell>${payment.amountPaid.toFixed(2)}</TableCell>
+                <TableCell>{payment.amountPaid} VNĐ</TableCell>
                 <TableCell>
                   <button className="border border-gray-300 text-gray-700 py-2 px-4 rounded-md flex items-center justify-center font-semibold hover:bg-primary-700 hover:text-primary-50">
                     <ArrowDownToLineIcon className="w-4 h-4 mr-1" />
