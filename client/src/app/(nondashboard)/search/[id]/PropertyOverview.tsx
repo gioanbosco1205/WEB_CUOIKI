@@ -49,7 +49,7 @@ const PropertyOverview = ({ propertyId }: PropertyOverviewProps) => {
           <div>
             <div className="text-sm text-gray-500">Giá thuê hàng tháng </div>
             <div className="font-semibold">
-              ${property.pricePerMonth.toLocaleString()}
+              {property.pricePerMonth.toLocaleString()} VNĐ
             </div>
           </div>
           <div className="border-l border-gray-300 h-10"></div>

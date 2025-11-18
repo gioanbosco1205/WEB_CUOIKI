@@ -134,18 +134,6 @@ getProperties: build.query<
       },
     }),
 
-    getTenantContracts: build.query<
-  { tenant: Tenant; leases: Lease[]; properties: Property[] },
-  string // tenantCognitoId
->({
-query: (cognitoId) => `api/tenants/contracts/${cognitoId}`,
-  async onQueryStarted(_, { queryFulfilled }) {
-    await withToast(queryFulfilled, {
-      error: "Không thể tải hợp đồng thuê.",
-    });
-  },
-}),
-
     getCurrentResidences: build.query<Property[], string>({
       query: (cognitoId) => `tenants/${cognitoId}/current-residences`,
       providesTags: (result) =>
@@ -304,8 +292,6 @@ query: (cognitoId) => `api/tenants/contracts/${cognitoId}`,
       },
     }),
 
-
-
     // application related endpoints
     getApplications: build.query<
       Application[],
@@ -416,6 +402,4 @@ export const {
   useGetApplicationsQuery,
   useUpdateApplicationStatusMutation,
   useCreateApplicationMutation,
-  useGetTenantContractsQuery,
-
 } = api;
