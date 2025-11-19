@@ -6,12 +6,13 @@ import { useAppSelector } from "@/state/redux";
 import { useGetPropertiesQuery } from "@/state/api";
 import { Property } from "@/types/prismaTypes";
 
-
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN as string;
-
 
 const Map = () => {
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
+  const currentPopupRef = useRef<mapboxgl.Popup | null>(null);
+  const isInsidePopupRef = useRef(false);
+
   const filters = useAppSelector((state) => state.global.filters);
   const { data: properties, isLoading, isError } = useGetPropertiesQuery(filters);
 
@@ -28,11 +29,52 @@ const Map = () => {
       zoom: 13,
     });
 
-    // Tạo marker cho từng property
     properties.forEach((property) => {
       const marker = createPropertyMarker(property, map);
-      const markerElement = marker.getElement();
-      const path = markerElement.querySelector("path[fill='#3FB1CE']");
+      const markerEl = marker.getElement();
+      const popup = marker.getPopup();
+      if (!popup) return;
+
+      const lngLat = [property.location.longitude, property.location.latitude] as [number, number];
+
+      /** 🟩 Hover vào marker → mở popup */
+      markerEl.addEventListener("mouseenter", () => {
+        // Đóng popup cũ nếu có
+        if (currentPopupRef.current && currentPopupRef.current !== popup) {
+          currentPopupRef.current.remove();
+        }
+
+        popup.setLngLat(lngLat).addTo(map);
+        currentPopupRef.current = popup;
+
+        const popupEl = popup.getElement();
+        if (!popupEl) return;
+
+        /** 🟩 Khi hover vào popup */
+        popupEl.onmouseenter = () => {
+          isInsidePopupRef.current = true;
+        };
+
+        /** 🟥 Khi rời popup */
+        popupEl.onmouseleave = () => {
+          isInsidePopupRef.current = false;
+          popup.remove();
+          if (currentPopupRef.current === popup) currentPopupRef.current = null;
+        };
+      });
+
+      /** 🟥 Khi rời marker → tắt popup nếu KHÔNG nằm trong popup */
+      markerEl.addEventListener("mouseleave", () => {
+        setTimeout(() => {
+          if (!isInsidePopupRef.current) {
+            popup.remove();
+            if (currentPopupRef.current === popup) currentPopupRef.current = null;
+          }
+        }, 70);
+      });
+
+      /** Đổi màu marker SVG */
+      const path = markerEl.querySelector("path[fill='#3FB1CE']");
       if (path) path.setAttribute("fill", "#000000");
     });
 
@@ -55,13 +97,13 @@ const Map = () => {
 };
 
 /**
- * Popup marker style gọn, không viền đen
+ * Popup + Marker
  */
 const createPropertyMarker = (property: Property, map: mapboxgl.Map) => {
   const imageUrl = property.photoUrls?.[0] || "/placeholder.jpg";
 
   const popupHtml = `
-    <div class="w-64 bg-white rounded-xl shadow-md overflow-hidden border-none">
+    <div class="w-full bg-white rounded-xl overflow-hidden border border-gray-200 shadow-md">
       <div class="flex">
         <img 
           src="${imageUrl}" 
@@ -69,11 +111,11 @@ const createPropertyMarker = (property: Property, map: mapboxgl.Map) => {
           class="w-24 h-24 object-cover rounded-l-xl"
           onerror="this.src='/placeholder.jpg'"
         />
-        <div class="p-2 flex flex-col justify-between border-none ">
+        <div class="p-2 flex flex-col justify-between">
           <a 
             href="/search/${property.id}" 
             target="_blank"
-            class="block text-sm font-semibold text-gray-800 hover:text-blue-600 leading-snug line-clamp-2  "
+            class="block text-sm font-semibold text-gray-800 hover:text-blue-600 leading-snug line-clamp-2"
           >
             ${property.name}
           </a>
@@ -90,12 +132,12 @@ const createPropertyMarker = (property: Property, map: mapboxgl.Map) => {
   `;
 
   const popup = new mapboxgl.Popup({
-    offset: 12,
-    closeButton: true,
+    offset: 20,
+    closeButton: false,
     className: "custom-popup",
   }).setHTML(popupHtml);
 
-  return new mapboxgl.Marker()
+  return new mapboxgl.Marker({ color: "#000000" })
     .setLngLat([property.location.longitude, property.location.latitude])
     .setPopup(popup)
     .addTo(map);

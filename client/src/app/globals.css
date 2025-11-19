@@ -247,3 +247,30 @@ body,
 [data-close-button="true"] {
   @apply bg-background border-border text-foreground hover:bg-muted;
 }
+
+/* Xóa hoàn toàn nền đen, viền đen, viền chữ của popup */
+.mapboxgl-popup,
+.mapboxgl-popup * {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Popup container trong suốt */
+.mapboxgl-popup {
+  background: transparent !important;
+}
+
+/* Tắt mũi tên */
+.mapboxgl-popup-tip {
+  display: none !important;
+}
+
+/* Tắt nền & viền content */
+.mapboxgl-popup-content {
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
