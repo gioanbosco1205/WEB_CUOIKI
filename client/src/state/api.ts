@@ -85,6 +85,7 @@ getProperties: build.query<
       location: filters.location,
       priceMin: filters.pricePerMonth?.[0],
       priceMax: filters.pricePerMonth?.[1],
+      roomType: filters.roomType, 
       amenities: Array.isArray(filters.amenities)
         ? filters.amenities.join(",")
         : "",
@@ -92,8 +93,8 @@ getProperties: build.query<
       favoriteIds: filters.favoriteIds?.join(","),
       latitude: filters.latitude,
       longitude: filters.longitude,
-      limit: 1000, // <-- thêm dòng này để fetch nhiều hơn 25
-      offset: 0,   // <-- nếu backend hỗ trợ phân trang
+      limit: 1000, 
+      offset: 0,   
     });
 
     return { url: "properties", params };

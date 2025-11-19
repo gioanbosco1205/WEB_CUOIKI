@@ -177,7 +177,11 @@ const FiltersBar = () => {
         {/* Room type */}
         <Select
   value={filters.roomType || "any"}
-  onValueChange={(v) => handleFilterChange("roomType", v, null)}
+  
+  onValueChange={(v) => {
+  console.log("Selected roomType:", v);
+  handleFilterChange("roomType", v, null);
+}}
 >
   <SelectTrigger className="w-40 rounded-xl border-primary-400">
     <SelectValue placeholder="Loại phòng" />
