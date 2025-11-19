@@ -19,10 +19,10 @@ import { cn, cleanParams } from "@/lib/utils";
 import { AmenityEnum, HighlightEnum,PropertyTypeLabels,PropertyTypeValues } from "@/lib/constants";
 
 const FiltersBar = () => {
-  const dispatch = useDispatch();
-  const router = useRouter();
+  const dispatch = useDispatch();// Dùng để gửi lệnh sửa Redux
+  const router = useRouter();// Dùng để sửa URL trình duyệt
   const pathname = usePathname();
-
+// Lấy dữ liệu từ Redux về để hiển thị
   const filters = useAppSelector((state) => state.global.filters);
   const isFiltersFullOpen = useAppSelector(
     (state) => state.global.isFiltersFullOpen

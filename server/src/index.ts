@@ -16,15 +16,15 @@ import path from "path";
 
 
 /* CONFIGURATIONS */
-dotenv.config();
-const app = express();
-app.use(express.json());
-app.use(helmet());
+dotenv.config();//được gọi đầu tiên để đảm bảo các biến môi trường có sẵn.
+const app = express();//Khởi tạo ứng dụng server.
+app.use(express.json());//dùng để phân tích các request có body là JSON.
+app.use(helmet());//Kích hoạt bảo mật helmet.
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
-app.use(morgan("common"));
+app.use(morgan("common"));//Kích hoạt morgan để ghi log theo định dạng "common".
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cors());
+app.use(cors());//Cho phép tất cả các yêu cầu từ origin khác (ví dụ: client Next.js).
 
 // Configure static file serving
 app.use('/Images', express.static('public/Images', {

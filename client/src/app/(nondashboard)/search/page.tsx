@@ -11,10 +11,10 @@ import Map from './Map';
 import Listings from './Listings';
 
 const SearchPage = () => {
-    const searchParams = useSearchParams();
-    const dispatch = useAppDispatch();
+    const searchParams = useSearchParams();// Lấy công cụ để đọc URL (?location=...)
+    const dispatch = useAppDispatch();// Lấy công cụ để gửi lệnh vào Redux
     const isFiltersFullOpen = useAppSelector(
-    (state) => state.global.isFiltersFullOpen
+    (state) => state.global.isFiltersFullOpen// Lấy trạng thái từ Redux: Sidebar có đang mở không?
     );
 
     useEffect(() => {
@@ -35,7 +35,8 @@ const SearchPage = () => {
 
     const cleanedFilters = cleanParams(initialFilters);
     dispatch(setFilters(cleanedFilters));
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    }, []); // xảy ra SAU KHI [] thay doi, vi [] rong nen chay 1 lan duy nhat
+    
 
      return (
     <div
