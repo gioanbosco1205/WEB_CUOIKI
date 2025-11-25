@@ -32,7 +32,7 @@ const AppSidebar = ({ userType }: AppSidebarProps) => {
           { icon: Building, label: "Phòng hiện tại", href: "/managers/properties" },
           {
             icon: FileText,
-            label: "Ứng dụng",
+            label: "Đơn đăng ký",
             href: "/managers/applications",
           },
           { icon: Settings, label: "Cài Đặt", href: "/managers/settings" },
@@ -44,7 +44,7 @@ const AppSidebar = ({ userType }: AppSidebarProps) => {
             label: "Ứng Dụng",
             href: "/tenants/applications",
           },
-          { icon: Home, label: "Phòng Cao Cấp ", href: "/tenants/residences" },
+          { icon: Home, label: "Nhà của bạn", href: "/tenants/residences" },
           { icon: Settings, label: "Cài Đặt", href: "/tenants/settings" },
         ];
 
