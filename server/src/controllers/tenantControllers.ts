@@ -82,15 +82,13 @@ export const getCurrentResidences = async (
   try {
     const { cognitoId } = req.params;
 
-    // Lấy tất cả property mà tenant đó đang thuê
     const properties = await prisma.property.findMany({
       where: { tenants: { some: { cognitoId } } },
       include: {
-        location: true, // Bảng location đã có latitude và longitude
+        location: true, 
       },
     });
 
-    // Format kết quả trả về (không cần queryRaw hay wktToGeoJSON)
     const residences = properties.map((property) => ({
       ...property,
       location: {
@@ -176,40 +174,5 @@ export const removeFavoriteProperty = async (
     res
       .status(500)
       .json({ message: `Error removing favorite property: ${err.message}` });
-  }
-};
-
-// Lấy hợp đồng thuê (leases) và property của tenant
-export const getTenantContracts = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-  try {
-    const { cognitoId } = req.params;
-
-    const tenant = await prisma.tenant.findUnique({
-      where: { cognitoId },
-      include: {
-        leases: {
-          include: {
-            property: true, // lấy thông tin bất động sản kèm lease
-          },
-        },
-        properties: true, // các property tenant sở hữu nếu có
-      },
-    });
-
-    if (!tenant) {
-      res.status(404).json({ message: "Tenant not found" });
-      return;
-    }
-
-    res.status(200).json({
-      tenant,
-      leases: tenant.leases,
-      properties: tenant.properties,
-    });
-  } catch (error: any) {
-    res.status(500).json({ message: `Error retrieving tenant contracts: ${error.message}` });
   }
 };

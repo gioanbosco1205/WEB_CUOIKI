@@ -75,7 +75,7 @@ export const api = createApi({
       },
     }),
 
-    // property related endpoints
+    // property 
 getProperties: build.query<
   Property[],
   Partial<FiltersState> & { favoriteIds?: number[] }
@@ -85,6 +85,7 @@ getProperties: build.query<
       location: filters.location,
       priceMin: filters.pricePerMonth?.[0],
       priceMax: filters.pricePerMonth?.[1],
+      roomType: filters.roomType, 
       amenities: Array.isArray(filters.amenities)
         ? filters.amenities.join(",")
         : "",
@@ -92,8 +93,8 @@ getProperties: build.query<
       favoriteIds: filters.favoriteIds?.join(","),
       latitude: filters.latitude,
       longitude: filters.longitude,
-      limit: 1000, // <-- thêm dòng này để fetch nhiều hơn 25
-      offset: 0,   // <-- nếu backend hỗ trợ phân trang
+      limit: 1000, 
+      offset: 0,   
     });
 
     return { url: "properties", params };
@@ -133,18 +134,6 @@ getProperties: build.query<
         });
       },
     }),
-
-    getTenantContracts: build.query<
-  { tenant: Tenant; leases: Lease[]; properties: Property[] },
-  string // tenantCognitoId
->({
-query: (cognitoId) => `api/tenants/contracts/${cognitoId}`,
-  async onQueryStarted(_, { queryFulfilled }) {
-    await withToast(queryFulfilled, {
-      error: "Không thể tải hợp đồng thuê.",
-    });
-  },
-}),
 
     getCurrentResidences: build.query<Property[], string>({
       query: (cognitoId) => `tenants/${cognitoId}/current-residences`,
@@ -304,8 +293,6 @@ query: (cognitoId) => `api/tenants/contracts/${cognitoId}`,
       },
     }),
 
-
-
     // application related endpoints
     getApplications: build.query<
       Application[],
@@ -416,6 +403,4 @@ export const {
   useGetApplicationsQuery,
   useUpdateApplicationStatusMutation,
   useCreateApplicationMutation,
-  useGetTenantContractsQuery,
-
 } = api;

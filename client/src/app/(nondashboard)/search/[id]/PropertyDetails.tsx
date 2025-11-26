@@ -83,12 +83,12 @@ const PropertyDetails = ({ propertyId }: { propertyId: number }) => {
             <hr />
             <div className="flex justify-between py-2 bg-secondary-50">
               <span className="text-primary-700 font-medium">Phí đăng ký phòng</span>
-              <span className="text-primary-700">{property.applicationFee.toLocaleString()}Vnd/Tháng</span>
+              <span className="text-primary-700">{property.applicationFee} VNĐ</span>
             </div>
             <hr />
             <div className="flex justify-between py-2 bg-secondary-50">
               <span className="text-primary-700 font-medium">Tiền đặt cọc </span>
-              <span className="text-primary-700">{property.securityDeposit.toLocaleString()}Vnd/Tháng</span>
+              <span className="text-primary-700">{property.securityDeposit} VNĐ</span>
             </div>
             <hr />
           </TabsContent>

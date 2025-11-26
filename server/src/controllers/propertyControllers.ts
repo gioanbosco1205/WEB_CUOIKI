@@ -60,6 +60,15 @@ export const getProperties = async (req: Request, res: Response): Promise<void> 
     } = req.query;
 
     const whereConditions: Prisma.Sql[] = [];
+    const roomTypeMap: Record<string, string> = {
+  phong_tro: "ROOM",
+  can_ho: "MINI_APARTMENT",
+  nha_nguyen_can: "HOUSE",
+  chung_cu: "APARTMENT",
+  ky_tuc_xa: "DORMITORY",
+  sleepbox: "SLEEPBOX",
+};
+
 
     if (favoriteIds) {
       const favoriteIdsArray = (favoriteIds as string).split(",").map(Number);
@@ -77,11 +86,14 @@ export const getProperties = async (req: Request, res: Response): Promise<void> 
     if (squareFeetMax)
       whereConditions.push(Prisma.sql`p."squareFeet" <= ${Number(squareFeetMax)}`);
 
-    if (propertyType && propertyType !== "any") {
-      whereConditions.push(
-        Prisma.sql`p."propertyType" = ${propertyType}::"PropertyType"`
-      );
-    }
+    if (req.query.roomType && req.query.roomType !== "any") {
+  const enumValue = roomTypeMap[req.query.roomType as string];
+  if (enumValue) {
+    whereConditions.push(
+      Prisma.sql`p."propertyType" = ${enumValue}::"PropertyType"`
+    );
+  }
+}
 
     if (amenities && amenities !== "any") {
       const arr = (amenities as string).split(",");

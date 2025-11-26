@@ -28,13 +28,13 @@ const Residences = () => {
   });
 
   if (isLoading) return <Loading />;
-  if (error) return <div>Lỗi tải phòng cao cấp</div>;
+  if (error) return <div>Lỗi tải phòng hiện tại của bạn</div>;
 
   return (
     <div className="dashboard-container">
       <Header
-        title="Phòng cao cấp "
-        subtitle="Xem tất cả các phòng cao cấp hiện tại của bạn"
+        title="Phòng của bạn "
+        subtitle="Xem tất cả các phòng hiện tại của bạn"
       />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {currentResidences?.map((property) => (
