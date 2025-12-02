@@ -11,26 +11,11 @@ import {
 } from "@/state/api";
 import { CircleCheckBig, Download, File, Hospital } from "lucide-react";
 import Link from "next/link";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import jsPDF from "jspdf";
-import { VniTimesNormal, VniTimesBold } from "@/lib/vni-times";
+// 1. IMPORT TỪ FILE MỚI (Thay vì vni-times)
+import { fontNormal, fontBold } from "@/lib/vni-times";
 import { Application } from "@/types/application";
-
-// Hàm đăng ký font Vietnamese
-const registerVietnameseFont = () => {
-  if ((globalThis as any).vietnameseFontRegistered) return;
-
-  try {
-    const doc = new jsPDF();
-    doc.addFileToVFS("VniTimesNormal.ttf", VniTimesNormal);
-    doc.addFileToVFS("VniTimesBold.ttf", VniTimesBold);
-    doc.addFont("VniTimesNormal.ttf", "VniTimes", "normal");
-    doc.addFont("VniTimesBold.ttf", "VniTimes", "bold");
-    (globalThis as any).vietnameseFontRegistered = true;
-  } catch (err) {
-    console.error("Failed to register Vietnamese font:", err);
-  }
-};
 
 const Applications: React.FC = () => {
   const { data: authUser } = useGetAuthUserQuery();
@@ -51,10 +36,7 @@ const Applications: React.FC = () => {
 
   const [updateApplicationStatus] = useUpdateApplicationStatusMutation();
 
-  // Đăng ký font khi component mount
-  useEffect(() => {
-    registerVietnameseFont();
-  }, []);
+  // Đã xóa useEffect đăng ký font toàn cục vì không cần thiết nữa
 
   // Lọc ứng dụng theo tab
   const filteredApplications = React.useMemo(() => {
@@ -68,27 +50,50 @@ const Applications: React.FC = () => {
   const generateContractPDF = useCallback((application: Application) => {
     try {
       const doc = new jsPDF("p", "mm", "a4");
+
+      // --- BẮT ĐẦU CẤU HÌNH FONT MỚI ---
+      const fontName = "TimesNewRoman"; // Đặt tên font để dùng trong code
+
+      // 1. Thêm file font vào hệ thống file ảo của jsPDF
+      doc.addFileToVFS("TimesNewRoman-Regular.ttf", fontNormal);
+      doc.addFileToVFS("TimesNewRoman-Bold.ttf", fontBold);
+
+      // 2. Đăng ký font để sử dụng
+      doc.addFont("TimesNewRoman-Regular.ttf", fontName, "normal");
+      doc.addFont("TimesNewRoman-Bold.ttf", fontName, "bold");
+
+      // 3. Set font mặc định
+      doc.setFont(fontName, "normal");
+      // --- KẾT THÚC CẤU HÌNH FONT ---
+
       const pageWidth = doc.internal.pageSize.getWidth();
       const margin = 20;
       let y = 45;
 
-      // Sử dụng font VniTimes
-      doc.setFont("VniTimes", "normal");
+      // Tiêu đề
+      doc.setFont(fontName, "bold"); // Chuyển sang in đậm
       doc.setFontSize(22);
       doc.text("HỢP ĐỒNG THUÊ NHÀ", pageWidth / 2, 25, { align: "center" });
 
       doc.setFontSize(12);
 
-      const addLine = (label: string, value: string, bold = false) => {
-        doc.setFont("VniTimes", bold ? "bold" : "normal");
+      const addLine = (label: string, value: string, isBold = false) => {
+        // Label
+        doc.setFont(fontName, isBold ? "bold" : "normal");
         doc.text(`${label}:`, margin, y);
+        
+        // Value (Luôn để thường cho dễ đọc, hoặc sửa tùy ý)
+        doc.setFont(fontName, "normal"); 
         doc.text(value, margin + 40, y);
         y += 8;
       };
 
       addLine("Mã đơn đăng ký", `${application.id}`);
       addLine("Tài sản", application.property.name);
-      addLine("Địa chỉ", `${application.property.location.city}, ${application.property.location.country}`);
+      
+      const address = `${application.property.location.city || ""}, ${application.property.location.country || ""}`;
+      addLine("Địa chỉ", address);
+      
       addLine("Giá thuê", `${application.property.pricePerMonth.toLocaleString()} VNĐ / tháng`);
       y += 5;
 
@@ -100,22 +105,27 @@ const Applications: React.FC = () => {
       addLine("Chủ nhà / Quản lý", application.manager.name);
       y += 5;
 
-      addLine("Thời hạn hợp đồng:", "", true);
+      // Dòng tiêu đề mục
+      doc.setFont(fontName, "bold"); 
+      doc.text("Thời hạn hợp đồng:", margin, y);
+      y += 8;
+
       addLine("Từ ngày", new Date(application.lease.startDate).toLocaleDateString("vi-VN"));
       addLine("Đến ngày", new Date(application.lease.endDate).toLocaleDateString("vi-VN"));
-      addLine("Lần thanh toán tiếp theo", new Date(application.lease.nextPaymentDate).toLocaleDateString("vi-VN"));
+      addLine("Lần thanh toán tiếp theo ", new Date(application.lease.nextPaymentDate).toLocaleDateString("vi-VN"));
       y += 5;
 
       addLine("Ngày lập hợp đồng", new Date().toLocaleDateString("vi-VN"));
 
       y += 20;
       doc.setFontSize(14);
-      doc.setFont("VniTimes", "bold");
+      doc.setFont(fontName, "bold");
       doc.text("BÊN THUÊ", margin, y);
       doc.text("BÊN CHO THUÊ", pageWidth - margin - 40, y);
       y += 25;
+      
       doc.setFontSize(11);
-      doc.setFont("VniTimes", "normal");
+      doc.setFont(fontName, "normal");
       doc.text("(Ký, ghi rõ họ tên)", margin, y);
       doc.text("(Ký, ghi rõ họ tên)", pageWidth - margin - 40, y);
 
