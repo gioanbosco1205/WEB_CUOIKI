@@ -20,7 +20,7 @@ const Properties = () => {
     skip: !authUser?.cognitoInfo?.userId,
   });
 
-  // ✅ Thêm mutation xoá
+  //Thêm mutation xoá
   const [deleteProperty, { isLoading: isDeleting }] = useDeletePropertyMutation();
 
   const handleDelete = async (propertyId: string) => {

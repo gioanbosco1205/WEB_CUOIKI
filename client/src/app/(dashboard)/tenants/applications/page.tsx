@@ -89,7 +89,6 @@ const handleDelete = async (id: string) => {
                   Tải xuống hợp đồng
                 </button>
 
-                {/* 🗑️ Nút xoá */}
                 <button
                   onClick={() => handleDelete(application.id)}
                   className="bg-red-100 border border-red-300 text-red-700 py-2 px-4 rounded-md flex items-center justify-center hover:bg-red-600 hover:text-white"

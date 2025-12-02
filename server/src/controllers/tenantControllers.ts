@@ -82,15 +82,13 @@ export const getCurrentResidences = async (
   try {
     const { cognitoId } = req.params;
 
-    // Lấy tất cả property mà tenant đó đang thuê
     const properties = await prisma.property.findMany({
       where: { tenants: { some: { cognitoId } } },
       include: {
-        location: true, // Bảng location đã có latitude và longitude
+        location: true, 
       },
     });
 
-    // Format kết quả trả về (không cần queryRaw hay wktToGeoJSON)
     const residences = properties.map((property) => ({
       ...property,
       location: {

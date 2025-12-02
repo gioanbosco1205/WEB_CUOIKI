@@ -54,5 +54,4 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.listen(port, "0.0.0.0", () => {
   console.log(`Server running on port ${port}`);
 });
-// Cho phép truy cập thư mục uploads (dùng để xem ảnh local)
 
