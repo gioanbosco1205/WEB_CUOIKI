@@ -8,35 +8,11 @@ export const chatHandler = async (req: Request, res: Response): Promise<void> =>
       return;
     }
 
-    const apiMessages = messages.map((msg: any) => ({
-      role: msg.sender === "ChatGPT" ? "assistant" : "user",
-      content: msg.message,
-    }));
-
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-      },
-      body: JSON.stringify({
-        model: "gpt-3.5-turbo",
-        messages: [
-          { role: "system", content: "Bạn là trợ lý AI thân thiện, chuyên hỗ trợ sinh viên tìm phòng trọ." },
-          ...apiMessages,
-        ],
-        temperature: 0.7,
-        max_tokens: 500,
-      }),
-    });
-
-    const data = await response.json();
-    console.log("OpenAI response:", data); // 🔍 debug
-
-    const reply = data.choices?.[0]?.message?.content?.trim() || "Mình chưa hiểu.";
-    res.json({ reply });
+    // Dummy reply cho test frontend
+    res.json({ reply: "Xin chào! Đây là phản hồi thử nghiệm từ server." });
   } catch (err) {
     console.error("Chat error:", err);
     res.status(500).json({ reply: "Đã xảy ra lỗi. Vui lòng thử lại." });
   }
 };
+
