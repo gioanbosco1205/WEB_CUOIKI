@@ -110,13 +110,12 @@ export const createApplication = async (
     }
 
     const newApplication = await prisma.$transaction(async (prisma) => {
-      // Create lease first
       const lease = await prisma.lease.create({
         data: {
-          startDate: new Date(), // Today
+          startDate: new Date(), 
           endDate: new Date(
             new Date().setFullYear(new Date().getFullYear() + 1)
-          ), // 1 year from today
+          ), 
           rent: property.pricePerMonth,
           deposit: property.securityDeposit,
           property: {
@@ -128,7 +127,6 @@ export const createApplication = async (
         },
       });
 
-      // Then create application with lease connection
       const application = await prisma.application.create({
         data: {
           applicationDate: new Date(applicationDate),
