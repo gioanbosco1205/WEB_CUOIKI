@@ -7,7 +7,7 @@ import {
   ModelInfo 
 } from '../../types/chat';
 
-const OPENROUTER_API_KEY = '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';
+const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY || '';
 const BASE_URL = 'https://openrouter.ai/api/v1';
 
 // System prompt bằng tiếng Anh để tránh lỗi encoding
