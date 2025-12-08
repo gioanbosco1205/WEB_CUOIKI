@@ -3,6 +3,7 @@ import {
   getProperties,
   getProperty,
   createProperty,
+  getPropertyPayments,
 } from "../controllers/propertyControllers";
 import multer from "multer";
 import path from "path";
@@ -29,6 +30,11 @@ const router = express.Router();
 router.get("/", getProperties);
 router.get("/:id", getProperty);
 router.get("/:id/leases", authMiddleware(["manager", "tenant"]), getLeases);
+router.get(
+  "/:id/payments",
+  authMiddleware(["manager"]),
+  getPropertyPayments
+);
 
 router.post(
   "/",

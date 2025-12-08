@@ -15,7 +15,7 @@ const Card = ({
   );
 
   return (
-    <div className="bg-white rounded-xl overflow-hidden shadow-lg w-full mb-5">
+    <div className="bg-white rounded-xl overflow-hidden shadow-lg w-full h-full flex flex-col">
       <div className="relative">
         <div className="w-full h-48 relative">
           <Image
@@ -52,7 +52,7 @@ const Card = ({
         )}
       </div>
       {/*Tiêu đề + Tên Phòng */}
-      <div className="p-4">
+      <div className="p-4 flex-1 flex flex-col">
         <h2 className="text-xl font-bold mb-1">
           {propertyLink ? (
             <Link
@@ -87,7 +87,7 @@ const Card = ({
           </p>
         </div>
         <hr />
-        <div className="flex justify-between items-center gap-4 text-gray-600 mt-5">
+        <div className="flex justify-between items-center gap-4 text-gray-600 mt-auto pt-5">
           <span className="flex items-center">
             <Bed className="w-5 h-5 mr-2" />
             {property.beds} Bed

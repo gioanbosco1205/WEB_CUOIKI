@@ -11,7 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import {
-  useGetPaymentsQuery,
+  useGetPropertyPaymentsQuery,
   useGetPropertyLeasesQuery,
   useGetPropertyQuery,
 } from "@/state/api";
@@ -30,7 +30,7 @@ const PropertyTenants = () => {
   const { data: leases, isLoading: leasesLoading } =
     useGetPropertyLeasesQuery(propertyId);
   const { data: payments, isLoading: paymentsLoading } =
-    useGetPaymentsQuery(propertyId);
+    useGetPropertyPaymentsQuery(propertyId);
 
   if (propertyLoading || leasesLoading || paymentsLoading) return <Loading />;
 
@@ -155,6 +155,86 @@ const PropertyTenants = () => {
                     </TableCell>
                   </TableRow>
                 ))}
+              </TableBody>
+            </Table>
+          </div>
+        </div>
+
+        {/* Lịch sử thanh toán của căn hộ này */}
+        <div className="bg-white rounded-xl shadow-md overflow-hidden p-6">
+          <div className="flex justify-between items-center mb-4">
+            <div>
+              <h2 className="text-2xl font-bold mb-1">Lịch sử thanh toán</h2>
+              <p className="text-sm text-gray-500">
+                Các khoản thanh toán đến từ tất cả hợp đồng thuộc căn hộ này.
+              </p>
+            </div>
+            <button
+              className="bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded-md flex items-center justify-center hover:bg-primary-700 hover:text-primary-50"
+              disabled={!payments?.length}
+            >
+              <Download className="w-5 h-5 mr-2" />
+              <span>Tải xuống tất cả</span>
+            </button>
+          </div>
+          <hr className="mt-4 mb-1" />
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Hóa đơn</TableHead>
+                  <TableHead>Hợp đồng</TableHead>
+                  <TableHead>Trạng thái</TableHead>
+                  <TableHead>Ngày thanh toán</TableHead>
+                  <TableHead>Số tiền</TableHead>
+                  <TableHead>Hành động</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {payments?.map((payment) => (
+                  <TableRow key={payment.id} className="h-16">
+                    <TableCell className="font-medium">
+                      <div className="flex items-center">
+                        <Download className="w-4 h-4 mr-2" />
+                        Invoice #{payment.id}
+                      </div>
+                    </TableCell>
+                    <TableCell>Lease #{payment.leaseId}</TableCell>
+                    <TableCell>
+                      <span
+                        className={`px-2 py-1 rounded-full text-xs font-semibold border ${
+                          payment.paymentStatus === "Paid"
+                            ? "bg-green-100 text-green-800 border-green-300"
+                            : payment.paymentStatus === "Pending"
+                            ? "bg-yellow-100 text-yellow-800 border-yellow-300"
+                            : "bg-red-100 text-red-800 border-red-300"
+                        }`}
+                      >
+                        {payment.paymentStatus === "Paid" && (
+                          <Check className="w-4 h-4 inline-block mr-1" />
+                        )}
+                        {payment.paymentStatus}
+                      </span>
+                    </TableCell>
+                    <TableCell>
+                      {new Date(payment.paymentDate).toLocaleDateString()}
+                    </TableCell>
+                    <TableCell>{payment.amountPaid} VNĐ</TableCell>
+                    <TableCell>
+                      <button className="border border-gray-300 text-gray-700 py-2 px-4 rounded-md flex items-center justify-center font-semibold hover:bg-primary-700 hover:text-primary-50">
+                        <ArrowDownToLine className="w-4 h-4 mr-1" />
+                        Tải xuống
+                      </button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+                {!payments?.length && (
+                  <TableRow>
+                    <TableCell colSpan={6} className="text-center text-sm text-gray-500">
+                      Chưa có thanh toán nào cho căn hộ này.
+                    </TableCell>
+                  </TableRow>
+                )}
               </TableBody>
             </Table>
           </div>
