@@ -293,6 +293,34 @@ getProperties: build.query<
       },
     }),
 
+    getPropertyPayments: build.query<Payment[], number>({
+      query: (propertyId) => `properties/${propertyId}/payments`,
+      providesTags: ["Payments"],
+      async onQueryStarted(_, { queryFulfilled }) {
+        await withToast(queryFulfilled, {
+          error: "Lỗi tải danh sách thanh toán của bất động sản.",
+        });
+      },
+    }),
+
+    createPayment: build.mutation<
+      Payment,
+      { leaseId: number; body: Partial<Payment> }
+    >({
+      query: ({ leaseId, body }) => ({
+        url: `leases/${leaseId}/payments`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["Payments", "Leases"],
+      async onQueryStarted(_, { queryFulfilled }) {
+        await withToast(queryFulfilled, {
+          success: "Thanh toán thành công!",
+          error: "Thanh toán thất bại.",
+        });
+      },
+    }),
+
     // application related endpoints
     getApplications: build.query<
       Application[],
@@ -399,7 +427,9 @@ export const {
   useRemoveFavoritePropertyMutation,
   useGetLeasesQuery, 
   useGetPropertyLeasesQuery,
+  useGetPropertyPaymentsQuery,
   useGetPaymentsQuery,
+  useCreatePaymentMutation,
   useGetApplicationsQuery,
   useUpdateApplicationStatusMutation,
   useCreateApplicationMutation,

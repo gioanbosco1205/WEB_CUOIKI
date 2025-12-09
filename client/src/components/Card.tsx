@@ -15,7 +15,7 @@ const Card = ({
   );
 
   return (
-    <div className="bg-white rounded-xl overflow-hidden shadow-lg w-full mb-5">
+    <div className="bg-white rounded-xl overflow-hidden shadow-lg w-full h-full flex flex-col">
       <div className="relative">
         <div className="w-full h-48 relative">
           <Image
@@ -45,15 +45,14 @@ const Card = ({
             onClick={onFavoriteToggle}
           >
             <Heart
-              className={`w-5 h-5 ${
-                isFavorite ? "text-red-500 fill-red-500" : "text-gray-600"
-              }`}
+              className={`w-5 h-5 ${isFavorite ? "text-red-500 fill-red-500" : "text-gray-600"
+                }`}
             />
           </button>
         )}
       </div>
       {/*Tiêu đề + Tên Phòng */}
-      <div className="p-4">
+      <div className="p-4 flex-1 flex flex-col">
         <h2 className="text-xl font-bold mb-1">
           {propertyLink ? (
             <Link
@@ -83,12 +82,12 @@ const Card = ({
             </span>
           </div>
           <p className="text-lg font-bold mb-3">
-            {property.pricePerMonth.toFixed(0)} VNĐ {" "}
-            <span className="text-gray-600 text-base font-normal"> /Tháng</span>
+            {property.pricePerMonth.toLocaleString("vi-VN")} 
+            <span className="text-gray-600 text-base font-normal">VNĐ/Tháng</span>
           </p>
         </div>
         <hr />
-        <div className="flex justify-between items-center gap-4 text-gray-600 mt-5">
+        <div className="flex justify-between items-center gap-4 text-gray-600 mt-auto pt-5">
           <span className="flex items-center">
             <Bed className="w-5 h-5 mr-2" />
             {property.beds} Bed

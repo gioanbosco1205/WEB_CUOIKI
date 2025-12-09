@@ -14,6 +14,7 @@ import {
   useGetLeasesQuery,
   useGetPaymentsQuery,
   useGetPropertyQuery,
+  useCreatePaymentMutation,
 } from "@/state/api";
 import { Lease, Payment, Property } from "@/types/prismaTypes";
 import {
@@ -42,10 +43,12 @@ const originalCardInfo = {
   isDefault: true,
 };
 
-const PaymentMethod = () => {
+const PaymentMethod = ({ lease }: { lease: Lease }) => {
   // 🔹 1. Tạo state để quản lý chế độ edit và dữ liệu
   const [isEditing, setIsEditing] = useState(false);
   const [cardInfo, setCardInfo] = useState(originalCardInfo);
+  const [amount, setAmount] = useState(lease.rent);
+  const [createPayment, { isLoading: isPaying }] = useCreatePaymentMutation();
 
   // 🔹 2. Hàm xử lý khi gõ vào input
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -95,6 +98,24 @@ const PaymentMethod = () => {
     // Reset lại dữ liệu về ban đầu
     setCardInfo(originalCardInfo);
     setIsEditing(false);
+  };
+
+  // 🔹 Thanh toán tiền thuê -> ghi nhận cho manager
+  const handlePayRent = async () => {
+    try {
+      await createPayment({
+        leaseId: lease.id,
+        body: {
+          amountPaid: amount,
+          amountDue: lease.rent,
+          paymentDate: new Date().toISOString(),
+          dueDate: new Date().toISOString(),
+          paymentStatus: "Paid",
+        },
+      }).unwrap();
+    } catch (error) {
+      console.error("Payment failed", error);
+    }
   };
 
   return (
@@ -207,7 +228,18 @@ const PaymentMethod = () => {
             </div>
 
             <hr className="my-4" />
-            <div className="flex justify-end">
+            <div className="flex justify-between items-center gap-4">
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-gray-500">Số tiền thanh toán</span>
+                <input
+                  type="number"
+                  value={amount}
+                  onChange={(e) => setAmount(Number(e.target.value))}
+                  className="text-sm text-gray-700 p-1 border rounded-md w-32"
+                  min={0}
+                />
+              </div>
+              <div className="flex gap-2">
               {/* 🔹 6. Nút Chỉnh sửa kích hoạt state */}
               <button
                 onClick={() => setIsEditing(true)}
@@ -216,6 +248,15 @@ const PaymentMethod = () => {
                 <Edit className="w-5 h-5 mr-2" />
                 <span>Chỉnh sửa</span>
               </button>
+              <button
+                onClick={handlePayRent}
+                disabled={isPaying}
+                className="bg-primary-700 text-white py-2 px-4 rounded-md flex items-center justify-center hover:bg-primary-800 disabled:opacity-60 disabled:cursor-not-allowed"
+              >
+                <CreditCard className="w-5 h-5 mr-2" />
+                <span>{isPaying ? "Đang thanh toán..." : "Thanh toán"}</span>
+              </button>
+              </div>
             </div>
           </div>
         )}
@@ -428,13 +469,15 @@ const Residence = () => {
       <div className="w-full mx-auto">
         <div className="md:flex gap-10">
           {currentLease ? (
-            <ResidenceCard property={property} currentLease={currentLease} />
+            <>
+              <ResidenceCard property={property} currentLease={currentLease} />
+              <PaymentMethod lease={currentLease} />
+            </>
           ) : (
             <div className="flex-1 p-6 bg-white rounded-xl shadow-md">
               Không tìm thấy hợp đồng thuê cho căn hộ này.
             </div>
           )}
-          <PaymentMethod />
         </div>
         <BillingHistory payments={payments || []} />
       </div>

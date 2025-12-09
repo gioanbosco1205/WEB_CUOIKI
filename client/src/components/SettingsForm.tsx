@@ -45,7 +45,7 @@ const SettingsForm = ({
             onSubmit={form.handleSubmit(handleSubmit)}
             className="space-y-6"
           >
-            <CustomFormField name="name" label="Name" disabled={!editMode} />
+            <CustomFormField name="name" label="Tên Người Dùng" disabled={!editMode} />
             <CustomFormField
               name="email"
               label="Email"
@@ -54,7 +54,7 @@ const SettingsForm = ({
             />
             <CustomFormField
               name="phoneNumber"
-              label="Phone Number"
+              label="Số điện thoại"
               disabled={!editMode}
             />
 

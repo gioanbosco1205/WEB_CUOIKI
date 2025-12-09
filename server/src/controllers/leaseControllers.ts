@@ -5,21 +5,20 @@ const prisma = new PrismaClient();
 
 export const getLeases = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { id } = req.params; // lấy propertyId từ URL
-    const { user } = req; // nếu bạn dùng authMiddleware có gán user
+    const { id } = req.params; 
+    const { user } = req; 
 
     const where: any = {};
 
-    // Nếu có id trong params, nghĩa là đang lấy leases theo property
     if (id) where.propertyId = Number(id);
 
-    // Có thể thêm filter theo tenant hoặc manager ở đây
     if (user?.role === "tenant") where.tenantId = user.id;
     if (user?.role === "manager") where.managerId = user.id;
     const leases = await prisma.lease.findMany({
       include: {
         tenant: true,
         property: true,
+      payments: true,
       },
     });
     res.json(leases);
@@ -44,5 +43,46 @@ export const getLeasePayments = async (
     res
       .status(500)
       .json({ message: `Error retrieving lease payments: ${error.message}` });
+  }
+};
+
+export const createLeasePayment = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const { id } = req.params;
+    const {
+      amountDue,
+      amountPaid,
+      dueDate,
+      paymentDate,
+      paymentStatus = "Paid",
+    } = req.body;
+
+    const leaseId = Number(id);
+
+    const lease = await prisma.lease.findUnique({ where: { id: leaseId } });
+    if (!lease) {
+      res.status(404).json({ message: "Lease not found" });
+      return;
+    }
+
+    const payment = await prisma.payment.create({
+      data: {
+        leaseId,
+        amountDue: amountDue ?? lease.rent,
+        amountPaid: amountPaid ?? lease.rent,
+        dueDate: dueDate ? new Date(dueDate) : new Date(),
+        paymentDate: paymentDate ? new Date(paymentDate) : new Date(),
+        paymentStatus,
+      },
+    });
+
+    res.status(201).json(payment);
+  } catch (error: any) {
+    res
+      .status(500)
+      .json({ message: `Error creating lease payment: ${error.message}` });
   }
 };

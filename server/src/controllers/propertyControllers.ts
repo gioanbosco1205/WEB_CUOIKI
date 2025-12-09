@@ -160,6 +160,40 @@ export const getProperties = async (req: Request, res: Response): Promise<void> 
 };
 
 /**
+ * Lấy toàn bộ payment của các lease thuộc một property (cho manager)
+ */
+export const getPropertyPayments = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const propertyId = Number(req.params.id);
+
+    const property = await prisma.property.findUnique({
+      where: { id: propertyId },
+    });
+
+    if (!property) {
+      res.status(404).json({ message: "Property not found" });
+      return;
+    }
+
+    const payments = await prisma.payment.findMany({
+      where: { lease: { propertyId } },
+      include: { lease: true },
+      orderBy: { paymentDate: "desc" },
+    });
+
+    res.json(payments);
+  } catch (err: any) {
+    console.error("❌ Error retrieving property payments:", err);
+    res.status(500).json({
+      message: `Error retrieving property payments: ${err.message}`,
+    });
+  }
+};
+
+/**
  * Lấy thông tin chi tiết 1 property
  */
 export const getProperty = async (req: Request, res: Response): Promise<void> => {
