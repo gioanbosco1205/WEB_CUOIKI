@@ -85,6 +85,8 @@ getProperties: build.query<
       location: filters.location,
       priceMin: filters.pricePerMonth?.[0],
       priceMax: filters.pricePerMonth?.[1],
+      squareFeetMin: filters.squareFeet?.[0],
+      squareFeetMax: filters.squareFeet?.[1],
       roomType: filters.roomType, 
       amenities: Array.isArray(filters.amenities)
         ? filters.amenities.join(",")
