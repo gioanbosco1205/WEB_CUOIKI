@@ -151,8 +151,69 @@ export const getProperties = async (req: Request, res: Response): Promise<void> 
       }
     `;
 
-    const result = await prisma.$queryRaw(completeQuery);
-    res.json(result);
+    const result = await prisma.$queryRaw(completeQuery) as any[];
+    
+    // Transform snake_case fields to camelCase để đảm bảo frontend nhận đúng format
+    const transformedResult = result.map((row: any) => {
+      const transformed: any = { ...row };
+      // Chuyển đổi manager_cognito_id thành managerCognitoId nếu có
+      if (transformed.manager_cognito_id !== undefined && transformed.managerCognitoId === undefined) {
+        transformed.managerCognitoId = transformed.manager_cognito_id;
+        delete transformed.manager_cognito_id;
+      }
+      // Chuyển đổi các field khác nếu cần
+      if (transformed.location_id !== undefined && transformed.locationId === undefined) {
+        transformed.locationId = transformed.location_id;
+        delete transformed.location_id;
+      }
+      if (transformed.posted_date !== undefined && transformed.postedDate === undefined) {
+        transformed.postedDate = transformed.posted_date;
+        delete transformed.posted_date;
+      }
+      if (transformed.price_per_month !== undefined && transformed.pricePerMonth === undefined) {
+        transformed.pricePerMonth = transformed.price_per_month;
+        delete transformed.price_per_month;
+      }
+      if (transformed.security_deposit !== undefined && transformed.securityDeposit === undefined) {
+        transformed.securityDeposit = transformed.security_deposit;
+        delete transformed.security_deposit;
+      }
+      if (transformed.application_fee !== undefined && transformed.applicationFee === undefined) {
+        transformed.applicationFee = transformed.application_fee;
+        delete transformed.application_fee;
+      }
+      if (transformed.square_feet !== undefined && transformed.squareFeet === undefined) {
+        transformed.squareFeet = transformed.square_feet;
+        delete transformed.square_feet;
+      }
+      if (transformed.property_type !== undefined && transformed.propertyType === undefined) {
+        transformed.propertyType = transformed.property_type;
+        delete transformed.property_type;
+      }
+      if (transformed.is_pets_allowed !== undefined && transformed.isPetsAllowed === undefined) {
+        transformed.isPetsAllowed = transformed.is_pets_allowed;
+        delete transformed.is_pets_allowed;
+      }
+      if (transformed.is_parking_included !== undefined && transformed.isParkingIncluded === undefined) {
+        transformed.isParkingIncluded = transformed.is_parking_included;
+        delete transformed.is_parking_included;
+      }
+      if (transformed.average_rating !== undefined && transformed.averageRating === undefined) {
+        transformed.averageRating = transformed.average_rating;
+        delete transformed.average_rating;
+      }
+      if (transformed.number_of_reviews !== undefined && transformed.numberOfReviews === undefined) {
+        transformed.numberOfReviews = transformed.number_of_reviews;
+        delete transformed.number_of_reviews;
+      }
+      if (transformed.photo_urls !== undefined && transformed.photoUrls === undefined) {
+        transformed.photoUrls = transformed.photo_urls;
+        delete transformed.photo_urls;
+      }
+      return transformed;
+    });
+    
+    res.json(transformedResult);
   } catch (err: any) {
     console.error("❌ Error retrieving properties:", err);
     res.status(500).json({ message: `Error retrieving properties: ${err.message}` });
@@ -300,10 +361,11 @@ export const createProperty = async (req: Request, res: Response): Promise<void>
 export const deleteProperty = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
+    const propertyId = Number(id);
 
     // Kiểm tra property có tồn tại không
     const existing = await prisma.property.findUnique({
-      where: { id: Number(id) },
+      where: { id: propertyId },
     });
 
     if (!existing) {
@@ -311,10 +373,33 @@ export const deleteProperty = async (req: Request, res: Response): Promise<void>
       return;
     }
 
-    // Xóa property
-    await prisma.property.delete({
-      where: { id: Number(id) },
-    });
+    // Xóa quan hệ và dữ liệu phụ thuộc trước khi xóa property để tránh lỗi FK
+    await prisma.$transaction([
+      // Xóa payment theo lease thuộc property
+      prisma.payment.deleteMany({
+        where: { lease: { propertyId } },
+      }),
+      // Xóa lease thuộc property
+      prisma.lease.deleteMany({
+        where: { propertyId },
+      }),
+      // Xóa application thuộc property
+      prisma.application.deleteMany({
+        where: { propertyId },
+      }),
+      // Ngắt liên kết favorite/tenant (bảng trung gian)
+      prisma.property.update({
+        where: { id: propertyId },
+        data: {
+          favoritedBy: { set: [] },
+          tenants: { set: [] },
+        },
+      }),
+      // Xóa property
+      prisma.property.delete({
+        where: { id: propertyId },
+      }),
+    ]);
 
     res.status(200).json({ message: "Đã xoá tin đăng thành công" });
   } catch (err: any) {
