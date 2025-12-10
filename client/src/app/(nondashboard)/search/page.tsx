@@ -46,7 +46,7 @@ const SearchPage = () => {
       }}
     >
       <FiltersBar />
-      <div className="flex flex-1 overflow-hidden gap-3 mb-5">
+      <div className="flex justify-between flex-1 overflow-hidden gap-3 mb-5">
         <div
           className={`h-full overflow-auto transition-all duration-300 ease-in-out ${
             isFiltersFullOpen
@@ -57,7 +57,7 @@ const SearchPage = () => {
           <FiltersFull />
         </div>
         <Map />
-        <div className="basis-3/12 overflow-y-auto">
+        <div className="basis-4/12 overflow-y-auto">
           <Listings />
         </div>
       </div>

@@ -63,7 +63,7 @@ import {
           </span>
         </h3>
         <div className="flex">
-          <div className="p-4 w-full flex flex-col gap-3">
+          <div className="p-4 w-full">
             {properties?.map((property) =>
               viewMode === "grid" ? (
                 <Card

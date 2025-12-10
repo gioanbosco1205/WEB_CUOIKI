@@ -25,7 +25,7 @@ const FiltersFull = () => {
   const router = useRouter();
   const pathname = usePathname();
   const filters = useAppSelector((state) => state.global.filters);
-  const [localFilters, setLocalFilters] = useState(filters);
+  const [localFilters, setLocalFilters] = useState(initialState.filters);
   const isFiltersFullOpen = useAppSelector(
     (state) => state.global.isFiltersFullOpen
   );
@@ -43,11 +43,6 @@ const FiltersFull = () => {
 
     router.push(`${pathname}?${updatedSearchParams.toString()}`);
   }, 400);
-
-  // Đồng bộ localFilters với Redux khi mở bộ lọc hoặc khi filters thay đổi
-  React.useEffect(() => {
-    setLocalFilters(filters);
-  }, [filters, isFiltersFullOpen]);
 
   const handleSubmit = () => {
     dispatch(setFilters(localFilters));

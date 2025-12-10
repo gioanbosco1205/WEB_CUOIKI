@@ -119,8 +119,7 @@ app.use((req: express.Request, res: express.Response) => {
 });
 
 /* SERVER */
-// Default to 3001 to match client config; allow override via env
-const port = Number(process.env.PORT) || 3001;
+const port = Number(process.env.PORT) || 3002;
 
 app.listen(port, "0.0.0.0", () => {
   console.log(`

@@ -10,42 +10,27 @@ mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN as string;
 
 const Map = () => {
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
-  const mapRef = useRef<mapboxgl.Map | null>(null);
-  const markersRef = useRef<mapboxgl.Marker[]>([]);
   const currentPopupRef = useRef<mapboxgl.Popup | null>(null);
   const isInsidePopupRef = useRef(false);
 
   const filters = useAppSelector((state) => state.global.filters);
-  const isFiltersFullOpen = useAppSelector((state) => state.global.isFiltersFullOpen);
   const { data: properties, isLoading, isError } = useGetPropertiesQuery(filters);
 
   useEffect(() => {
     if (isLoading || isError || !properties) return;
-    if (!mapContainerRef.current) return;
 
-    // Khởi tạo map chỉ một lần
-    if (!mapRef.current) {
-      mapRef.current = new mapboxgl.Map({
-        container: mapContainerRef.current,
-        style: "mapbox://styles/thanhduong1/cmgqqw45x00d701sd7rx1cmab",
-        center:
-          filters.longitude && filters.latitude
-            ? [filters.longitude, filters.latitude]
-            : [106.6519, 10.9804],
-        zoom: 13,
-      });
-    }
-
-    const map = mapRef.current;
-    if (!map) return;
-
-    // Xoá toàn bộ markers cũ trước khi vẽ lại
-    markersRef.current.forEach((m) => m.remove());
-    markersRef.current = [];
+    const map = new mapboxgl.Map({
+      container: mapContainerRef.current!,
+      style: "mapbox://styles/thanhduong1/cmgqqw45x00d701sd7rx1cmab",
+      center:
+        filters.longitude && filters.latitude
+          ? [filters.longitude, filters.latitude]
+          : [106.6519, 10.9804],
+      zoom: 13,
+    });
 
     properties.forEach((property) => {
       const marker = createPropertyMarker(property, map);
-      markersRef.current.push(marker);
       const markerEl = marker.getElement();
       const popup = marker.getPopup();
       if (!popup) return;
@@ -94,25 +79,14 @@ const Map = () => {
     });
 
     setTimeout(() => map.resize(), 700);
-    // Cleanup của effect này chỉ xoá markers lần sau, không remove map
-    return () => {
-      markersRef.current.forEach((m) => m.remove());
-      markersRef.current = [];
-    };
+    return () => map.remove();
   }, [isLoading, isError, properties, filters.longitude, filters.latitude]);
-
-  // Khi mở/đóng bộ lọc => map có thay đổi chiều rộng, cần resize
-  useEffect(() => {
-    if (mapRef.current) {
-      setTimeout(() => mapRef.current?.resize(), 120);
-    }
-  }, [isFiltersFullOpen]);
 
   if (isLoading) return <>Loading...</>;
   if (isError || !properties) return <div>Failed to fetch properties</div>;
 
   return (
-    <div className="basis-7/12 grow relative rounded-xl">
+    <div className="basis-5/12 grow relative rounded-xl">
       <div
         ref={mapContainerRef}
         className="map-container rounded-xl"
