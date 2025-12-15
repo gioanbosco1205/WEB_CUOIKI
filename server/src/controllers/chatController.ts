@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { prisma } from '../lib/prisma';
+import { prisma } from '../../lib/prisma';
 import { ChatRequest, OpenRouterResponse } from '../../types/chat';
 
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY || '';

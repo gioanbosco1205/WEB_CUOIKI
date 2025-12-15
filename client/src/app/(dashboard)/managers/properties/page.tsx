@@ -5,7 +5,6 @@ import Header from "@/components/Header";
 import Loading from "@/components/Loading";
 import {
   useGetAuthUserQuery,
-  useGetManagerPropertiesQuery,
   useGetPropertiesQuery,
   useDeletePropertyMutation,
 } from "@/state/api";
@@ -19,14 +18,6 @@ const Properties = () => {
     isLoading: isAllLoading,
     error: allError,
   } = useGetPropertiesQuery({});
-
-  // Still fetch manager-owned properties so delete actions stay scoped
-  const {
-    data: managerProperties,
-    isLoading: isManagerLoading,
-  } = useGetManagerPropertiesQuery(authUser?.cognitoInfo?.userId || "", {
-    skip: !authUser?.cognitoInfo?.userId,
-  });
 
   //Thêm mutation xoá
   const [deleteProperty, { isLoading: isDeleting }] = useDeletePropertyMutation();
@@ -42,7 +33,7 @@ const Properties = () => {
   };
   
 
-  if (isAllLoading || isManagerLoading) return <Loading />;
+  if (isAllLoading) return <Loading />;
   if (allError) return <div>Error loading danh sách phòng</div>;
 
   return (
@@ -53,8 +44,11 @@ const Properties = () => {
       />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {allProperties?.map((property) => {
-          const isOwned =
-            managerProperties?.some((p) => p.id === property.id) ?? false;
+          // Cho phép manager xóa mọi tin đăng (seed hoặc tự tạo)
+          const userRole = String(authUser?.userRole || "").toLowerCase();
+          const isManager = userRole === "manager";
+          const canDelete = isManager;
+
           return (
             <div key={property.id} className="relative">
             <Card
@@ -64,7 +58,7 @@ const Properties = () => {
               showFavoriteButton={false}
               propertyLink={`/managers/properties/${property.id}`}
             />
-            {isOwned && (
+            {canDelete && (
               <button
                 onClick={() => handleDelete(property.id)}
                 disabled={isDeleting}

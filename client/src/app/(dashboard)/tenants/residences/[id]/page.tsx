@@ -32,7 +32,7 @@ import {
 } from "lucide-react";
 import { useParams } from "next/navigation";
 // 🔹 1. Import useState
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 
 // Dữ liệu ban đầu (Trong ứng dụng thật, bạn sẽ lấy từ API/props)
 const originalCardInfo = {
@@ -43,12 +43,45 @@ const originalCardInfo = {
   isDefault: true,
 };
 
+import Image from "next/image";
+
 const PaymentMethod = ({ lease }: { lease: Lease }) => {
   // 🔹 1. Tạo state để quản lý chế độ edit và dữ liệu
   const [isEditing, setIsEditing] = useState(false);
   const [cardInfo, setCardInfo] = useState(originalCardInfo);
   const [amount, setAmount] = useState(lease.rent);
   const [createPayment, { isLoading: isPaying }] = useCreatePaymentMutation();
+  const { data: payments = [] } = useGetPaymentsQuery(lease.id, {
+    skip: !lease.id,
+  });
+
+  const hasPaidCurrentMonth = useMemo(() => {
+    const now = new Date();
+    return payments.some((p) => {
+      const pay = new Date(p.paymentDate);
+      return (
+        pay.getMonth() === now.getMonth() &&
+        pay.getFullYear() === now.getFullYear() &&
+        p.paymentStatus === "Paid"
+      );
+    });
+  }, [payments]);
+
+  const nextStatusLabel =
+    amount >= lease.rent
+      ? "Đã thanh toán"
+      : amount > 0
+      ? "Thanh toán một phần"
+      : "Chưa thanh toán";
+
+  const handleAmountChange = (value: string) => {
+    const parsed = Number(value);
+    if (Number.isNaN(parsed)) {
+      setAmount(0);
+      return;
+    }
+    setAmount(Math.max(0, parsed));
+  };
 
   // 🔹 2. Hàm xử lý khi gõ vào input
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -102,15 +135,23 @@ const PaymentMethod = ({ lease }: { lease: Lease }) => {
 
   // 🔹 Thanh toán tiền thuê -> ghi nhận cho manager
   const handlePayRent = async () => {
+    if (hasPaidCurrentMonth) return;
+    if (amount <= 0) return;
+
+    const amountDue = lease.rent;
+    const status =
+      amount >= amountDue ? "Paid" : amount > 0 ? "PartiallyPaid" : "Pending";
+    const dueDate = lease.endDate || new Date().toISOString();
+
     try {
       await createPayment({
         leaseId: lease.id,
         body: {
           amountPaid: amount,
-          amountDue: lease.rent,
+          amountDue,
           paymentDate: new Date().toISOString(),
-          dueDate: new Date().toISOString(),
-          paymentStatus: "Paid",
+          dueDate,
+          paymentStatus: status,
         },
       }).unwrap();
     } catch (error) {
@@ -122,57 +163,78 @@ const PaymentMethod = ({ lease }: { lease: Lease }) => {
     <div className="bg-white rounded-xl shadow-md overflow-hidden p-6 mt-10 md:mt-0 flex-1">
       <h2 className="text-2xl font-bold mb-4">Phương thức thanh toán</h2>
       <p className="mb-4">Thay đổi cách thanh toán cho gói dịch vụ của bạn.</p>
-      <div className="border rounded-lg p-6">
-        {/* 🔹 5. Hiển thị có điều kiện */}
-        {isEditing ? (
-          // --- CHẾ ĐỘ CHỈNH SỬA ---
-          <div>
-            <div className="flex gap-10">
-              <div className="w-36 h-20 bg-blue-800 flex items-center justify-center rounded-md">
-                {/* Input cho Tên Ngân hàng */}
-                <input
-                  type="text"
-                  name="bankName"
-                  value={cardInfo.bankName}
-                  onChange={handleChange}
-                  className="w-28 text-center bg-transparent text-white text-2xl font-bold border-b-2 border-white"
-                />
-              </div>
+      <div className="border rounded-lg p-6 space-y-6">
+        <div className="flex flex-col md:flex-row md:items-start gap-6">
+          <div className="w-36 h-20 bg-primary-700 flex items-center justify-center rounded-md text-white text-2xl font-bold">
+            {cardInfo.bankName}
+          </div>
 
-              <div className="flex flex-col justify-between w-full gap-2">
-                {/* Input cho Email */}
-                <div className="flex items-center gap-2">
-                  <Mail className="w-4 h-4 text-gray-500" />
-                  <input
-                    type="email"
-                    name="email"
-                    value={cardInfo.email}
-                    onChange={handleChange}
-                    className="text-sm text-gray-700 p-1 border rounded-md w-full"
-                  />
-                </div>
-
-                {/* 🔹 ĐÃ XÓA Ô INPUT NĂM HẾT HẠN */}
-
-                {/* Input cho Ngày hết hạn */}
-                <div className="flex items-center gap-2">
-                  <CreditCard className="w-4 h-4 text-gray-500" />
-                  <span className="text-sm text-gray-500 w-16">Ngày HH:</span>
-                  <input
-                    type="text"
-                    name="expiryDate"
-                    value={cardInfo.expiryDate}
-                    onChange={handleChange}
-                    placeholder="DD/MM/YYYY"
-                    className="text-sm text-gray-700 p-1 border rounded-md w-full"
-                  />
-                </div>
-              </div>
+          <div className="flex-1 space-y-2">
+            <div className="flex items-start gap-3">
+              <h3 className="text-lg font-semibold">
+                {cardInfo.bankName} hết hạn {cardInfo.expiryYear}
+              </h3>
+              {cardInfo.isDefault && (
+                <span className="text-sm font-medium border border-primary-700 text-primary-700 px-3 py-1 rounded-full">
+                  Mặc định
+                </span>
+              )}
             </div>
+            <div className="text-sm text-gray-600 flex items-center gap-2">
+              <CreditCard className="w-4 h-4" />
+              <span>Hết hạn • {cardInfo.expiryDate}</span>
+            </div>
+            <div className="text-sm text-gray-600 flex items-center gap-2">
+              <Mail className="w-4 h-4" />
+              <span>{cardInfo.email}</span>
+            </div>
+          </div>
 
-            <hr className="my-4" />
-            {/* Nút Lưu và Hủy */}
-            <div className="flex justify-end gap-2">
+          <div className="flex gap-2">
+            <button
+              onClick={() => setIsEditing((prev) => !prev)}
+              className="bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded-md flex items-center justify-center hover:bg-primary-50"
+            >
+              <Edit className="w-5 h-5 mr-2" />
+              <span>{isEditing ? "Đang chỉnh" : "Chỉnh sửa"}</span>
+            </button>
+          </div>
+        </div>
+
+        {isEditing && (
+          <div className="grid md:grid-cols-2 gap-4">
+            <label className="text-sm text-gray-600 flex flex-col gap-1">
+              Ngân hàng
+              <input
+                type="text"
+                name="bankName"
+                value={cardInfo.bankName}
+                onChange={handleChange}
+                className="border rounded-md p-2 text-sm"
+              />
+            </label>
+            <label className="text-sm text-gray-600 flex flex-col gap-1">
+              Email nhận hóa đơn
+              <input
+                type="email"
+                name="email"
+                value={cardInfo.email}
+                onChange={handleChange}
+                className="border rounded-md p-2 text-sm"
+              />
+            </label>
+            <label className="text-sm text-gray-600 flex flex-col gap-1">
+              Ngày hết hạn (DD/MM/YYYY)
+              <input
+                type="text"
+                name="expiryDate"
+                value={cardInfo.expiryDate}
+                onChange={handleChange}
+                className="border rounded-md p-2 text-sm"
+                placeholder="DD/MM/YYYY"
+              />
+            </label>
+            <div className="flex items-end gap-2">
               <button
                 onClick={handleCancel}
                 className="bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded-md flex items-center justify-center hover:bg-gray-100"
@@ -185,81 +247,68 @@ const PaymentMethod = ({ lease }: { lease: Lease }) => {
                 className="bg-primary-700 text-white py-2 px-4 rounded-md flex items-center justify-center hover:bg-primary-800"
               >
                 <Save className="w-5 h-5 mr-2" />
-                <span>Lưu thay đổi</span>
+                <span>Lưu</span>
               </button>
-            </div>
-          </div>
-        ) : (
-          // --- CHẾ ĐỘ XEM (Như bạn mô tả) ---
-          <div>
-            <div className="flex gap-10">
-              <div className="w-36 h-20 bg-blue-800 flex items-center justify-center rounded-md">
-                {/* Hiển thị dữ liệu từ state */}
-                <span className="text-white text-2xl font-bold">
-                  {cardInfo.bankName}
-                </span>
-              </div>
-
-              <div className="flex flex-col justify-between">
-                <div>
-                  <div className="flex items-start gap-5">
-                    {/* 🔹 Tự động cập nhật Tên và Năm */}
-                    <h3 className="text-lg font-semibold">
-                      {cardInfo.bankName} sẽ hết hạn vào {cardInfo.expiryYear}
-                    </h3>
-                    {cardInfo.isDefault && (
-                      <span className="text-sm font-medium border border-primary-700 text-primary-700 px-3 py-1 rounded-full">
-                        Mặc định
-                      </span>
-                    )}
-                  </div>
-                  <div className="text-sm text-gray-500 flex items-center">
-                    <CreditCard className="w-4 h-4 mr-1" />
-                    {/* Hiển thị dữ liệu từ state */}
-                    <span>Hết hạn • {cardInfo.expiryDate}</span>
-                  </div>
-                </div>
-                <div className="text-sm text-gray-500 flex items-center">
-                  <Mail className="w-4 h-4 mr-1" />
-                  {/* Hiển thị dữ liệu từ state */}
-                  <span>{cardInfo.email}</span>
-                </div>
-              </div>
-            </div>
-
-            <hr className="my-4" />
-            <div className="flex justify-between items-center gap-4">
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-500">Số tiền thanh toán</span>
-                <input
-                  type="number"
-                  value={amount}
-                  onChange={(e) => setAmount(Number(e.target.value))}
-                  className="text-sm text-gray-700 p-1 border rounded-md w-32"
-                  min={0}
-                />
-              </div>
-              <div className="flex gap-2">
-              {/* 🔹 6. Nút Chỉnh sửa kích hoạt state */}
-              <button
-                onClick={() => setIsEditing(true)}
-                className="bg-white border border-gray-300 text-gray-700 py-2 px-4 rounded-md flex items-center justify-center hover:bg-primary-700 hover:text-primary-50"
-              >
-                <Edit className="w-5 h-5 mr-2" />
-                <span>Chỉnh sửa</span>
-              </button>
-              <button
-                onClick={handlePayRent}
-                disabled={isPaying}
-                className="bg-primary-700 text-white py-2 px-4 rounded-md flex items-center justify-center hover:bg-primary-800 disabled:opacity-60 disabled:cursor-not-allowed"
-              >
-                <CreditCard className="w-5 h-5 mr-2" />
-                <span>{isPaying ? "Đang thanh toán..." : "Thanh toán"}</span>
-              </button>
-              </div>
             </div>
           </div>
         )}
+
+        <hr />
+
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="space-y-1">
+            <div className="text-sm text-gray-500">Số tiền cần thanh toán</div>
+            <div className="flex items-center gap-2">
+              <input
+                type="number"
+                value={amount}
+                onChange={(e) => handleAmountChange(e.target.value)}
+                className="text-sm text-gray-700 p-2 border rounded-md w-40"
+                min={0}
+              />
+              <span className="text-sm text-gray-500">
+                (Giá thuê: {lease.rent.toLocaleString("vi-VN")} VNĐ)
+              </span>
+            </div>
+            <div className="text-sm text-gray-500">
+              Trạng thái dự kiến: {nextStatusLabel}
+              {hasPaidCurrentMonth && " (Đã thanh toán tháng này)"}
+            </div>
+          </div>
+          <button
+            onClick={handlePayRent}
+            disabled={isPaying || amount <= 0 || hasPaidCurrentMonth}
+            className="bg-primary-700 text-white py-3 px-5 rounded-md flex items-center justify-center hover:bg-primary-800 disabled:opacity-60 disabled:cursor-not-allowed"
+          >
+            <CreditCard className="w-5 h-5 mr-2" />
+            <span>
+              {hasPaidCurrentMonth
+                ? "Đã thanh toán tháng này"
+                : isPaying
+                ? "Đang thanh toán..."
+                : "Thanh toán"}
+            </span>
+          </button>
+        </div>
+
+        {/* QR thanh toán (placeholder) */}
+        {/* <div className="rounded-lg border border-dashed border-primary-200 p-4 bg-primary-50/50">
+          <div className="text-sm font-semibold mb-2">Thanh toán qua QR</div>
+          <div className="flex items-center gap-4">
+            <div className="w-28 h-28 bg-white rounded-lg border flex items-center justify-center">
+              <Image
+                src="/logo.svg"
+                alt="QR code placeholder"
+                width={96}
+                height={96}
+              />
+            </div>
+            <div className="text-sm text-gray-600">
+              Quét mã QR bằng app ngân hàng để thanh toán. Sau khi người cho thuê
+              xác nhận, trạng thái sẽ cập nhật.
+            </div>
+          </div>
+        </div> */}
       </div>
     </div>
   );
@@ -411,13 +460,12 @@ const BillingHistory = ({ payments }: { payments: Payment[] }) => {
                     {payment.paymentStatus === "Paid" ? (
                       <Check className="w-4 h-4 inline-block mr-1" />
                     ) : null}
-
-                  {payment.paymentStatus === "Paid"
-                 ? "Đã thanh toán"
-                  : payment.paymentStatus === "Pending"
-                  ? "Đang chờ"
-                  : "Thất bại"}
-                 </span>
+                    {payment.paymentStatus === "Paid"
+                      ? "Đã thanh toán"
+                      : payment.paymentStatus === "Pending"
+                      ? "Đang chờ"
+                      : "Thanh toán một phần / Thất bại"}
+                  </span>
                 </TableCell>
 
                 <TableCell>
@@ -452,17 +500,19 @@ const Residence = () => {
     parseInt(authUser?.cognitoInfo?.userId || "0"),
     { skip: !authUser?.cognitoInfo?.userId }
   );
+
+  const currentLease = useMemo(
+    () => leases?.find((lease) => lease.propertyId === property?.id),
+    [leases, property?.id]
+  );
+
   const { data: payments, isLoading: paymentsLoading } = useGetPaymentsQuery(
-    leases?.[0]?.id || 0,
-    { skip: !leases?.[0]?.id }
+    currentLease?.id || 0,
+    { skip: !currentLease?.id }
   );
 
   if (propertyLoading || leasesLoading || paymentsLoading) return <Loading />;
   if (!property || propertyError) return <div>Error loading property</div>;
-
-  const currentLease = leases?.find(
-    (lease) => lease.propertyId === property.id
-  );
 
   return (
     <div className="dashboard-container p-6">

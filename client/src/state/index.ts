@@ -1,14 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface FiltersState {
-  location?: string;
+  location?: string | null;
   pricePerMonth?: [number | null, number | null]; // Giá thuê theo tháng
   roomType?: string; // phòng trọ, căn hộ, ký túc xá,...
   squareFeet?: [number | null, number | null]; // diên tích phong
   amenities?: string[]; // Các tiện ích: Wifi, Máy lạnh, Gác lửng, Gần trường...
   availableFrom?: string;
-  latitude?: number ; 
-  longitude?: number ; 
+  latitude?: number | null; 
+  longitude?: number | null; 
   favoriteIds?: number[];
   distanceToSchool?: [number | null, number | null]; // khoảng cách đến trường
 }
