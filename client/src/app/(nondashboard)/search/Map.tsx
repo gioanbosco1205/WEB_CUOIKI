@@ -37,7 +37,7 @@ const Map = () => {
 
       const lngLat = [property.location.longitude, property.location.latitude] as [number, number];
 
-      /** 🟩 Hover vào marker → mở popup */
+      /** Hover vào marker → mở popup */
       markerEl.addEventListener("mouseenter", () => {
         // Đóng popup cũ nếu có
         if (currentPopupRef.current && currentPopupRef.current !== popup) {
@@ -50,12 +50,12 @@ const Map = () => {
         const popupEl = popup.getElement();
         if (!popupEl) return;
 
-        /** 🟩 Khi hover vào popup */
+        /** Khi hover vào popup */
         popupEl.onmouseenter = () => {
           isInsidePopupRef.current = true;
         };
 
-        /** 🟥 Khi rời popup */
+        /** Khi rời popup */
         popupEl.onmouseleave = () => {
           isInsidePopupRef.current = false;
           popup.remove();
@@ -63,7 +63,7 @@ const Map = () => {
         };
       });
 
-      /** 🟥 Khi rời marker → tắt popup nếu KHÔNG nằm trong popup */
+      /**Khi rời marker → tắt popup nếu KHÔNG nằm trong popup */
       markerEl.addEventListener("mouseleave", () => {
         setTimeout(() => {
           if (!isInsidePopupRef.current) {
@@ -96,9 +96,7 @@ const Map = () => {
   );
 };
 
-/**
- * Popup + Marker
- */
+
 const createPropertyMarker = (property: Property, map: mapboxgl.Map) => {
   const imageUrl = property.photoUrls?.[0] || "/placeholder.jpg";
 

@@ -38,3 +38,4 @@ PORT = 3001
 DATABASE_URL = "postgresql://postgres:1234567890aA@localhost:5432/realestate2?schema=public"
 
 
+useState lưu trữ và cập nhật dữ liệu tạm 

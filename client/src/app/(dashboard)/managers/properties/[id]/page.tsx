@@ -42,7 +42,26 @@ const PropertyTenants = () => {
         new Date(payment.dueDate).getMonth() === currentDate.getMonth() &&
         new Date(payment.dueDate).getFullYear() === currentDate.getFullYear()
     );
-    return currentMonthPayment?.paymentStatus || "Chưa thanh toán ";
+    
+    // Chuyển đổi sang tiếng Việt
+    if (currentMonthPayment?.paymentStatus === "Paid") {
+      return "Đã thanh toán";
+    }
+    return "Chưa thanh toán";
+  };
+
+  // Hàm chuyển đổi paymentStatus sang tiếng Việt
+  const translatePaymentStatus = (status: string) => {
+    switch (status) {
+      case "Paid":
+        return "Đã thanh toán";
+      case "Pending":
+        return "Đang chờ";
+      case "Overdue":
+        return "Quá hạn";
+      default:
+        return status;
+    }
   };
 
   return (
@@ -132,12 +151,12 @@ const PropertyTenants = () => {
                     <TableCell>
                       <span
                         className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                          getCurrentMonthPaymentStatus(lease.id) === "Paid"
+                          getCurrentMonthPaymentStatus(lease.id) === "Đã thanh toán"
                             ? "bg-green-100 text-green-800 border-green-300"
                             : "bg-red-100 text-red-800 border-red-300"
                         }`}
                       >
-                        {getCurrentMonthPaymentStatus(lease.id) === "Paid" && (
+                        {getCurrentMonthPaymentStatus(lease.id) === "Đã thanh toán" && (
                           <Check className="w-4 h-4 inline-block mr-1" />
                         )}
                         {getCurrentMonthPaymentStatus(lease.id)}
@@ -196,10 +215,10 @@ const PropertyTenants = () => {
                     <TableCell className="font-medium">
                       <div className="flex items-center">
                         <Download className="w-4 h-4 mr-2" />
-                        Invoice #{payment.id}
+                        Hóa đơn #{payment.id}
                       </div>
                     </TableCell>
-                    <TableCell>Lease #{payment.leaseId}</TableCell>
+                    <TableCell>Hợp đồng #{payment.leaseId}</TableCell>
                     <TableCell>
                       <span
                         className={`px-2 py-1 rounded-full text-xs font-semibold border ${
@@ -213,7 +232,7 @@ const PropertyTenants = () => {
                         {payment.paymentStatus === "Paid" && (
                           <Check className="w-4 h-4 inline-block mr-1" />
                         )}
-                        {payment.paymentStatus}
+                        {translatePaymentStatus(payment.paymentStatus)}
                       </span>
                     </TableCell>
                     <TableCell>

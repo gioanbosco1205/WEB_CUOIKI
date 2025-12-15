@@ -89,8 +89,7 @@ const FiltersFull = () => {
           <div className="flex items-center">
             <Input
               placeholder="Nhập địa chỉ ..."
-              value={localFilters.location}
-              onChange={(e) =>
+value={localFilters.location ?? ''}              onChange={(e) =>
                 setLocalFilters((prev) => ({
                   ...prev,
                   location: e.target.value,

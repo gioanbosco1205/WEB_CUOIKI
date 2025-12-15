@@ -251,7 +251,7 @@ export default function ChatWindow({ onClose }: { onClose: () => void }) {
 
   // Câu hỏi nhanh
   const quickQuestions = [
-    { icon: <Home className="w-3 h-3" />, text: "Tìm phòng trọ quận 1 giá dưới 3 triệu", category: "Tìm phòng" },
+    { icon: <Home className="w-3 h-3" />, text: "Tìm phòng trọ thủ dầu một giá dưới 3 triệu", category: "Tìm phòng" },
     { icon: <FileText className="w-3 h-3" />, text: "Cần chú ý gì khi ký hợp đồng thuê nhà?", category: "Hợp đồng" },
     { icon: <Shield className="w-3 h-3" />, text: "An ninh khu vực này tốt không?", category: "An ninh" },
     { icon: <Wifi className="w-3 h-3" />, text: "Phòng trọ có internet không?", category: "Tiện ích" },
@@ -534,7 +534,7 @@ export default function ChatWindow({ onClose }: { onClose: () => void }) {
         </div>
       </div>
 
-      {/* Debug Panel - Chỉ hiển thị trong development */}
+      {/* Debug Panel - Chỉ hiển thị trong development
       {process.env.NODE_ENV === 'development' && (
         <div className="border-t border-gray-200 p-2 bg-gray-50">
           <div className="flex gap-2">
@@ -594,7 +594,7 @@ export default function ChatWindow({ onClose }: { onClose: () => void }) {
             </button>
           </div>
         </div>
-      )}
+      )} */}
 
       {/* Chat Input */}
       <div className="border-t border-gray-200 p-4 bg-white">

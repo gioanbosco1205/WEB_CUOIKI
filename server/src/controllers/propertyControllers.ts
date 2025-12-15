@@ -46,6 +46,7 @@ export const getProperties = async (req: Request, res: Response): Promise<void> 
   try {
     const {
       favoriteIds,
+      location,
       priceMin,
       priceMax,
       beds,
@@ -98,6 +99,18 @@ export const getProperties = async (req: Request, res: Response): Promise<void> 
     if (amenities && amenities !== "any") {
       const arr = (amenities as string).split(",");
       whereConditions.push(Prisma.sql`p.amenities @> ${arr}::"Amenity"[]`);
+    }
+
+    if (location && typeof location === "string" && location.trim() !== "") {
+      const locationTerm = `%${location.trim().toLowerCase()}%`;
+      whereConditions.push(
+        Prisma.sql`(
+          LOWER(l.city) LIKE ${locationTerm}
+          OR LOWER(l.state) LIKE ${locationTerm}
+          OR LOWER(l.address) LIKE ${locationTerm}
+          OR LOWER(p.name) LIKE ${locationTerm}
+        )`
+      );
     }
 
     if (availableFrom && availableFrom !== "any") {

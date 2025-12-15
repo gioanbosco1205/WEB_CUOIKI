@@ -13,6 +13,8 @@ const CardCompact = ({
   const [imgSrc, setImgSrc] = useState(
     property.photoUrls?.[0] || "/placeholder.jpg"
   );
+  const averageRating = property.averageRating ?? 0;
+  const numberOfReviews = property.numberOfReviews ?? 0;
 
   return (
     <div className="bg-white rounded-xl overflow-hidden shadow-lg w-full flex h-40 mb-5">
@@ -73,10 +75,10 @@ const CardCompact = ({
           <div className="flex text-sm items-center">
             <Star className="w-3 h-3 text-yellow-400 mr-1" />
             <span className="font-semibold">
-              {property.averageRating.toFixed(1)}
+              {averageRating.toFixed(1)}
             </span>
             <span className="text-gray-600 ml-1">
-              ({property.numberOfReviews})
+              ({numberOfReviews})
             </span>
           </div>
         </div>
@@ -97,8 +99,8 @@ const CardCompact = ({
           </div>
 
           <p className="text-base font-bold">
-            ${property.pricePerMonth.toFixed(0)}
-            <span className="text-gray-600 text-xs font-normal"> /mo</span>
+            {property.pricePerMonth.toFixed(0)} VNĐ
+            <span className="text-gray-600 text-xs font-normal"> /Tháng</span>
           </p>
         </div>
       </div>

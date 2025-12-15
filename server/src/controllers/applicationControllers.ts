@@ -10,15 +10,19 @@ export const listApplications = async (
   try {
     const { userId, userType } = req.query;
 
+    // Fallback lấy thông tin từ token nếu client không truyền query
+    const resolvedUserId = userId?.toString() || req.user?.id;
+    const resolvedUserType = userType?.toString().toLowerCase() || req.user?.role?.toLowerCase();
+
     let whereClause = {};
 
-    if (userId && userType) {
-      if (userType === "tenant") {
-        whereClause = { tenantCognitoId: String(userId) };
-      } else if (userType === "manager") {
+    if (resolvedUserId && resolvedUserType) {
+      if (resolvedUserType === "tenant") {
+        whereClause = { tenantCognitoId: String(resolvedUserId) };
+      } else if (resolvedUserType === "manager") {
         whereClause = {
           property: {
-            managerCognitoId: String(userId),
+            managerCognitoId: String(resolvedUserId),
           },
         };
       }
@@ -197,6 +201,18 @@ export const updateApplicationStatus = async (
           deposit: application.property.securityDeposit,
           propertyId: application.propertyId,
           tenantCognitoId: application.tenantCognitoId,
+        },
+      });
+
+      // Tạo kỳ thanh toán đầu tiên ở trạng thái Pending
+      await prisma.payment.create({
+        data: {
+          leaseId: newLease.id,
+          amountDue: application.property.pricePerMonth,
+          amountPaid: 0,
+          dueDate: new Date(),
+          paymentDate: new Date(),
+          paymentStatus: "Pending",
         },
       });
 

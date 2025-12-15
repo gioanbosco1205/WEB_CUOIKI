@@ -57,7 +57,6 @@ export const createLeasePayment = async (
       amountPaid,
       dueDate,
       paymentDate,
-      paymentStatus = "Paid",
     } = req.body;
 
     const leaseId = Number(id);
@@ -68,11 +67,23 @@ export const createLeasePayment = async (
       return;
     }
 
+    const calculatedAmountDue = amountDue ?? lease.rent;
+    const calculatedAmountPaid = amountPaid ?? lease.rent;
+    let paymentStatus: "Paid" | "PartiallyPaid" | "Pending" | "Overdue" = "Pending";
+
+    if (calculatedAmountPaid >= calculatedAmountDue) {
+      paymentStatus = "Paid";
+    } else if (calculatedAmountPaid > 0) {
+      paymentStatus = "PartiallyPaid";
+    } else {
+      paymentStatus = "Pending";
+    }
+
     const payment = await prisma.payment.create({
       data: {
         leaseId,
-        amountDue: amountDue ?? lease.rent,
-        amountPaid: amountPaid ?? lease.rent,
+        amountDue: calculatedAmountDue,
+        amountPaid: calculatedAmountPaid,
         dueDate: dueDate ? new Date(dueDate) : new Date(),
         paymentDate: paymentDate ? new Date(paymentDate) : new Date(),
         paymentStatus,
