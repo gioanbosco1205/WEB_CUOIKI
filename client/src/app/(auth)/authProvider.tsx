@@ -178,7 +178,7 @@ const Auth = ({ children }: { children: React.ReactNode }) => {
     if (user && isAuthPage) {
       router.push("/landing");
     }
-  }, [user, isAuthPage, router]);
+  }, [user, isAuthPage, router]);///Neu da dang nhap thi khong can vao lai trang dang nhap
 
   if (!isAuthPage && !isDashboardPage) {
     return <>{children}</>;

@@ -1,6 +1,8 @@
 import * as z from "zod";
 import { PropertyTypeEnum } from "@/lib/constants";
 
+
+//kiểm tra dữ liệu
 /* ================================================================
    PHẦN CŨ – GIỮ NGUYÊN 100% (không thay đổi gì cả)
    ================================================================ */
