@@ -21,16 +21,16 @@ const PropertyLocation = ({ propertyId }: PropertyDetailsProps) => {
       container: mapContainerRef.current!,
       style: "mapbox://styles/thanhduong1/cmgqqw45x00d701sd7rx1cmab",
       center: [
-        property.location.coordinates.longitude,
-        property.location.coordinates.latitude,
+        property.location.longitude,
+        property.location.latitude,
       ],
       zoom: 14,
     });
 
     const marker = new mapboxgl.Marker()
       .setLngLat([
-        property.location.coordinates.longitude,
-        property.location.coordinates.latitude,
+        property.location.longitude,
+        property.location.latitude,
       ])
       .addTo(map);
 

@@ -100,7 +100,6 @@ export const getManagerProperties = async (req: Request, res: Response): Promise
           return { ...property, location: null };
         }
 
-        // ✅ Không còn query ST_asText nữa
         const location = await prisma.location.findUnique({
           where: { id: property.location.id },
           select: { latitude: true, longitude: true },

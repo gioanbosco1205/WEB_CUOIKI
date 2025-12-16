@@ -22,7 +22,7 @@ const Applications = () => {
     userType: "tenant",
   });
 
-  // 🧩 Mutation xoá application
+  // xoá application
   const [deleteApplication] = useDeleteApplicationMutation();
   
   const [applicationsList, setApplicationsList] = React.useState<any[]>([]);

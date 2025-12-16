@@ -46,7 +46,6 @@ const originalCardInfo = {
 import Image from "next/image";
 
 const PaymentMethod = ({ lease }: { lease: Lease }) => {
-  // 🔹 1. Tạo state để quản lý chế độ edit và dữ liệu
   const [isEditing, setIsEditing] = useState(false);
   const [cardInfo, setCardInfo] = useState(originalCardInfo);
   const [amount, setAmount] = useState(lease.rent);
@@ -126,14 +125,13 @@ const PaymentMethod = ({ lease }: { lease: Lease }) => {
     setIsEditing(false);
   };
 
-  // 🔹 4. Hàm xử lý khi bấm Hủy
+  // Hàm xử lý khi bấm Hủy
   const handleCancel = () => {
-    // Reset lại dữ liệu về ban đầu
     setCardInfo(originalCardInfo);
     setIsEditing(false);
   };
 
-  // 🔹 Thanh toán tiền thuê -> ghi nhận cho manager
+  // Thanh toán tiền thuê -> ghi nhận cho manager
   const handlePayRent = async () => {
     if (hasPaidCurrentMonth) return;
     if (amount <= 0) return;
