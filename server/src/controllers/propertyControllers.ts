@@ -420,3 +420,4 @@ export const deleteProperty = async (req: Request, res: Response): Promise<void>
     res.status(500).json({ message: `Lỗi khi xoá property: ${err.message}` });
   }
 };
+
